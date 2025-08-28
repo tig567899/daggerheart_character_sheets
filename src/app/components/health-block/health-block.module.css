@@ -1,0 +1,36 @@
+.healthBlock {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 6px;
+    padding-bottom: 12px;
+}
+
+.pill {
+    border-radius: 10px;
+    width: 30px;
+    height: 15px;
+    border: 1px solid black;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.filledPill {
+    background-color: black;
+}
+
+.resourceContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.armorThresholds {
+    display: flex;
+    align-items: center;
+}
+
+.thresholdDescription {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

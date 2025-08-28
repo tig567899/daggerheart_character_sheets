@@ -1,0 +1,39 @@
+.framedStatContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.statDisplay {
+    font-size: 32;
+    border: 1px solid black;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 4px;
+}
+
+.displaySmall {
+    font-size: 20;
+    width: 28;
+    height: 28;
+}
+
+.adjustableStatContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.adjustableStatButtons {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
