@@ -1,59 +1,39 @@
+import { createReducer } from "@reduxjs/toolkit";
+
+import { CharClass } from "@dh_sheets/app/constants";
 import {
+    addExperience,
+    addInventoryItem,
+    addInventoryWeapon,
+    loadDataFromCookies,
+    removeModifier,
+    setActiveArmor,
+    setAncestry,
     setCharacterClass,
     setCharacterName,
     setCharacterPronouns,
+    setCommunity,
     setCurrentHp,
     setCurrentStress,
-    setStatValue,
-} from '@dh_sheets/app/redux/character-data-store/actions';
-import { CharacterDataState } from '@dh_sheets/app/redux/character-data-store/types';
-import { CharClass } from '@dh_sheets/app/types';
-import { createReducer } from '@reduxjs/toolkit';
+    setExperience,
+    setHope,
+    setInventoryItemAt,
+    setInventoryWeaponAt,
+    setModifierForField,
+    setPrimaryWeapon,
+    setSecondaryWeapon,
+} from "@dh_sheets/app/redux/character-data-store/actions";
+import { CharacterDataState } from "@dh_sheets/app/redux/character-data-store/types";
 
 const initialState: CharacterDataState = {
     headerData: {
-        name: '',
-        pronouns: '',
-        heritage: '',
-    },
-    scores: {
-        agility: {
-            bonus: 0,
-            mark: false,
-            name: 'agility',
-        },
-        strength: {
-            bonus: 0,
-            mark: false,
-            name: 'strength',
-        },
-        finesse: {
-            bonus: 0,
-            mark: false,
-            name: 'finesse',
-        },
-        instinct: {
-            bonus: 0,
-            mark: false,
-            name: 'instinct',
-        },
-        presence: {
-            bonus: 0,
-            mark: false,
-            name: 'presence',
-        },
-        knowledge: {
-            bonus: 0,
-            mark: false,
-            name: 'knowledge',
-        },
+        name: "",
+        pronouns: "",
     },
     classData: {
         level: 1,
         charClass: [CharClass.BARD],
-        subclass: '',
-        hopeFeature: [],
-        classFeature: [],
+        subclass: "",
     },
     characterStateData: {
         hp: 0,
@@ -74,11 +54,15 @@ const initialState: CharacterDataState = {
         inventoryItems: [],
     },
     features: [],
-    experiences: {},
+    experiences: ["", ""],
+    modifiers: {},
 };
 
 export const characterData = createReducer(initialState, (builder) => {
     builder
+        .addCase(loadDataFromCookies, (state, action) => {
+            return action.payload;
+        })
         .addCase(setCharacterName, (state, action) => {
             if (action.payload === state.headerData.name) {
                 return state;
@@ -143,100 +127,165 @@ export const characterData = createReducer(initialState, (builder) => {
                 },
             };
         })
-        .addCase(setStatValue, (state, action) => {
-            switch (action.payload.name) {
-                case 'Agility': {
-                    if (action.payload.bonus === state.scores.agility.bonus) {
-                        return state;
-                    }
-                    return {
-                        ...state,
-                        scores: {
-                            ...state.scores,
-                            agility: {
-                                ...state.scores.agility,
-                                bonus: action.payload.bonus,
-                            },
-                        },
-                    };
-                }
-                case 'Strength': {
-                    if (action.payload.bonus === state.scores.strength.bonus) {
-                        return state;
-                    }
-                    return {
-                        ...state,
-                        scores: {
-                            ...state.scores,
-                            strength: {
-                                ...state.scores.strength,
-                                bonus: action.payload.bonus,
-                            },
-                        },
-                    };
-                }
-                case 'Finesse': {
-                    if (action.payload.bonus === state.scores.finesse.bonus) {
-                        return state;
-                    }
-                    return {
-                        ...state,
-                        scores: {
-                            ...state.scores,
-                            finesse: {
-                                ...state.scores.finesse,
-                                bonus: action.payload.bonus,
-                            },
-                        },
-                    };
-                }
-                case 'Instinct': {
-                    if (action.payload.bonus === state.scores.instinct.bonus) {
-                        return state;
-                    }
-                    return {
-                        ...state,
-                        scores: {
-                            ...state.scores,
-                            instinct: {
-                                ...state.scores.instinct,
-                                bonus: action.payload.bonus,
-                            },
-                        },
-                    };
-                }
-                case 'Presence': {
-                    if (action.payload.bonus === state.scores.presence.bonus) {
-                        return state;
-                    }
-                    return {
-                        ...state,
-                        scores: {
-                            ...state.scores,
-                            presence: {
-                                ...state.scores.presence,
-                                bonus: action.payload.bonus,
-                            },
-                        },
-                    };
-                }
-                case 'Knowledge': {
-                    if (action.payload.bonus === state.scores.knowledge.bonus) {
-                        return state;
-                    }
-                    return {
-                        ...state,
-                        scores: {
-                            ...state.scores,
-                            knowledge: {
-                                ...state.scores.knowledge,
-                                bonus: action.payload.bonus,
-                            },
-                        },
-                    };
-                }
-                default:
-                    return state;
+        .addCase(setExperience, (state, action) => {
+            if (action.payload.index > state.experiences.length) {
+                return;
+            }
+
+            const experiencesCopy = [
+                ...state.experiences.slice(0, action.payload.index),
+                action.payload.experience,
+                ...state.experiences.slice(action.payload.index + 1),
+            ];
+
+            return {
+                ...state,
+                experiences: experiencesCopy,
+            };
+        })
+        .addCase(addExperience, (state, action) => {
+            return {
+                ...state,
+                experiences: [...state.experiences, action.payload],
+            };
+        })
+        .addCase(setHope, (state, action) => {
+            if (action.payload === state.characterStateData.hope) {
+                return state;
+            }
+            return {
+                ...state,
+                characterStateData: {
+                    ...state.characterStateData,
+                    hope: action.payload,
+                },
+            };
+        })
+        .addCase(setPrimaryWeapon, (state, action) => {
+            if (action.payload?.isSecondary) return state;
+            return {
+                ...state,
+                equipment: {
+                    ...state.equipment,
+                    primaryWeapon: action.payload,
+                },
+            };
+        })
+        .addCase(setSecondaryWeapon, (state, action) => {
+            if (action.payload?.isSecondary === false) return state;
+            return {
+                ...state,
+                equipment: {
+                    ...state.equipment,
+                    secondaryWeapon: action.payload,
+                },
+            };
+        })
+        .addCase(setActiveArmor, (state, action) => {
+            return {
+                ...state,
+                equipment: {
+                    ...state.equipment,
+                    armor: action.payload,
+                },
+            };
+        })
+        .addCase(setInventoryWeaponAt, (state, action) => {
+            const weaponsArray = state.equipment.inventoryWeapons;
+            const newWeaponsArray = [
+                ...weaponsArray.slice(0, action.payload.index),
+            ];
+            if (action.payload.weapon) {
+                newWeaponsArray.push(action.payload.weapon);
+            }
+            newWeaponsArray.push(
+                ...weaponsArray.slice(action.payload.index + 1),
+            );
+
+            return {
+                ...state,
+                equipment: {
+                    ...state.equipment,
+                    inventoryWeapons: newWeaponsArray,
+                },
+            };
+        })
+        .addCase(setInventoryItemAt, (state, action) => {
+            const itemsArray = state.equipment.inventoryItems;
+            const newItemsArray = [
+                ...itemsArray.slice(0, action.payload.index),
+            ];
+            if (action.payload.item) {
+                newItemsArray.push(action.payload.item);
+            }
+            newItemsArray.push(...itemsArray.slice(action.payload.index + 1));
+
+            return {
+                ...state,
+                equipment: {
+                    ...state.equipment,
+                    inventoryItems: newItemsArray,
+                },
+            };
+        })
+        .addCase(addInventoryWeapon, (state, action) => {
+            return {
+                ...state,
+                equipment: {
+                    ...state.equipment,
+                    inventoryWeapons: [
+                        ...state.equipment.inventoryWeapons,
+                        action.payload,
+                    ],
+                },
+            };
+        })
+        .addCase(addInventoryItem, (state, action) => {
+            return {
+                ...state,
+                equipment: {
+                    ...state.equipment,
+                    inventoryItems: [
+                        ...state.equipment.inventoryItems,
+                        action.payload,
+                    ],
+                },
+            };
+        })
+        .addCase(setModifierForField, (state, action) => {
+            return {
+                ...state,
+                modifiers: {
+                    ...state.modifiers,
+                    [action.payload.modifierKey]: {
+                        field: action.payload.modifierField,
+                        bonus: action.payload.modifier,
+                        additionalData: action.payload.metadata,
+                        modifierKey: action.payload.modifierKey,
+                    },
+                },
+            };
+        })
+        .addCase(removeModifier, (state, action) => {
+            const modifiers = { ...state.modifiers };
+            delete modifiers[action.payload];
+            return {
+                ...state,
+                modifiers,
+            };
+        })
+        .addCase(setAncestry, (state, action) => {
+            return {
+                ...state,
+                ancestry: action.payload,
+            };
+        }).addCase(setCommunity, (state, action) => {
+            if (action.payload === state.community) {
+                return state;
+            }
+            return {
+                ...state,
+                community: action.payload,
             }
         });
 });

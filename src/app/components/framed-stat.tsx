@@ -1,6 +1,7 @@
-import classNames from 'classnames';
-import styles from './framed-stat.module.css';
-import { useCallback } from 'react';
+import classNames from "classnames";
+import { useCallback } from "react";
+
+import styles from "./framed-stat.module.css";
 
 export interface FramedStatProps {
     value: number | string;
@@ -24,9 +25,9 @@ export const FixedFramedStat = ({
                 })}
             >
                 {`${
-                    usePlus && typeof value === 'number' && value > 0 ? '+' : ''
+                    usePlus && typeof value === "number" && value > 0 ? "+" : ""
                 }${value}`}
-            </div>{' '}
+            </div>{" "}
             {label}
         </div>
     );
@@ -40,14 +41,14 @@ export const AdjustableFramedStat = ({
     onChange,
 }: FramedStatProps) => {
     const onAdjustUp = useCallback(() => {
-        if (typeof value === 'string' || !label) {
+        if (typeof value === "string" || !label) {
             return;
         }
         onChange?.(label, value + 1);
     }, [value]);
 
     const onAdjustDown = useCallback(() => {
-        if (typeof value === 'string' || !label) {
+        if (typeof value === "string" || !label) {
             return;
         }
         onChange?.(label, value - 1);

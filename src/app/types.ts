@@ -1,11 +1,31 @@
+import { JSX, ReactElement } from "react";
+
+import {
+    AbilityName,
+    Dice,
+    DistanceRange,
+    ModifierField,
+    ModifierKey,
+    WeaponBurden,
+} from "@dh_sheets/app/constants";
+
 export interface WeaponData {
     name: string;
-    range: Range;
+    range: DistanceRange;
     dice: Dice;
-    customDiceText: string;
+    damageType: string;
     modifier: number;
     burden: WeaponBurden;
-    features: string[];
+    features: EquipmentFeature[];
+    trait: AbilityName;
+    isSecondary?: boolean;
+}
+
+export interface Modifier {
+    field: ModifierField;
+    additionalData: any;
+    bonus: number | ModifierField;
+    modifierKey: ModifierKey;
 }
 
 export interface ArmorData {
@@ -13,47 +33,32 @@ export interface ArmorData {
     majorThreshold: number;
     severeThreshold: number;
     score: number;
-    features: string[];
+    features: EquipmentFeature[];
 }
 
-export interface Stat {
-    bonus: number;
+export interface Ability {
     name: string;
-    mark?: boolean;
+    description: (string | ReactElement | JSX.Element)[];
+    clarification?: ReactElement[];
+    modifier?: Modifier[];
 }
 
-export enum CharClass {
-    BARD = 'Bard',
-    DRUID = 'Druid',
-    GUARDIAN = 'Guardian',
-    RANGER = 'Ranger',
-    ROGUE = 'Rogue',
-    SERAPH = 'Seraph',
-    SORCERER = 'Sorcerer',
-    WARRIOR = 'Warrior',
-    WIZARD = 'Wizard',
+export interface EquipmentFeature {
+    name: string;
+    description: string;
 }
 
-export enum Range {
-    MELEE = 'Melee',
-    V_CLOSE = 'Very close',
-    CLOSE = 'Close',
-    FAR = 'Far',
-    V_FAR = 'Very far',
-    OUT_OF_RANGE = 'Out of range', // I'm not sure this is every used, but whatever.
+export interface Ancestry {
+    name: string;
+    background: string[];
+    abilities: Ability[];
 }
 
-export enum Dice {
-    D4,
-    D6,
-    D8,
-    D10,
-    D12,
-    D20,
-    CUSTOM,
+export interface Community {
+    name: string;
+    background: string;
+    rolePlayTips: string;
+    ability: Ability;
 }
 
-export enum WeaponBurden {
-    ONE_HANDED = 'One-Handed',
-    TWO_HANDED = 'Two-Handed',
-}
+export { WeaponBurden };

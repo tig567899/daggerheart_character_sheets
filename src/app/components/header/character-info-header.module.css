@@ -1,3 +1,9 @@
 .headerContainer {
     display: flex;
 }
+
+.headerInput {
+    display: flex;
+    margin-left: 6px;
+    height: 100%;
+}

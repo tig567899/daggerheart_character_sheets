@@ -1,0 +1,15 @@
+.labeledBoxContainer {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.labeledBoxContents {
+    font-size: 14px;
+    border-bottom: 1px solid black;
+}
+
+.labeledBoxLabel {
+    font-size: 12px;
+    font-weight: bold;
+}

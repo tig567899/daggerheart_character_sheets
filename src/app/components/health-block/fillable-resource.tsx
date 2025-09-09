@@ -1,8 +1,8 @@
-import { useCallback } from 'react';
-import classNames from 'classnames';
+import { useCallback } from "react";
 
-import styles from './health-block.module.css';
-import { PillToggle } from '@dh_sheets/app/components/health-block/pill-toggle';
+import { PillToggle } from "@dh_sheets/app/components/health-block/pill-toggle";
+
+import styles from "./health-block.module.css";
 
 export interface FillableResourceProps {
     name: string;
@@ -35,8 +35,9 @@ export const FillableResource = ({
                 pillKey={i}
                 categoryName={name}
                 filled={i < value}
+                currentValue={Math.min(value - 1, maxValue - 1)}
                 onToggle={onChangeValue}
-            />
+            />,
         );
     }
 

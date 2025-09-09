@@ -1,0 +1,71 @@
+.circle {
+    width: 18px;
+    height: 18px;
+    margin-left: 5px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.circleFilled {
+    width: 12px;
+    height: 12px;
+    background-color: black;
+    border-radius: 10px;
+}
+
+.circleContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.addWeaponButton {
+    margin-top: 6px;
+}
+
+.weaponInfoLayout {
+    display: flex;
+    flex-direction: column;
+}
+
+.weaponInfoCategory {
+    align-self: flex-start;
+    font-size: 18px;
+    margin-bottom: 6px;
+    display: flex;
+    width: 100%;
+    margin-top: 6px;
+}
+
+.changeWeapon {
+    margin-left: 6px;
+}
+
+.removeWeapon {
+    margin-left: auto;
+}
+
+.weaponInfoDisplay {
+    display: flex;
+}
+
+.featureBox {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 6px;
+}
+
+.weaponFeature {
+    font-size: 14px;
+}
+
+.divider {
+    width: 1px;
+    height: 15px;
+    margin: 0 3px;
+    background-color: gray;
+}

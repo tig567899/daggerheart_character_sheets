@@ -1,0 +1,24 @@
+.staticInputText {
+    border-bottom: 1px solid black;
+    display: flex;
+    min-width: 200px;
+    height: 100%;
+}
+
+.inputField {
+    flex: 1 0;
+}
+
+.staticEditButton {
+    align-self: right;
+}
+
+.dynamicInputText {
+    min-width: 200px;
+    display: flex;
+    height: 100%;
+}
+
+.staticInputPlaceholder {
+    color: gray;
+}

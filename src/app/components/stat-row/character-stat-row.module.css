@@ -1,8 +1,23 @@
 .container {
     display: flex;
     flex-direction: row;
+    align-self: center;
+    flex-grow: 1;
+    width: 100%;
 }
 
 .statContainer {
-    margin-left: 12px;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+.statBlock {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-right: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

@@ -1,0 +1,46 @@
+.addArmorButton {
+    margin-top: 6px;
+}
+
+.infoLayout {
+    display: flex;
+    flex-direction: column;
+}
+
+.infoCategory {
+    align-self: flex-start;
+    font-size: 18px;
+    margin-bottom: 6px;
+    display: flex;
+    width: 100%;
+}
+
+.changeArmor {
+    margin-left: 6px;
+}
+
+.removeArmor {
+    margin-left: auto;
+}
+
+.infoDisplay {
+    display: flex;
+}
+
+.featureBox {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 6px;
+}
+
+.feature {
+    font-size: 14px;
+}
+
+.divider {
+    width: 1px;
+    height: 15px;
+    margin: 0 3px;
+    background-color: gray;
+}

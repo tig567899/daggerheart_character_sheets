@@ -1,8 +1,6 @@
 .healthBlock {
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 6px;
-    padding-bottom: 12px;
+    display: flex;
+    flex-direction: column;
 }
 
 .pill {
@@ -27,10 +25,12 @@
 .armorThresholds {
     display: flex;
     align-items: center;
+    align-self: center;
 }
 
 .thresholdDescription {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }

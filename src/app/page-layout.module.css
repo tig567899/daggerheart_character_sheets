@@ -1,3 +1,9 @@
+.pageLayout {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
 .columnLayout {
     display: flex;
     flex-direction: row;

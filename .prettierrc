@@ -1,0 +1,7 @@
+{
+    "importOrder": ["^@dh_sheets/app/(.*)$", "^[./]"],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true,
+    "tabWidth": 4,
+    "plugins": ["@trivago/prettier-plugin-sort-imports"]
+}

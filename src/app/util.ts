@@ -1,47 +1,30 @@
-import { CharClass } from "@dh_sheets/app/types";
+import { ModifierField } from "@dh_sheets/app/constants";
 
-export function getBaseEvasionByClass(className: CharClass) {
-    switch(className){
-        case CharClass.BARD:
-            return 10;
-        case CharClass.DRUID:
-            return 10;
-        case CharClass.GUARDIAN:
-            return 9;
-        case CharClass.RANGER:
-            return 12;
-        case CharClass.ROGUE:
-            return 12;
-        case CharClass.SERAPH:
-            return 9;
-        case CharClass.SORCERER:
-            return 10;
-        case CharClass.WARRIOR:
-            return 11;
-        case CharClass.WIZARD:
-            return 11;
-    }
+export function getBaseProficiencyByLevel(level: number): number {
+    if (level === 1) return 1;
+    if (level < 5) return 2;
+    if (level < 8) return 3;
+    return 4;
 }
 
-export function getBaseHpByClass(className: CharClass) {
-    switch(className){
-        case CharClass.BARD:
-            return 5;
-        case CharClass.DRUID:
-            return 6;
-        case CharClass.GUARDIAN:
-            return 7;
-        case CharClass.RANGER:
-            return 6;
-        case CharClass.ROGUE:
-            return 6;
-        case CharClass.SERAPH:
-            return 7;
-        case CharClass.SORCERER:
-            return 6;
-        case CharClass.WARRIOR:
-            return 6;
-        case CharClass.WIZARD:
-            return 5;
-    }
+export function isExperienceModifierField(field: ModifierField): boolean {
+    return (
+        field === ModifierField.EXPERIENCE_UNSELECTED ||
+        field === ModifierField.EXPERIENCE_1 ||
+        field === ModifierField.EXPERIENCE_2 ||
+        field === ModifierField.EXPERIENCE_3 ||
+        field === ModifierField.EXPERIENCE_4 ||
+        field === ModifierField.EXPERIENCE_5
+    );
+}
+
+export function shouldCacheModifier(field: ModifierField): boolean {
+    return (
+        field === ModifierField.AGILITY ||
+        field === ModifierField.STRENGTH ||
+        field === ModifierField.FINESSE ||
+        field === ModifierField.INSTINCT ||
+        field === ModifierField.PRESENCE ||
+        field === ModifierField.KNOWLEDGE
+    );
 }

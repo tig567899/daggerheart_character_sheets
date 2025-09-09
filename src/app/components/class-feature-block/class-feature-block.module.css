@@ -1,0 +1,23 @@
+.classTitle {
+    font-size: 20px;
+}
+
+.featureName {
+    font-weight: bold;
+    margin-top: 12px;
+    margin-bottom: 6px;
+}
+
+.featureDescription {
+    font-size: 14px;
+}
+
+.featureDescriptionBlock {
+    margin-bottom: 12px;
+}
+
+.featureClarification {
+    font-size: 14px;
+    font-style: italic;
+    margin-top: 12px;
+}

@@ -1,0 +1,77 @@
+.container {
+    padding: 6px 12px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.modifierDestinationRow {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.dragTargetContainer {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.dragTargetTitle {
+    font-size: 18px;
+}
+
+.dragTarget {
+    border: 1px solid gray;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dragTargetHover {
+    background-color: skyblue;
+}
+
+.abilityUses {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+.modifierRow {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.modifierBox {
+    border: 1px dashed gray;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    margin: 0 15px;
+}
+
+.modifierBoxDragging {
+    opacity: 0.4;
+}
+
+.modifiedBox {
+    cursor: pointer;
+}
+
+.modifierRowDescription{
+    align-self: center;
+    margin-top: 20px;
+    font-style: italic;
+}

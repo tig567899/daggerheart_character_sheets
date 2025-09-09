@@ -1,15 +1,25 @@
-import React, { useCallback, useState } from 'react';
+import classNames from "classnames";
+import React, { useCallback, useState } from "react";
+
+import styles from "./saveable-input.module.css";
 
 interface InputProps {
     initialInput: string;
     inputType: string;
-    name: string
-    onSave: (newInput: string) => void;
+    name: string;
+    index?: number;
+    onSave: (newInput: string, index?: number) => void;
 }
 
-export const SaveableInput = ({ initialInput, name, inputType, onSave }: InputProps) => {
+export const SaveableInput = ({
+    initialInput,
+    name,
+    inputType,
+    index,
+    onSave,
+}: InputProps) => {
     const [isEditing, setIsEditing] = useState(false);
-    const [editedValue, setEditedValue] = useState<string>(initialInput ?? '');
+    const [editedValue, setEditedValue] = useState<string>(initialInput ?? "");
 
     const edit = useCallback(() => {
         setIsEditing(true);
@@ -17,7 +27,7 @@ export const SaveableInput = ({ initialInput, name, inputType, onSave }: InputPr
 
     const save = useCallback(() => {
         if (editedValue !== initialInput) {
-            onSave?.(editedValue);
+            onSave?.(editedValue, index);
         }
         setIsEditing(false);
     }, [setIsEditing, editedValue]);
@@ -27,16 +37,30 @@ export const SaveableInput = ({ initialInput, name, inputType, onSave }: InputPr
     }, []);
 
     const staticView = (
-        <div>
-            {name}
-            {initialInput}
-            <button onClick={edit}>edit</button>
+        <div className={styles.staticInputText}>
+            <div
+                className={classNames(styles.inputField, {
+                    [styles.staticInputPlaceholder]: !initialInput,
+                })}
+            >
+                {" "}
+                {initialInput ? initialInput : name}
+            </div>
+            <button className={styles.staticEditButton} onClick={edit}>
+                edit
+            </button>
         </div>
     );
 
     const dynamicView = (
-        <div>
-            <input placeholder={name} type={inputType} value={editedValue} onInput={onInputChange}></input>
+        <div className={styles.dynamicInputText}>
+            <input
+                className={styles.inputField}
+                placeholder={name}
+                type={inputType}
+                value={editedValue}
+                onInput={onInputChange}
+            />
             <button onClick={save}>save</button>
         </div>
     );

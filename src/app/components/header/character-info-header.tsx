@@ -12,7 +12,7 @@ import { FixedFramedStat } from '@dh_sheets/app/components/framed-stat';
 import { useAppDispatch } from '@dh_sheets/app/redux/hooks';
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { CharClass } from '@dh_sheets/app/types';
+import { CharClass } from '@dh_sheets/app/constants';
 
 import styles from './character-info-header.module.css';
 
@@ -47,19 +47,24 @@ export const CharacterInfoHeader = ({}: CharacterInfoParams) => {
     return (
         <div className={styles.headerContainer}>
             <div>Daggerheart Character Sheet</div>
-            <SaveableInput
-                initialInput={characterData.headerData.name}
-                inputType="string"
-                onSave={onNameSave}
-                name='Name'
-            ></SaveableInput>
-            <SaveableInput
-                initialInput={characterData.headerData.pronouns}
-                inputType="string"
-                onSave={onPronounsSave}
-                name='Pronouns'
-            ></SaveableInput>
-            <select onChange={onCharClassChange}>
+            <div className={styles.headerInput}>
+                <SaveableInput
+                    initialInput={characterData.headerData?.name}
+                    inputType="string"
+                    onSave={onNameSave}
+                    name="Name"
+                />
+            </div>
+            <div className={styles.headerInput}>
+                <SaveableInput
+                    initialInput={characterData.headerData?.pronouns}
+                    inputType="string"
+                    onSave={onPronounsSave}
+                    name="Pronouns"
+                />
+            </div>
+
+            <select className={styles.headerInput} value={classData.charClass[0]} onChange={onCharClassChange}>
                 {Object.values(CharClass).map((charClass) => (
                     <option key={charClass}>{charClass}</option>
                 ))}

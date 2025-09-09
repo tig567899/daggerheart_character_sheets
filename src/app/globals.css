@@ -31,12 +31,21 @@ body {
 }
 
 a {
-  color: inherit;
+  color: #1b75d0;
   text-decoration: none;
+  cursor: pointer;
 }
 
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
+}
+
+button {
+    cursor: pointer;
+}
+
+ul {
+    margin-left: 30px;
 }

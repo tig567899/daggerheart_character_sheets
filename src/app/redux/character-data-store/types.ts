@@ -1,20 +1,17 @@
-import { ArmorData, CharClass, Stat, WeaponData } from '@dh_sheets/app/types';
+import { CharClass } from "@dh_sheets/app/constants";
+import { Ancestry, ArmorData, Community, Modifier, WeaponData } from "@dh_sheets/app/types";
 
 export interface CharacterDataState {
     // Values which will very likely not change after character creation.
     headerData: {
         name: string;
         pronouns: string;
-        heritage: string;
     };
-    scores: StatData;
     // Mostly fixed values, may change on level up.
     classData: {
         level: number;
         charClass: CharClass[]; // TODO Change this to an array of enums
         subclass: string;
-        hopeFeature: string[];
-        classFeature: string[];
     };
     // Temporary values that will change throughout a play session
     characterStateData: {
@@ -35,15 +32,10 @@ export interface CharacterDataState {
         inventoryWeapons: WeaponData[];
         inventoryItems: string[];
     };
-    experiences: Record<string, number>;
+    experiences: string[];
     features: string[];
-};
-
-export interface StatData {
-    agility: Stat;
-    strength: Stat;
-    finesse: Stat;
-    instinct: Stat;
-    presence: Stat;
-    knowledge: Stat;
-};
+    modifiers: Record<string, Modifier>;
+    ancestry?: string;
+    secondaryAncestry?: string;
+    community?: string;
+}
