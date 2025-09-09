@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "3": "^2.1.0",
     "@atlaskit/pragmatic-drag-and-drop": "^1.7.5",
     "@reduxjs/toolkit": "^2.8.2",
     "classnames": "^2.5.1",
