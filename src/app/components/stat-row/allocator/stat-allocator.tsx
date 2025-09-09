@@ -180,6 +180,7 @@ export const StatAllocator = forwardRef(
                 instinctModKey,
                 presenceModKey,
                 knowledgeModKey,
+                dispatch,
             ],
         );
 
@@ -241,20 +242,15 @@ export const StatAllocator = forwardRef(
                     numberAssigned() + (modifierKey === null ? -1 : 1),
                 );
             },
-            [
-                agilityModKey,
-                strengthModKey,
-                finesseModKey,
-                instinctModKey,
-                presenceModKey,
-                knowledgeModKey,
-                numberAssigned,
-            ],
+            [numberAssigned, onAllocatedNumberChanged],
         );
 
-        const unassignModifier = useCallback((field: ModifierField) => {
-            setAssignmentForModifier(field, null);
-        }, []);
+        const unassignModifier = useCallback(
+            (field: ModifierField) => {
+                setAssignmentForModifier(field, null);
+            },
+            [setAssignmentForModifier],
+        );
 
         useEffect(() => {
             return monitorForElements({
@@ -330,3 +326,5 @@ export const StatAllocator = forwardRef(
         );
     },
 );
+
+StatAllocator.displayName = "StatAllocator";

@@ -33,7 +33,7 @@ export const HealthBlock = () => {
 
     const onHpChange = useCallback((hp: number) => {
         dispatch(setCurrentHp(hp));
-    }, []);
+    }, [dispatch]);
 
     const onStressChange = useCallback(
         (stress: number) => {

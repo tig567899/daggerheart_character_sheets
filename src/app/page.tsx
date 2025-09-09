@@ -36,7 +36,7 @@ export default function Home() {
             return;
         }
         dispatch(loadDataFromCookies(cookies.charData));
-    }, []);
+    }, [cookies.charData, dispatch]);
     return (
         <div className={styles.pageLayout}>
             <CharacterInfoHeader />

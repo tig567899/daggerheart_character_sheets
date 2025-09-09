@@ -28,7 +28,7 @@ export const ModalTrigger = forwardRef(
         useImperativeHandle(ref, () => ({
             openModalId(id?: string) {
                 setModalKey(modalKey);
-                setModalId(id ?? 'modal');
+                setModalId(id ?? "modal");
             },
         }));
 
@@ -36,10 +36,13 @@ export const ModalTrigger = forwardRef(
             setModalId(null);
         }, []);
 
-        const onModalSelect = useCallback((...props: any) => {
-            onSelect(...props);
-            setModalId(null);
-        }, [onSelect]);
+        const onModalSelect = useCallback(
+            (...props: any) => {
+                onSelect(...props);
+                setModalId(null);
+            },
+            [onSelect],
+        );
 
         return (
             <div>
@@ -58,3 +61,5 @@ export const ModalTrigger = forwardRef(
         );
     },
 );
+
+ModalTrigger.displayName = "ModalTrigger";

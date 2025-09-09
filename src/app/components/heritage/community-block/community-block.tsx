@@ -42,7 +42,7 @@ export const CommunityBlock = () => {
                 />
             );
         },
-        [],
+        [index],
     );
 
     const onSetCommunity = useCallback(

@@ -21,7 +21,7 @@ export const PillToggle = ({
     const onPillClick = useCallback(() => {
         if (!filled || pillKey !== currentValue) onToggle(pillKey + 1);
         else onToggle(pillKey);
-    }, [filled, currentValue]);
+    }, [filled, currentValue, onToggle, pillKey]);
     return (
         <div
             className={classNames(styles.pill, {

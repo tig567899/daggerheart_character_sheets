@@ -19,15 +19,15 @@ export const FillableResource = ({
     warningText,
     onValueChange,
 }: FillableResourceProps) => {
-    if (!maxValue || value === undefined) {
-        return null;
-    }
-
     const resourceInputArray = [];
 
     const onChangeValue = useCallback((value: number) => {
         onValueChange?.(value);
-    }, []);
+    }, [onValueChange]);
+
+    if (!maxValue || value === undefined) {
+        return null;
+    }
 
     for (let i = 0; i < maxValue; ++i) {
         resourceInputArray.push(

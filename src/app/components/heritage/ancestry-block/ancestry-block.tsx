@@ -46,7 +46,7 @@ export const AncestryBlock = () => {
                 />
             );
         },
-        [],
+        [index],
     );
 
     const onSetAncestry = useCallback(

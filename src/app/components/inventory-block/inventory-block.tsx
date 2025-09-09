@@ -41,7 +41,7 @@ export const InventoryBlock = () => {
             setSelectingFor(null);
             setModalKey(Math.random());
         },
-        [selectingFor, setModalKey],
+        [dispatch, selectingFor, setModalKey],
     );
 
     const onWeaponClear = useCallback(
@@ -49,7 +49,7 @@ export const InventoryBlock = () => {
             dispatch(setInventoryWeaponAt({ index }));
             setModalKey(Math.random());
         },
-        [setModalKey],
+        [dispatch, setModalKey],
     );
 
     const equipmentData = useSelector(getEquipmentData);
@@ -59,7 +59,7 @@ export const InventoryBlock = () => {
             <BlockTitle title="Inventory" />
             <div className={weaponStyles.weaponInfoCategory}>Items</div>
             {equipmentData.inventoryItems.map((item) => (
-                <div>{item}</div>
+                <div key={`equipment-${item}`}>{item}</div>
             ))}
             {equipmentData.inventoryWeapons.map((weapon, index) => {
                 return (

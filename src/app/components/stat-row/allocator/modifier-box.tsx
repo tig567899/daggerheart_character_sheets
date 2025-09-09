@@ -25,7 +25,7 @@ export const ModifierBox = ({ modifier, modifierKey }: ModifierBoxProps) => {
             onDragStart: () => setDragging(true),
             onDrop: () => setDragging(false),
         });
-    }, [ref]);
+    }, [ref, modifier, modifierKey]);
 
     return (
         <div

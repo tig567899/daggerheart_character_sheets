@@ -27,7 +27,7 @@ export const ArmorBlock = () => {
 
     const onRemoveArmor = useCallback(() => {
         dispatch(setActiveArmor());
-    }, [dispatch])
+    }, [dispatch]);
 
     const renderModal = useCallback(
         (

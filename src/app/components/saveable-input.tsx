@@ -30,7 +30,7 @@ export const SaveableInput = ({
             onSave?.(editedValue, index);
         }
         setIsEditing(false);
-    }, [setIsEditing, editedValue]);
+    }, [setIsEditing, editedValue, index, initialInput, onSave]);
 
     const onInputChange = useCallback((event: any) => {
         setEditedValue(event.target.value);

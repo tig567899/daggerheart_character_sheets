@@ -1,7 +1,7 @@
-import classNames from 'classnames';
-import { useCallback } from 'react';
+import classNames from "classnames";
+import { useCallback } from "react";
 
-import styles from './hope-block.module.css';
+import styles from "./hope-block.module.css";
 
 export interface ToggleProps {
     diamondKey: number;
@@ -19,7 +19,7 @@ export const DiamondFillable = ({
     const onClick = useCallback(() => {
         if (!filled || diamondKey !== currentValue) onToggle(diamondKey + 1);
         else onToggle(diamondKey);
-    }, [filled, currentValue]);
+    }, [diamondKey, onToggle, filled, currentValue]);
 
     // TODO: Make the dots hearts
     return (

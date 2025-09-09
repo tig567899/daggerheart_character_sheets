@@ -2,10 +2,9 @@ import { createSelector } from "@reduxjs/toolkit";
 
 import { ModifierField } from "@dh_sheets/app/constants";
 import { CharacterDataState } from "@dh_sheets/app/redux/character-data-store/types";
-import { Ancestry, Modifier } from "@dh_sheets/app/types";
+import { Modifier } from "@dh_sheets/app/types";
 import {
     getBaseProficiencyByLevel,
-    shouldCacheModifier,
 } from "@dh_sheets/app/util";
 
 export const getCharacterData = (store: {
@@ -54,7 +53,7 @@ export const getModifierByField = createSelector(
     ],
     (
         modifiers: Record<string, Modifier>,
-        { level }: any,
+        { level },
         field: ModifierField,
     ): number => {
         const getModifier = (localField: ModifierField): number => {

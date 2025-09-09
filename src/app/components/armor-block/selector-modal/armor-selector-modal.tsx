@@ -8,7 +8,6 @@ import { ArmorData } from "@dh_sheets/app/types";
 import styles from "../../selector-modal.module.css";
 
 export interface ArmorProps {
-    hide?: boolean;
     onSelect: (id: string, armor: ArmorData) => void;
     onClose: () => void;
 }
@@ -18,7 +17,7 @@ enum ModalColumn {
     CUSTOM_WEAPON,
 }
 
-export const ArmorSelectorModal = ({ hide, onSelect, onClose }: ArmorProps) => {
+export const ArmorSelectorModal = ({ onSelect, onClose }: ArmorProps) => {
     const [columnSelected, setColumnSelected] = useState<ModalColumn>(
         ModalColumn.WEAPON_SELECTION,
     );
@@ -35,7 +34,10 @@ export const ArmorSelectorModal = ({ hide, onSelect, onClose }: ArmorProps) => {
         (e: React.MouseEvent) => e.stopPropagation(),
         [],
     );
-    const onArmorSelect = useCallback((armor: ArmorData) => onSelect('armor', armor), []);
+    const onArmorSelect = useCallback(
+        (armor: ArmorData) => onSelect("armor", armor),
+        [onSelect],
+    );
 
     const armorListLayout = (
         <ArmorTable

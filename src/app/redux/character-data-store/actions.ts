@@ -2,7 +2,7 @@ import { createAction } from "@reduxjs/toolkit";
 
 import { CharClass, ModifierField, ModifierKey } from "@dh_sheets/app/constants";
 import { CharacterDataState } from "@dh_sheets/app/redux/character-data-store/types";
-import { Ancestry, ArmorData, WeaponData } from "@dh_sheets/app/types";
+import { ArmorData, WeaponData } from "@dh_sheets/app/types";
 
 // Fixed Stats
 export const setCharacterName = createAction<string>("Set character name");

@@ -1,5 +1,5 @@
 import { CharClass } from "@dh_sheets/app/constants";
-import { Ancestry, ArmorData, Community, Modifier, WeaponData } from "@dh_sheets/app/types";
+import { ArmorData, Modifier, WeaponData } from "@dh_sheets/app/types";
 
 export interface CharacterDataState {
     // Values which will very likely not change after character creation.

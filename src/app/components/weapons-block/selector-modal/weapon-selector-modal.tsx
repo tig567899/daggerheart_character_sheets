@@ -5,7 +5,6 @@ import { Tier1PrimaryWeapons } from '@dh_sheets/app/data/weapon-data-store';
 import { WeaponTable } from '@dh_sheets/app/components/weapons-block/selector-modal/weapon-table';
 
 import styles from '../../selector-modal.module.css';
-import { WeaponSlot } from '@dh_sheets/app/components/weapons-block/weapons-block';
 
 export interface WeaponProps {
     hide?: boolean;
@@ -25,7 +24,7 @@ export const WeaponSelectorModal = ({ hide, id, onSelect, onClose }: WeaponProps
     );
 
     // Use this later
-    const secondary = id === WeaponSlot.SECONDARY;
+    // const secondary = id === WeaponSlot.SECONDARY;
 
     const setWeaponListLayout = useCallback(() => {
         setColumnSelected(ModalColumn.WEAPON_SELECTION);
@@ -35,7 +34,7 @@ export const WeaponSelectorModal = ({ hide, id, onSelect, onClose }: WeaponProps
         setColumnSelected(ModalColumn.CUSTOM_WEAPON);
     }, []);
 
-    const onWeaponSelect = useCallback((weapon: WeaponData) => onSelect(id, weapon), [id])
+    const onWeaponSelect = useCallback((weapon: WeaponData) => onSelect(id, weapon), [id, onSelect])
 
     const absorbClick = useCallback((e: React.MouseEvent) => e.stopPropagation(), [])
 

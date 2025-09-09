@@ -26,7 +26,7 @@ export const StatAllocatorModal = ({ show, onClose }: ModalProps) => {
     const onSubmit = useCallback(() => {
         allocatorRef.current?.onSubmit();
         onClose();
-    }, []);
+    }, [onClose, allocatorRef]);
 
     if (!show) {
         return null;

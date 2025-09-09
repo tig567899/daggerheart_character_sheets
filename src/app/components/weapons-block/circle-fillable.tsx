@@ -18,7 +18,7 @@ export const CircleFillable = ({
 }: ToggleProps) => {
     const onClick = useCallback(() => {
         onToggle?.(filled ? circleKey : circleKey + 1);
-    }, [filled, onToggle]);
+    }, [filled, onToggle, circleKey]);
 
     // TODO: Make the dots hearts
     return (

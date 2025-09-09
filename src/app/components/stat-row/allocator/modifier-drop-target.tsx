@@ -36,7 +36,7 @@ export const ModifierDropTarget = ({
             onDragLeave: () => setIsDraggedOver(false),
             onDrop: () => setIsDraggedOver(false),
         });
-    }, [ref]);
+    }, [ref, ability]);
 
     const unassign = useCallback(() => {
         {
@@ -44,7 +44,7 @@ export const ModifierDropTarget = ({
                 onUnassign(ability);
             }
         }
-    }, [ability, modified]);
+    }, [ability, modified, onUnassign]);
 
     return (
         <div

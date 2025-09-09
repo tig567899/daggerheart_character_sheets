@@ -45,14 +45,14 @@ export const AdjustableFramedStat = ({
             return;
         }
         onChange?.(label, value + 1);
-    }, [value]);
+    }, [label, onChange, value]);
 
     const onAdjustDown = useCallback(() => {
         if (typeof value === "string" || !label) {
             return;
         }
         onChange?.(label, value - 1);
-    }, [value]);
+    }, [label, onChange, value]);
     return (
         <div className={styles.adjustableStatContainer}>
             <FixedFramedStat

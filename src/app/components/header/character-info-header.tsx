@@ -16,9 +16,7 @@ import { CharClass } from '@dh_sheets/app/constants';
 
 import styles from './character-info-header.module.css';
 
-export interface CharacterInfoParams {}
-
-export const CharacterInfoHeader = ({}: CharacterInfoParams) => {
+export const CharacterInfoHeader = () => {
     const characterData = useSelector(getCharacterData);
     const classData = useSelector(getClassData);
     const dispatch = useAppDispatch();

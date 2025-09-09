@@ -22,7 +22,7 @@ export const CommunityModal = ({ initialIndex, onSelect, onClose }: ModalProps) 
 
     const onSubmit = useCallback(() => {
         onSelect(CommunitiesList[communityIndex]);
-    }, [communityIndex]);
+    }, [onSelect, communityIndex]);
 
     return (
         <div onClick={onClose} className={styles.modalContainer}>

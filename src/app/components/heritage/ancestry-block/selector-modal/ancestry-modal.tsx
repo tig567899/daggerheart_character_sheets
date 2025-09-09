@@ -22,7 +22,7 @@ export const AncestryModal = ({initialAncestryIndex, onSelect, onClose }: ModalP
 
     const onSubmit = useCallback(() => {
         onSelect(AncestriesList[ancestryIndex]);
-    }, [ancestryIndex]);
+    }, [onSelect, ancestryIndex]);
 
     return (
         <div onClick={onClose} className={styles.modalContainer}>
