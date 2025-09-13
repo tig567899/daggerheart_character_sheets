@@ -23,7 +23,7 @@ export interface WeaponData {
 
 export interface Modifier {
     field: ModifierField;
-    additionalData: any;
+    additionalData?: any;
     bonus: number | ModifierField;
     modifierKey: ModifierKey;
 }
@@ -46,6 +46,7 @@ export interface Ability {
 export interface EquipmentFeature {
     name: string;
     description: string;
+    modifiers?: Modifier[];
 }
 
 export interface Ancestry {
@@ -59,6 +60,15 @@ export interface Community {
     background: string;
     rolePlayTips: string;
     ability: Ability;
+}
+
+export interface SubclassData {
+    name: string;
+    description: string;
+    spellcastTrait?: AbilityName;
+    foundationFeatures: Ability[];
+    specializationFeatures: Ability[];
+    masteryFeatures: Ability[];
 }
 
 export { WeaponBurden };

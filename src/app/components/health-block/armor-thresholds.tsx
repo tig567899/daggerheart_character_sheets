@@ -1,4 +1,4 @@
-import { FixedFramedStat } from '@dh_sheets/app/components/framed-stat';
+import { FixedFramedStat } from '@dh_sheets/app/components/parts/framed-stat/framed-stat';
 import {
     getClassData,
     getEquipmentData,

@@ -3,9 +3,11 @@ import { useCallback } from "react";
 import { useSelector } from "react-redux";
 
 import { getBaseHpByClass } from "@dh_sheets/app/charClassUtil";
-import { BlockTitle } from "@dh_sheets/app/components/block-title";
 import { ArmorThresholds } from "@dh_sheets/app/components/health-block/armor-thresholds";
 import { FillableResource } from "@dh_sheets/app/components/health-block/fillable-resource";
+import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
+import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";
+import { ModifierField } from "@dh_sheets/app/constants";
 import {
     setCurrentHp,
     setCurrentStress,
@@ -17,9 +19,7 @@ import {
 } from "@dh_sheets/app/redux/character-data-store/selector";
 import { useAppDispatch, useAppSelector } from "@dh_sheets/app/redux/hooks";
 
-import parentStyles from "../framed-block.module.css";
 import styles from "./health-block.module.css";
-import { ModifierField } from "@dh_sheets/app/constants";
 
 export const HealthBlock = () => {
     const { hp, stress, stressMax } = useSelector(getCharacterStateData);
@@ -27,13 +27,20 @@ export const HealthBlock = () => {
     const dispatch = useAppDispatch();
 
     const charHpMax = getBaseHpByClass(classData.charClass[0]);
-    const hpMods = useAppSelector((state) => getModifierByField(state, ModifierField.MAX_HP));
+    const hpMods = useAppSelector((state) =>
+        getModifierByField(state, ModifierField.MAX_HP),
+    );
 
-    const stressMods = useAppSelector((state) => getModifierByField(state, ModifierField.MAX_STRESS));
+    const stressMods = useAppSelector((state) =>
+        getModifierByField(state, ModifierField.MAX_STRESS),
+    );
 
-    const onHpChange = useCallback((hp: number) => {
-        dispatch(setCurrentHp(hp));
-    }, [dispatch]);
+    const onHpChange = useCallback(
+        (hp: number) => {
+            dispatch(setCurrentHp(hp));
+        },
+        [dispatch],
+    );
 
     const onStressChange = useCallback(
         (stress: number) => {
@@ -43,9 +50,7 @@ export const HealthBlock = () => {
     );
 
     return (
-        <div
-            className={classNames(parentStyles.framedBlock, styles.healthBlock)}
-        >
+        <FramedBlock className={styles.healthBlock}>
             <BlockTitle title="Damage and Health" />
             <ArmorThresholds />
             <FillableResource
@@ -60,6 +65,6 @@ export const HealthBlock = () => {
                 value={stress}
                 onValueChange={onStressChange}
             />
-        </div>
+        </FramedBlock>
     );
 };

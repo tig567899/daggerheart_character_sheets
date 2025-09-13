@@ -51,6 +51,7 @@ export enum ModifierField {
     INSTINCT = 'ins',
     PRESENCE = 'pre',
     KNOWLEDGE = 'kno',
+    ALL_STATS = 'all_stats',
     // Resistances
     EVASION = 'eva',
     ARMOR_SCORE = 'arm',
@@ -97,13 +98,49 @@ export enum ModifierKey {
     INIIIAL_MOD_PLUS_1_1 = 'initial_mod_plus_1_1',
     INIIIAL_MOD_PLUS_1_2 = 'initial_mod_plus_1_2',
     INIIIAL_MOD_MINUS_1 = 'initial_mod_minus_1',
-    // Ancestry Bonuses
+    // Ancestry bonuses
     CLANK_ANCESTRY_BONUS = 'clank_ancestry_bonus',
     GALAPA_ANCESTRY_MAJOR_BONUS = 'galapa_ancestry_major_bonus',
     GALAPA_ANCESTRY_SEVERE_BONUS = 'galapa_ancestry_severe_bonus',
     GIANT_ANCESTRY_BONUS = 'giant_ancestry_bonus',
     HUMAN_ANCESTRY_BONUS = 'human_ancestry_bonus',
     SIMIAH_ANCESTRY_BONUS = 'simiah_ancestry_bonus',
+    // Armor bonuses
+    GAMBESON_ARMOR = 'gambeson_armor',
+    CHAINMAIL_ARMOR = 'chainmail_armor',
+    FULL_PLATE_ARMOR_EVA = 'full_plate_armor_1',
+    FULL_PLATE_ARMOR_AGI = 'full_plate_armor_2',
+    BELLARMOI_FINE_ARMOR = 'bellarmoi_fine_armor',
+    SAVIOR_CHAIN_STATS = 'savior_chainmail_stats',
+    SAVIOR_CHAIN_EVA = 'savior_chainmail_evasion',
+    // Weapon Bonuses
+    HEAVY_WEAPON = 'heavy_weapon_evasion',
+    MASSIVE_WEAPON = 'massive_weapon_evasion',
+    CUMBERSOME_WEAPON = 'cumbersome_weapon_finesse',
+    BRAVE_WEAPON_EVA = 'brave_weapon_evasion',
+    BRAVE_WEAPON_SEV = 'brave_weapon_severe',
+    PROTECTIVE_WEAPON = 'protective_weapon_armor',
+    
+    // Subclass bonuses
+    STALWART_GUARDIAN_FOUND_MAJ = 'stalwart_guardian_foundation_major',
+    STALWART_GUARDIAN_FOUND_SEV = 'stalwart_guardian_foundation_severe',
+    STALWART_GUARDIAN_SPEC_MAJ = 'stalwart_guardian_spec_major',
+    STALWART_GUARDIAN_SPEC_SEV = 'stalwart_guardian_spec_severe',
+    STALWART_GUARDIAN_MAST_MAJ = 'stalwart_guardian_mastery_major',
+    STALWART_GUARDIAN_MAST_SEV = 'stalwart_guardian_mastery_severe',
+    VENGEANCE_GUARDIAN_FOUND_STRESS = 'vengeance_guardian_found_stress',
+}
+
+export enum Domains {
+    ARCANA = 'Arcana',
+    BLADE = 'Blade',
+    BONE = 'Bone',
+    CODEX = 'Codex',
+    GRACE = 'Grace',
+    MIDNIGHT = 'Midnight',
+    SAGE = 'Sage',
+    SPLENDOR = 'Splendor',
+    VALOR = 'Valor',
 }
 
 export const COOKIE_KEY = 'charData';

@@ -10,8 +10,8 @@ export interface CharacterDataState {
     // Mostly fixed values, may change on level up.
     classData: {
         level: number;
-        charClass: CharClass[]; // TODO Change this to an array of enums
-        subclass: string;
+        charClass: CharClass[];
+        subclass?: number;
     };
     // Temporary values that will change throughout a play session
     characterStateData: {

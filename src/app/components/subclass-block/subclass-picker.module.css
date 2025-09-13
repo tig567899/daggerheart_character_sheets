@@ -1,0 +1,52 @@
+.gallery {
+    overflow-x: auto;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 12px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+
+.card {
+    min-width: 40%;
+    height: 100%;
+    border: 1px darkgray solid;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.cardSelected {
+    border: 1px black solid;
+}
+
+.name {
+    font-size: 20px;
+    margin-bottom: 6px;
+}
+
+.background {
+    font-size: 14px;
+    font-style: italic;
+    margin-bottom: 12px;
+}
+
+.subTitle {
+    font-size: 18px;
+}
+
+.abilityBlock {
+    margin-top: 6px;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+.abilityName {
+    font-weight: bold;
+    display: inline;
+}
+
+.abilityDesc {
+    display: inline;
+}

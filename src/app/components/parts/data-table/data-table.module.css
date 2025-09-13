@@ -1,0 +1,46 @@
+.tableContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.tableListContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    overflow-y: auto;
+    margin-bottom: 12px;
+}
+
+.row {
+    cursor: pointer;
+    height: 24px;
+
+    &:hover {
+        background-color: lightgray;
+    }
+
+    td:first-child {
+        padding: 6px;
+    }
+}
+
+.table {
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.tableHeader {
+    th {
+        text-align: left;
+
+        &:first-child {
+            padding: 6px;
+        }
+    }
+}
+
+.featureCell {
+    padding: 6px 0;
+    width: 40%;
+}

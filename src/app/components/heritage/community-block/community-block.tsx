@@ -1,17 +1,17 @@
 import { useCallback, useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
 
-import { BlockTitle } from "@dh_sheets/app/components/block-title";
 import { CommunityInfo } from "@dh_sheets/app/components/heritage/community-block/community-info";
 import { CommunityModal } from "@dh_sheets/app/components/heritage/community-block/selector-modal/community-modal";
-import { ModalTrigger } from "@dh_sheets/app/components/modal-trigger";
+import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
+import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";
+import { ModalTrigger } from "@dh_sheets/app/components/parts/modal/modal-trigger";
 import { CommunitiesList } from "@dh_sheets/app/data/community-data";
 import { setCommunity } from "@dh_sheets/app/redux/character-data-store/actions";
 import { getCommunity } from "@dh_sheets/app/redux/character-data-store/selector";
 import { useAppDispatch } from "@dh_sheets/app/redux/hooks";
 import { Community } from "@dh_sheets/app/types";
 
-import parentStyles from "../../framed-block.module.css";
 import styles from "../heritage-block.module.css";
 
 export const CommunityBlock = () => {
@@ -57,7 +57,7 @@ export const CommunityBlock = () => {
     }, [modalTriggerRef]);
 
     return (
-        <div className={parentStyles.framedBlock}>
+        <FramedBlock>
             <BlockTitle title="Community" />
             {community ? (
                 <CommunityInfo community={community} onEdit={onEdit} />
@@ -72,6 +72,6 @@ export const CommunityBlock = () => {
                 onSelect={onSetCommunity}
                 keyPrefix={"community-select-modal"}
             />
-        </div>
+        </FramedBlock>
     );
 };

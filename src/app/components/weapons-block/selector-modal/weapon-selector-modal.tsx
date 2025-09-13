@@ -1,10 +1,13 @@
-import { WeaponData } from '@dh_sheets/app/types';
-import { useCallback, useState } from 'react';
-import classNames from 'classnames';
-import { Tier1PrimaryWeapons } from '@dh_sheets/app/data/weapon-data-store';
-import { WeaponTable } from '@dh_sheets/app/components/weapons-block/selector-modal/weapon-table';
+import classNames from "classnames";
+import { useCallback, useMemo, useState } from "react";
 
-import styles from '../../selector-modal.module.css';
+import {
+    BaseModal,
+    ColumnModal,
+} from "@dh_sheets/app/components/parts/modal/base-modal";
+import { WeaponTable } from "@dh_sheets/app/components/weapons-block/selector-modal/weapon-table";
+import { Tier1PrimaryWeapons } from "@dh_sheets/app/data/weapon-data-store";
+import { WeaponData } from "@dh_sheets/app/types";
 
 export interface WeaponProps {
     hide?: boolean;
@@ -13,37 +16,51 @@ export interface WeaponProps {
     onClose: () => void;
 }
 
-enum ModalColumn {
-    WEAPON_SELECTION,
-    CUSTOM_WEAPON,
-}
-
-export const WeaponSelectorModal = ({ hide, id, onSelect, onClose }: WeaponProps) => {
-    const [columnSelected, setColumnSelected] = useState<ModalColumn>(
-        ModalColumn.WEAPON_SELECTION
-    );
-
+export const WeaponSelectorModal = ({
+    id,
+    onSelect,
+    onClose,
+}: WeaponProps) => {
     // Use this later
     // const secondary = id === WeaponSlot.SECONDARY;
+    const onWeaponSelect = useCallback(
+        (weapon: WeaponData) => onSelect(id, weapon),
+        [id, onSelect],
+    );
 
-    const setWeaponListLayout = useCallback(() => {
-        setColumnSelected(ModalColumn.WEAPON_SELECTION);
-    }, []);
+    const renderWeaponLayout = useCallback(
+        () => (
+            <WeaponTable
+                onWeaponSelect={onWeaponSelect}
+                weapons={Tier1PrimaryWeapons}
+            />
+        ),
+        [],
+    );
+    const renderCustomWeaponLayout = () => <div>TBD</div>;
 
-    const setCustomWeaponLayout = useCallback(() => {
-        setColumnSelected(ModalColumn.CUSTOM_WEAPON);
-    }, []);
+    const columns = useMemo(
+        () => [
+            {
+                name: "Weapon List",
+                render: renderWeaponLayout,
+            },
+            {
+                name: "Custom Weapon",
+                render: renderCustomWeaponLayout,
+            },
+        ],
+        [],
+    );
 
-    const onWeaponSelect = useCallback((weapon: WeaponData) => onSelect(id, weapon), [id, onSelect])
-
-    const absorbClick = useCallback((e: React.MouseEvent) => e.stopPropagation(), [])
-
-    if (hide) {
-        return null;
-    }
-
-    const weaponListLayout = <WeaponTable onWeaponSelect={onWeaponSelect} weapons={Tier1PrimaryWeapons} />;
-    const customWeaponLayout = <div>TBD</div>;
+    return (
+        <ColumnModal
+            title="Select Weapon"
+            onClose={onClose}
+            columns={columns}
+        />
+    );
+    /*
     return (
         <div onClick={onClose} className={styles.modalContainer}>
             <div onClick={absorbClick} className={styles.modal}>
@@ -74,5 +91,5 @@ export const WeaponSelectorModal = ({ hide, id, onSelect, onClose }: WeaponProps
                     : customWeaponLayout}
             </div>
         </div>
-    );
+    );*/
 };

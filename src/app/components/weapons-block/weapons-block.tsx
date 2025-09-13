@@ -1,8 +1,8 @@
 import { useCallback, useRef } from "react";
 import { useSelector } from "react-redux";
 
-import { BlockTitle } from "@dh_sheets/app/components/block-title";
-import { ModalTrigger } from "@dh_sheets/app/components/modal-trigger";
+import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
+import { ModalTrigger } from "@dh_sheets/app/components/parts/modal/modal-trigger";
 import { CircleFillable } from "@dh_sheets/app/components/weapons-block/circle-fillable";
 import { WeaponSelectorModal } from "@dh_sheets/app/components/weapons-block/selector-modal/weapon-selector-modal";
 import { WeaponInfoLayout } from "@dh_sheets/app/components/weapons-block/weapon-info";
@@ -19,8 +19,8 @@ import { useAppDispatch } from "@dh_sheets/app/redux/hooks";
 import { WeaponData } from "@dh_sheets/app/types";
 import { getBaseProficiencyByLevel } from "@dh_sheets/app/util";
 
-import parentStyles from "../framed-block.module.css";
 import styles from "./weapons-block.module.css";
+import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";
 
 const MAX_PROFICIENCY = 6;
 export enum WeaponSlot {
@@ -90,7 +90,7 @@ export const WeaponsBlock = () => {
 
     // TODO: Add Hand Diagram
     return (
-        <div className={parentStyles.framedBlock}>
+        <FramedBlock>
             <BlockTitle title="Active Weapons" />
             <div className={styles.circleContainer}>
                 Proficiency {...resourceInputArray}
@@ -135,6 +135,6 @@ export const WeaponsBlock = () => {
                 keyPrefix="weapon-select-modal"
                 onSelect={onWeaponSelect}
             />
-        </div>
+        </FramedBlock>
     );
 };

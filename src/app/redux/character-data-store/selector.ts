@@ -1,11 +1,9 @@
 import { createSelector } from "@reduxjs/toolkit";
 
-import { ModifierField } from "@dh_sheets/app/constants";
+import { ModifierField, ModifierKey } from "@dh_sheets/app/constants";
 import { CharacterDataState } from "@dh_sheets/app/redux/character-data-store/types";
 import { Modifier } from "@dh_sheets/app/types";
-import {
-    getBaseProficiencyByLevel,
-} from "@dh_sheets/app/util";
+import { getBaseProficiencyByLevel } from "@dh_sheets/app/util";
 
 export const getCharacterData = (store: {
     characterData: CharacterDataState;
@@ -48,23 +46,34 @@ export const getModifierByField = createSelector(
     [
         getModifiers,
         getClassData,
-        (_store: { characterData: CharacterDataState }, field: ModifierField) =>
-            field,
+        (_store, field: ModifierField) => field,
+        (_store, field, modsToExclude?: ModifierKey[]) => modsToExclude,
     ],
     (
         modifiers: Record<string, Modifier>,
         { level },
         field: ModifierField,
+        modsToExclude?: ModifierKey[],
     ): number => {
+        const keyValueArray = Object.keys(modifiers)
+            .filter((key) => {
+                if (!modsToExclude) return true;
+                return modsToExclude.some((mod) => mod === key);
+            })
+            .map((key) => modifiers[key]);
         const getModifier = (localField: ModifierField): number => {
-            return Object.values(modifiers).reduce((acc, modifier) => {
+            return keyValueArray.reduce((acc, modifier) => {
                 if (modifier.field === localField) {
                     if (typeof modifier.bonus === "number") {
                         return acc + modifier.bonus;
                     }
 
                     if (modifier.bonus === ModifierField.PROFICIENCY) {
-                        return acc + getBaseProficiencyByLevel(level) + getModifier(modifier.bonus)
+                        return (
+                            acc +
+                            getBaseProficiencyByLevel(level) +
+                            getModifier(modifier.bonus)
+                        );
                     }
 
                     // This should be a one-layer deep loop, but if we run into an infinite, we'll deal with it.
@@ -73,27 +82,17 @@ export const getModifierByField = createSelector(
                 return acc;
             }, 0);
         };
-
-        if (field === ModifierField.MAJOR_THRESHOLD) {
-            console.log('here');
-        }
-
         return getModifier(field);
     },
 );
 
-export const getModifierByIds = createSelector(
+export const getModifierById = createSelector(
     [
         getModifiers,
-        (_store: { characterData: CharacterDataState }, ids: string[]) => ids,
+        (_store: { characterData: CharacterDataState }, id: string) => id,
     ],
-    (modifiers: Record<string, Modifier>, ids: string[]) => {
-        const toReturn = new Map<string, Modifier>();
-
-        ids.forEach((id) => {
-            toReturn.set(id, modifiers[id]);
-        });
-        return toReturn;
+    (modifiers: Record<string, Modifier>, id: string) => {
+        return modifiers[id];
     },
 );
 
@@ -104,3 +103,7 @@ export const getPrimaryAncestry = (store: {
 export const getCommunity = (store: {
     characterData: CharacterDataState;
 }): string | undefined => store.characterData.community;
+
+export const getSubclassIndex = (store: {
+    characterData: CharacterDataState;
+}): number | undefined => store.characterData.classData.subclass;
