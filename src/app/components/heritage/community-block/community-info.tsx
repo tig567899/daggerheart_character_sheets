@@ -35,7 +35,7 @@ export const CommunityInfo = ({ community, onEdit }: CommunityProps) => {
                     See {descriptionExpanded ? "less" : "more"}
                 </a>
             </div>
-            <div className={styles.infoDescription}>{community.rolePlayTips}</div>
+            <div className={styles.rolePlayDescription}>{community.rolePlayTips}</div>
             Community Feature
             <div>
                 <div

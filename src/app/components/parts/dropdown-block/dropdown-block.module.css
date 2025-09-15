@@ -1,0 +1,36 @@
+.container {
+    margin-bottom: 15px;
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding-left: 15px;
+    padding-bottom: 6px;
+}
+
+.dropdownParent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    min-width: fit-content;
+    min-height: 30px;
+    cursor: pointer;
+    margin-top: 12px;
+    margin-bottom: 3px;
+}
+
+.expandIndicator {
+    width: 32px;
+    height: 32px;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.1s linear;
+    transform: rotate(90deg);
+    margin-left: auto;
+}
+
+.expandIndicatorCollapsed {
+    transform: rotate(-90deg);
+    transition: transform 0.1s linear;
+}

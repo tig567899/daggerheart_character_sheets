@@ -1,11 +1,9 @@
-import classNames from "classnames";
 import { useCallback, useState } from "react";
 
 import { AncestryGallery } from "@dh_sheets/app/components/heritage/ancestry-block/selector-modal/ancestry-gallery";
+import { BaseModal } from "@dh_sheets/app/components/parts/modal/base-modal";
 import { AncestriesList } from "@dh_sheets/app/data/ancestry-data";
 import { Ancestry } from "@dh_sheets/app/types";
-
-import styles from "../../../selector-modal.module.css";
 
 export interface ModalProps {
     initialAncestryIndex?: number;
@@ -13,11 +11,13 @@ export interface ModalProps {
     onSelect: (ancestry: Ancestry) => void;
 }
 
-export const AncestryModal = ({initialAncestryIndex, onSelect, onClose }: ModalProps) => {
-    const [ancestryIndex, setAncestryIndex] = useState<number>(initialAncestryIndex ?? -1);
-    const absorbClick = useCallback(
-        (e: React.MouseEvent) => e.stopPropagation(),
-        [],
+export const AncestryModal = ({
+    initialAncestryIndex,
+    onSelect,
+    onClose,
+}: ModalProps) => {
+    const [ancestryIndex, setAncestryIndex] = useState<number>(
+        initialAncestryIndex ?? -1,
     );
 
     const onSubmit = useCallback(() => {
@@ -25,27 +25,17 @@ export const AncestryModal = ({initialAncestryIndex, onSelect, onClose }: ModalP
     }, [onSelect, ancestryIndex]);
 
     return (
-        <div onClick={onClose} className={styles.modalContainer}>
-            <div
-                onClick={absorbClick}
-                className={classNames(styles.modal, styles.short)}
-            >
-                <button className={styles.closeButton} onClick={onClose}>
-                    Close
-                </button>
-                <div className={styles.selectorTitle}>Set Ancestry</div>
-
-                <AncestryGallery
-                    updateSelection={setAncestryIndex}
-                    selectedIndex={ancestryIndex}
-                />
-
-                <div className={styles.actionButtons}>
-                    <button disabled={ancestryIndex < 0} onClick={onSubmit}>
-                        Submit
-                    </button>
-                </div>
-            </div>
-        </div>
+        <BaseModal
+            title="Set Ancestry"
+            disableSubmit={ancestryIndex < 0}
+            short
+            onSelect={onSubmit}
+            onClose={onClose}
+        >
+            <AncestryGallery
+                updateSelection={setAncestryIndex}
+                selectedIndex={ancestryIndex}
+            />
+        </BaseModal>
     );
 };

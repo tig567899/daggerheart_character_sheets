@@ -1,4 +1,4 @@
-import { LabeledDisplayBox } from "@dh_sheets/app/components/labeled-display-box";
+import { LabeledDisplayBox } from "@dh_sheets/app/components/parts/labeled-display-box/labeled-display-box";
 import { ArmorData } from "@dh_sheets/app/types";
 
 import styles from "./armor-block.module.css";
@@ -44,7 +44,7 @@ export const ArmorInfoLayout = ({ armor, onEdit, onRemove }: ArmorProps) => {
                                 key={`${armor.name}-display-feature-${index}`}
                                 className={styles.feature}
                             >
-                                <b>{feature.name}</b>: {feature.description}
+                                <b>{feature.name}</b>: {feature.description} {feature.modifiers ? '(Automatic)' : null}
                             </div>
                         );
                     })}

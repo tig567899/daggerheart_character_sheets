@@ -1,7 +1,8 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { BlockTitle } from "@dh_sheets/app/components/block-title";
+import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
+import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";
 import { WeaponSelectorModal } from "@dh_sheets/app/components/weapons-block/selector-modal/weapon-selector-modal";
 import { WeaponInfoLayout } from "@dh_sheets/app/components/weapons-block/weapon-info";
 import {
@@ -12,50 +13,55 @@ import { getEquipmentData } from "@dh_sheets/app/redux/character-data-store/sele
 import { useAppDispatch } from "@dh_sheets/app/redux/hooks";
 import { WeaponData } from "@dh_sheets/app/types";
 
-import parentStyles from "../framed-block.module.css";
 import weaponStyles from "../weapons-block/weapons-block.module.css";
+import { ModalTrigger } from "@dh_sheets/app/components/parts/modal/modal-trigger";
 
 export const InventoryBlock = () => {
-    const [modalKey, setModalKey] = useState<number>(Math.random());
-    const [selectingFor, setSelectingFor] = useState<number | null>(null);
-
+    const modalTriggerRef = useRef<any>(null);
+    
     const dispatch = useAppDispatch();
 
     const onOpenDialog = useCallback(
-        (index: number) => setSelectingFor(index),
-        [setSelectingFor],
+        (index: number) => modalTriggerRef.current?.openModalId(index),
+        [modalTriggerRef],
     );
-
-    const onModalClose = useCallback(() => {
-        setSelectingFor(null);
-        setModalKey(Math.random());
-    }, [setSelectingFor]);
 
     const onWeaponSelect = useCallback(
         (id: string, weapon?: WeaponData) => {
-            if (selectingFor === -1 && weapon) {
+            if (id === '-1' && weapon) {
                 dispatch(addInventoryWeapon(weapon));
-            } else if (selectingFor !== null) {
-                dispatch(setInventoryWeaponAt({ weapon, index: selectingFor }));
+            } else {
+                dispatch(setInventoryWeaponAt({ weapon, index: Number(id) }));
             }
-            setSelectingFor(null);
-            setModalKey(Math.random());
         },
-        [dispatch, selectingFor, setModalKey],
+        [dispatch],
     );
 
     const onWeaponClear = useCallback(
         (index: number) => {
             dispatch(setInventoryWeaponAt({ index }));
-            setModalKey(Math.random());
         },
-        [dispatch, setModalKey],
+        [dispatch],
     );
 
     const equipmentData = useSelector(getEquipmentData);
 
+    const renderModal = useCallback(
+        (onSelect: (...props: any) => void, onClose: () => void, modalId: string, key: string) => {
+            return (
+                <WeaponSelectorModal
+                    key={key}
+                    id={modalId}
+                    onSelect={onSelect}
+                    onClose={onClose}
+                />
+            );
+        },
+        [],
+    );
+
     return (
-        <div className={parentStyles.framedBlock}>
+        <FramedBlock>
             <BlockTitle title="Inventory" />
             <div className={weaponStyles.weaponInfoCategory}>Items</div>
             {equipmentData.inventoryItems.map((item) => (
@@ -81,13 +87,10 @@ export const InventoryBlock = () => {
                 Add inventory weapon
             </button>
 
-            <WeaponSelectorModal
-                key={`inventory-weapon-select-modal-${modalKey}`}
-                id={'inventory'}
-                hide={selectingFor === null}
-                onSelect={onWeaponSelect}
-                onClose={onModalClose}
-            />
-        </div>
+            <ModalTrigger ref={modalTriggerRef}
+                renderModal={renderModal}
+                keyPrefix="inventory-weapon-select-modal"
+                onSelect={onWeaponSelect}/>
+        </FramedBlock>
     );
 };

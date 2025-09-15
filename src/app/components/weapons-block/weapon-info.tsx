@@ -1,5 +1,5 @@
 import { WeaponData } from '@dh_sheets/app/types';
-import { LabeledDisplayBox } from '@dh_sheets/app/components/labeled-display-box';
+import { LabeledDisplayBox } from '@dh_sheets/app/components/parts/labeled-display-box/labeled-display-box';
 
 import styles from './weapons-block.module.css';
 

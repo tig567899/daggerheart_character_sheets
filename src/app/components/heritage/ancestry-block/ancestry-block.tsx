@@ -1,10 +1,11 @@
 import { useCallback, useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
 
-import { BlockTitle } from "@dh_sheets/app/components/block-title";
 import { AncestryInfo } from "@dh_sheets/app/components/heritage/ancestry-block/ancestry-info";
 import { AncestryModal } from "@dh_sheets/app/components/heritage/ancestry-block/selector-modal/ancestry-modal";
-import { ModalTrigger } from "@dh_sheets/app/components/modal-trigger";
+import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
+import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";
+import { ModalTrigger } from "@dh_sheets/app/components/parts/modal/modal-trigger";
 import { AncestriesList } from "@dh_sheets/app/data/ancestry-data";
 import {
     removeModifier,
@@ -15,7 +16,6 @@ import { getPrimaryAncestry } from "@dh_sheets/app/redux/character-data-store/se
 import { useAppDispatch } from "@dh_sheets/app/redux/hooks";
 import { Ancestry } from "@dh_sheets/app/types";
 
-import parentStyles from "../../framed-block.module.css";
 import styles from "../heritage-block.module.css";
 
 export const AncestryBlock = () => {
@@ -26,7 +26,7 @@ export const AncestryBlock = () => {
             (entry) => entry.name === ancestryName,
         );
 
-        return {ancestry: AncestriesList[index], index}
+        return { ancestry: AncestriesList[index], index };
     }, [ancestryName]);
     const dispatch = useAppDispatch();
 
@@ -77,7 +77,7 @@ export const AncestryBlock = () => {
     }, [modalTriggerRef]);
 
     return (
-        <div className={parentStyles.framedBlock}>
+        <FramedBlock>
             <BlockTitle title="Ancestry" />
             {ancestry ? (
                 <AncestryInfo ancestry={ancestry} onEdit={onEdit} />
@@ -90,8 +90,8 @@ export const AncestryBlock = () => {
                 ref={modalTriggerRef}
                 renderModal={renderModal}
                 onSelect={onSetAncestry}
-                keyPrefix={"ancestry-select-modal"}
+                keyPrefix="ancestry-select-modal"
             />
-        </div>
+        </FramedBlock>
     );
 };

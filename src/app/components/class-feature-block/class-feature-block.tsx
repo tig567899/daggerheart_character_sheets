@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 
 import { getBaseFeaturesByClass } from "@dh_sheets/app/charClassUtil";
-import { BlockTitle } from "@dh_sheets/app/components/block-title";
+import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
+import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";
 import { getClassData } from "@dh_sheets/app/redux/character-data-store/selector";
 
-import parentStyles from "../framed-block.module.css";
 import styles from "./class-feature-block.module.css";
 
 export const ClassFeatureBlock = () => {
@@ -13,9 +13,11 @@ export const ClassFeatureBlock = () => {
         getBaseFeaturesByClass(charClass),
     );
 
+    const title = featuresByClass.length ? 'Class Feature' : 'Class Features';
+
     return (
-        <div className={parentStyles.framedBlock}>
-            <BlockTitle title="Class Features" />
+        <FramedBlock>
+            <BlockTitle title={title} />
             {featuresByClass.map((featureList, index) => (
                 <div key={`feature-list-${index}`}>
                     {featuresByClass.length > 1 ? (
@@ -27,16 +29,18 @@ export const ClassFeatureBlock = () => {
                                 {feature.name}
                             </div>
                             <div className={styles.featureDescription}>
-                                {feature.description.map((description, descriptionIndex) => (
-                                    <div
-                                        key={`feature-description-part-${descriptionIndex}`}
-                                        className={
-                                            styles.featureDescriptionBlock
-                                        }
-                                    >
-                                        {description}
-                                    </div>
-                                ))}
+                                {feature.description.map(
+                                    (description, descriptionIndex) => (
+                                        <div
+                                            key={`feature-description-part-${descriptionIndex}`}
+                                            className={
+                                                styles.featureDescriptionBlock
+                                            }
+                                        >
+                                            {description}
+                                        </div>
+                                    ),
+                                )}
                             </div>
                             {feature.clarification ? (
                                 <div className={styles.featureClarification}>
@@ -47,6 +51,6 @@ export const ClassFeatureBlock = () => {
                     ))}
                 </div>
             ))}
-        </div>
+        </FramedBlock>
     );
 };

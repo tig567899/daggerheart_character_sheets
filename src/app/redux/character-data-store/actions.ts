@@ -59,3 +59,5 @@ export const setCommunity = createAction<string>('Set community');
 export const loadDataFromCookies = createAction<CharacterDataState>(
     "Load data from cookies",
 );
+
+export const setSubclassIndex = createAction<number>('Set subclass index');

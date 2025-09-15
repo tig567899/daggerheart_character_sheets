@@ -1,5 +1,6 @@
-import { CharClass } from "@dh_sheets/app/constants";
-import { Ability } from "@dh_sheets/app/types";
+import { CharClass, Domains } from "@dh_sheets/app/constants";
+import { BardSubclassData, DruidSubclassData, GuardianSubclassData } from "@dh_sheets/app/data/subclass-data";
+import { Ability, SubclassData } from "@dh_sheets/app/types";
 
 export function getBaseEvasionByClass(className: CharClass) {
     switch (className) {
@@ -68,6 +69,47 @@ export function getStartingItemsByClass(className: CharClass): string {
         case CharClass.WIZARD:
             return "A book you’re trying to translate or a tiny, harmless elemental pet";
     }
+}
+
+export function getDomainsByClass(className: CharClass): Domains[] {
+    switch (className) {
+        case CharClass.BARD:
+            return [Domains.CODEX, Domains.GRACE];
+        case CharClass.DRUID:
+            return [Domains.SAGE, Domains.ARCANA];
+        case CharClass.GUARDIAN:
+            return [Domains.VALOR, Domains.BLADE];
+        case CharClass.RANGER:
+            return [Domains.BONE, Domains.SAGE];
+        case CharClass.ROGUE:
+            return [Domains.MIDNIGHT, Domains.GRACE];
+        case CharClass.SERAPH:
+            return [Domains.SPLENDOR, Domains.VALOR];
+        case CharClass.SORCERER:
+            return [Domains.ARCANA, Domains.MIDNIGHT];
+        case CharClass.WARRIOR:
+            return [Domains.BLADE, Domains.BONE];
+        case CharClass.WIZARD:
+            return [Domains.CODEX, Domains.SPLENDOR];
+    }
+}
+
+export function getSubclassesByClass(className: CharClass): SubclassData[] {
+    switch(className) {
+        case CharClass.BARD:
+            return BardSubclassData;
+        case CharClass.DRUID:
+            return DruidSubclassData;
+        case CharClass.GUARDIAN:
+            return GuardianSubclassData;
+        case CharClass.RANGER:
+        case CharClass.ROGUE:
+        case CharClass.SERAPH:
+        case CharClass.SORCERER:
+        case CharClass.WARRIOR:
+        case CharClass.WIZARD:
+    }
+    return [];
 }
 
 export function getHopeFeatureByClass(className: CharClass): Ability {

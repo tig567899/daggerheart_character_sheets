@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@dh_sheets/*": ["./src/*"]
+      "@dh_sheets/*": ["./src/*"],
+      "@icons/*": ["./icons/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

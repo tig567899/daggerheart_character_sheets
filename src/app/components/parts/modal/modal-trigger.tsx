@@ -8,12 +8,12 @@ import {
 
 interface ModalTriggerProps extends React.PropsWithChildren {
     renderModal: (
-        onSelect: (...props: any) => void,
         onClose: () => void,
+        onSelect: (...props: any) => void,
         modalId: string,
         key: string,
     ) => ReactElement;
-    onSelect: (...props: any) => void;
+    onSelect?: (...props: any) => void;
     keyPrefix: string;
 }
 
@@ -38,7 +38,7 @@ export const ModalTrigger = forwardRef(
 
         const onModalSelect = useCallback(
             (...props: any) => {
-                onSelect(...props);
+                onSelect?.(...props);
                 setModalId(null);
             },
             [onSelect],

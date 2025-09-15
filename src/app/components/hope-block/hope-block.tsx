@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 
 import { getHopeFeatureByClass } from "@dh_sheets/app/charClassUtil";
-import { BlockTitle } from "@dh_sheets/app/components/block-title";
 import { HopeCounter } from "@dh_sheets/app/components/hope-block/hope-counter";
+import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
+import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";
 import { getClassData } from "@dh_sheets/app/redux/character-data-store/selector";
 
-import parentStyles from "../framed-block.module.css";
 import styles from "./hope-block.module.css";
 
 export const HopeBlock = () => {
@@ -14,7 +14,7 @@ export const HopeBlock = () => {
     const hopeFeature = getHopeFeatureByClass(charClass[0]);
 
     return (
-        <div className={parentStyles.framedBlock}>
+        <FramedBlock>
             <BlockTitle title="Hope" />
             <HopeCounter />
             <div className={styles.hopeFeatureContainer}>
@@ -25,6 +25,6 @@ export const HopeBlock = () => {
                     {hopeFeature.description}
                 </div>
             </div>
-        </div>
+        </FramedBlock>
     );
 };

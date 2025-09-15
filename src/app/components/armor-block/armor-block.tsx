@@ -3,14 +3,18 @@ import { useSelector } from "react-redux";
 
 import { ArmorInfoLayout } from "@dh_sheets/app/components/armor-block/armor-info";
 import { ArmorSelectorModal } from "@dh_sheets/app/components/armor-block/selector-modal/armor-selector-modal";
-import { BlockTitle } from "@dh_sheets/app/components/block-title";
-import { ModalTrigger } from "@dh_sheets/app/components/modal-trigger";
-import { setActiveArmor } from "@dh_sheets/app/redux/character-data-store/actions";
+import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
+import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";
+import { ModalTrigger } from "@dh_sheets/app/components/parts/modal/modal-trigger";
+import {
+    removeModifier,
+    setActiveArmor,
+    setModifierForField,
+} from "@dh_sheets/app/redux/character-data-store/actions";
 import { getEquipmentData } from "@dh_sheets/app/redux/character-data-store/selector";
 import { useAppDispatch } from "@dh_sheets/app/redux/hooks";
 import { ArmorData } from "@dh_sheets/app/types";
 
-import parentStyles from "../framed-block.module.css";
 import styles from "./armor-block.module.css";
 
 export const ArmorBlock = () => {
@@ -20,13 +24,34 @@ export const ArmorBlock = () => {
 
     const onArmorSelect = useCallback(
         (_id: string, selectedArmor?: ArmorData) => {
+            armor?.features.forEach((feature) =>
+                feature.modifiers?.forEach((modifier) => {
+                    dispatch(removeModifier(modifier.modifierKey));
+                }),
+            );
+            selectedArmor?.features.forEach((feature) =>
+                feature.modifiers?.forEach((modifier) => {
+                    dispatch(
+                        setModifierForField({
+                            modifierKey: modifier.modifierKey,
+                            modifier: modifier.bonus,
+                            modifierField: modifier.field,
+                        }),
+                    );
+                }),
+            );
             dispatch(setActiveArmor(selectedArmor));
         },
-        [dispatch],
+        [dispatch, armor],
     );
 
     const onRemoveArmor = useCallback(() => {
         dispatch(setActiveArmor());
+        armor?.features.forEach((feature) =>
+            feature.modifiers?.forEach((modifier) => {
+                dispatch(removeModifier(modifier.modifierKey));
+            }),
+        );
     }, [dispatch]);
 
     const renderModal = useCallback(
@@ -47,20 +72,21 @@ export const ArmorBlock = () => {
         [],
     );
 
+    const openModal = useCallback(() => {
+        modalTriggerRef.current?.openModalId();
+    }, [modalTriggerRef]);
+
     return (
-        <div className={parentStyles.framedBlock}>
+        <FramedBlock>
             <BlockTitle title="Active Armor" />
             {armor ? (
                 <ArmorInfoLayout
                     armor={armor}
-                    onEdit={modalTriggerRef.current?.openModalId}
+                    onEdit={openModal}
                     onRemove={onRemoveArmor}
                 />
             ) : (
-                <button
-                    onClick={modalTriggerRef.current?.openModalId}
-                    className={styles.addArmorButton}
-                >
+                <button onClick={openModal} className={styles.addArmorButton}>
                     Set active armor
                 </button>
             )}
@@ -70,6 +96,6 @@ export const ArmorBlock = () => {
                 onSelect={onArmorSelect}
                 keyPrefix={"armor-select-modal"}
             />
-        </div>
+        </FramedBlock>
     );
 };

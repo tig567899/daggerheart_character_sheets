@@ -7,8 +7,8 @@ import React, {
     useState,
 } from "react";
 
-import { ModifierBox } from "@dh_sheets/app/components/stat-row/allocator/modifier-box";
-import { ModifierDropTarget } from "@dh_sheets/app/components/stat-row/allocator/modifier-drop-target";
+import { ModifierBox } from "@dh_sheets/app/components/stat-block/allocator/modifier-box";
+import { ModifierDropTarget } from "@dh_sheets/app/components/stat-block/allocator/modifier-drop-target";
 import {
     AbilityName,
     ModifierField,
@@ -16,9 +16,10 @@ import {
     abilityToModifierFieldMap,
 } from "@dh_sheets/app/constants";
 import { setModifierForField } from "@dh_sheets/app/redux/character-data-store/actions";
-import { useAppDispatch } from "@dh_sheets/app/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@dh_sheets/app/redux/hooks";
 
 import styles from "./stat-allocator.module.css";
+import { useStatModifiers } from "@dh_sheets/app/components/stat-block/util";
 
 const abilityUsesArray = [
     ["Sprint", "Leap", "Maneuver"],

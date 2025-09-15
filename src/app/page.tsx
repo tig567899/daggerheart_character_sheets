@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useCookies } from "react-cookie";
 
 import { ArmorBlock } from "@dh_sheets/app/components/armor-block/armor-block";
 import { ClassFeatureBlock } from "@dh_sheets/app/components/class-feature-block/class-feature-block";
-import { LayoutColumn } from "@dh_sheets/app/components/column";
 import { ExperiencesBlock } from "@dh_sheets/app/components/experiences-block/experiences-block";
 import { GoldBlock } from "@dh_sheets/app/components/gold-block/gold-block";
 import { CharacterInfoHeader } from "@dh_sheets/app/components/header/character-info-header";
@@ -14,7 +13,9 @@ import { AncestryBlock } from "@dh_sheets/app/components/heritage/ancestry-block
 import { CommunityBlock } from "@dh_sheets/app/components/heritage/community-block/community-block";
 import { HopeBlock } from "@dh_sheets/app/components/hope-block/hope-block";
 import { InventoryBlock } from "@dh_sheets/app/components/inventory-block/inventory-block";
-import { CharacterStatRow } from "@dh_sheets/app/components/stat-row/character-stat-row";
+import { LayoutColumn } from "@dh_sheets/app/components/parts/framed-block/column";
+import { CharacterStatRow } from "@dh_sheets/app/components/stat-block/character-stat-row";
+import { SubclassBlock } from "@dh_sheets/app/components/subclass-block/subclass-block";
 import { WeaponsBlock } from "@dh_sheets/app/components/weapons-block/weapons-block";
 import { COOKIE_KEY } from "@dh_sheets/app/constants";
 import { loadDataFromCookies } from "@dh_sheets/app/redux/character-data-store/actions";
@@ -29,6 +30,7 @@ interface CookieValues {
 
 export default function Home() {
     const dispatch = useAppDispatch();
+    const [windowWidth, setWindowWidth] = useState<number>(0);
 
     const [cookies] = useCookies<"charData", CookieValues>([COOKIE_KEY]);
     useEffect(() => {
@@ -37,10 +39,19 @@ export default function Home() {
         }
         dispatch(loadDataFromCookies(cookies.charData));
     }, [cookies.charData, dispatch]);
-    return (
-        <div className={styles.pageLayout}>
-            <CharacterInfoHeader />
-            <CharacterStatRow />
+
+    const handleResize = useCallback(() => {
+        setWindowWidth(window.innerWidth);
+    }, []);
+
+    useEffect(() => {
+        window.addEventListener("resize", handleResize);
+        setWindowWidth(window.innerWidth);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    const fullSizeLayout = useMemo(
+        () => (
             <div className={styles.columnLayout}>
                 <LayoutColumn>
                     <HealthBlock />
@@ -48,6 +59,7 @@ export default function Home() {
                     <ExperiencesBlock />
                     <GoldBlock />
                     <ClassFeatureBlock />
+                    <SubclassBlock />
                 </LayoutColumn>
                 <LayoutColumn>
                     <WeaponsBlock />
@@ -57,6 +69,36 @@ export default function Home() {
                     <CommunityBlock />
                 </LayoutColumn>
             </div>
+        ),
+        [],
+    );
+
+    const limitedWidthLayout = useMemo(
+        () => (
+            <div className={styles.columnLayout}>
+                <LayoutColumn fullWidth>
+                    <HealthBlock />
+                    <HopeBlock />
+                    <ExperiencesBlock />
+                    <GoldBlock />
+                    <ClassFeatureBlock />
+                    <SubclassBlock />
+                    <WeaponsBlock />
+                    <ArmorBlock />
+                    <InventoryBlock />
+                    <AncestryBlock />
+                    <CommunityBlock />
+                </LayoutColumn>
+            </div>
+        ),
+        [],
+    );
+
+    return (
+        <div className={styles.pageLayout}>
+            <CharacterInfoHeader />
+            <CharacterStatRow />
+            {windowWidth > 600 ? fullSizeLayout : limitedWidthLayout}
         </div>
     );
 }

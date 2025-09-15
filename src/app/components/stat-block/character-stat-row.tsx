@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 
 import { getBaseEvasionByClass } from "@dh_sheets/app/charClassUtil";
-import { FixedFramedStat } from "@dh_sheets/app/components/framed-stat";
-import { StatsBlock } from "@dh_sheets/app/components/stat-row/stats-block";
+import { FixedFramedStat } from "@dh_sheets/app/components/parts/framed-stat/framed-stat";
+import { StatsBlock } from "@dh_sheets/app/components/stat-block/stats-block";
 import { ModifierField } from "@dh_sheets/app/constants";
 import {
     getClassData,
@@ -26,7 +26,10 @@ export const CharacterStatRow = () => {
 
     return (
         <div className={styles.container}>
-            <FixedFramedStat value={baseEvasion + evasionModifier} label="Evasion" />
+            <FixedFramedStat
+                value={baseEvasion + evasionModifier}
+                label="Evasion"
+            />
             <FixedFramedStat value={armorValue} label="Armor" />
             <StatsBlock />
         </div>

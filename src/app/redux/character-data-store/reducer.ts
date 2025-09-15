@@ -22,6 +22,7 @@ import {
     setModifierForField,
     setPrimaryWeapon,
     setSecondaryWeapon,
+    setSubclassIndex,
 } from "@dh_sheets/app/redux/character-data-store/actions";
 import { CharacterDataState } from "@dh_sheets/app/redux/character-data-store/types";
 
@@ -33,7 +34,6 @@ const initialState: CharacterDataState = {
     classData: {
         level: 1,
         charClass: [CharClass.BARD],
-        subclass: "",
     },
     characterStateData: {
         hp: 0,
@@ -100,6 +100,7 @@ export const characterData = createReducer(initialState, (builder) => {
                 classData: {
                     ...state.classData,
                     charClass: [action.payload, ...remainingClasses],
+                    subclass: undefined
                 },
             };
         })
@@ -286,6 +287,17 @@ export const characterData = createReducer(initialState, (builder) => {
             return {
                 ...state,
                 community: action.payload,
+            }
+        }).addCase(setSubclassIndex, (state, action) => {
+            if (action.payload === state.classData.subclass) {
+                return state;
+            }
+            return {
+                ...state,
+                classData: {
+                    ...state.classData,
+                    subclass: action.payload,
+                }
             }
         });
 });

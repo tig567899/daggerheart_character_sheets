@@ -1,5 +1,6 @@
-import { BlockTitle } from "@dh_sheets/app/components/block-title";
 import { FillableResource } from "@dh_sheets/app/components/health-block/fillable-resource";
+import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
+import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";
 import {
     getGoldBags,
     getGoldChests,
@@ -7,7 +8,6 @@ import {
 } from "@dh_sheets/app/redux/character-data-store/selector";
 import { useAppSelector } from "@dh_sheets/app/redux/hooks";
 
-import parentStyles from "../framed-block.module.css";
 import styles from "./gold-block.module.css";
 
 export const GoldBlock = () => {
@@ -17,7 +17,7 @@ export const GoldBlock = () => {
 
     // TODO: Replace the fillableresource with a custom icon
     return (
-        <div className={parentStyles.framedBlock}>
+        <FramedBlock>
             <BlockTitle title="Gold" />
             <div className={styles.goldRow}>
                 <FillableResource
@@ -32,6 +32,6 @@ export const GoldBlock = () => {
                     value={goldChests}
                 />
             </div>
-        </div>
+        </FramedBlock>
     );
 };
