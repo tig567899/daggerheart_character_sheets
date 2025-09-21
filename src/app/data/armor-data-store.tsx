@@ -63,7 +63,7 @@ export const Tier1Armors: ArmorData[] = [
                         bonus: -2,
                     },
                     {
-                        field: ModifierField.EVASION,
+                        field: ModifierField.AGILITY,
                         modifierKey: ModifierKey.FULL_PLATE_ARMOR_AGI,
                         bonus: -1,
                     },

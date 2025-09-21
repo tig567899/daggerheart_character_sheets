@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-import { getHopeFeatureByClass } from "@dh_sheets/app/charClassUtil";
+import { getHopeFeatureByClass } from "@dh_sheets/app/char-class-util";
 import { HopeCounter } from "@dh_sheets/app/components/hope-block/hope-counter";
 import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
 import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";

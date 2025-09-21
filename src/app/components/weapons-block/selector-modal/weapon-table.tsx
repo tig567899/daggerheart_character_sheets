@@ -1,9 +1,8 @@
 import { DataTable } from "@dh_sheets/app/components/parts/data-table/data-table";
 import { DataTableContainer } from "@dh_sheets/app/components/parts/data-table/data-table-container";
+import { DropdownBlock } from "@dh_sheets/app/components/parts/dropdown-block/dropdown-block";
 import { WeaponTier } from "@dh_sheets/app/data/weapon-data-store";
 import { WeaponData } from "@dh_sheets/app/types";
-
-import styles from "../../selector-modal.module.css";
 
 function weaponIdentifier(weapon: WeaponData) {
     return weapon.name;
@@ -54,37 +53,77 @@ const WeaponDisplayHandlers = [
 ];
 
 interface Props {
-    weapons: WeaponTier;
+    weapons: WeaponTier[];
     onWeaponSelect: (weapon: WeaponData) => void;
 }
 
 export const WeaponTable = ({ weapons, onWeaponSelect }: Props) => {
     return (
         <DataTableContainer>
-            <DataTable<WeaponData>
-                title="Physical Weapons"
-                data={weapons.physical}
-                getIdentifier={weaponIdentifier}
-                onSelect={onWeaponSelect}
-                dataHandlers={WeaponDisplayHandlers}
-            />
+            <DropdownBlock title={"Tier 1 (Level 1)"}>
+                <DataTable<WeaponData>
+                    title="Physical Weapons"
+                    data={weapons[0].physical}
+                    getIdentifier={weaponIdentifier}
+                    onSelect={onWeaponSelect}
+                    dataHandlers={WeaponDisplayHandlers}
+                />
+                <DataTable<WeaponData>
+                    title="Magical Weapons"
+                    data={weapons[0].magical}
+                    getIdentifier={weaponIdentifier}
+                    onSelect={onWeaponSelect}
+                    dataHandlers={WeaponDisplayHandlers}
+                />
+            </DropdownBlock>
+            <DropdownBlock title={"Tier 2 (Levels 2 - 4)"}>
+                <DataTable<WeaponData>
+                    title="Physical Weapons"
+                    data={weapons[1].physical}
+                    getIdentifier={weaponIdentifier}
+                    onSelect={onWeaponSelect}
+                    dataHandlers={WeaponDisplayHandlers}
+                />
+                <DataTable<WeaponData>
+                    title="Magical Weapons"
+                    data={weapons[1].magical}
+                    getIdentifier={weaponIdentifier}
+                    onSelect={onWeaponSelect}
+                    dataHandlers={WeaponDisplayHandlers}
+                />
+            </DropdownBlock>
+            <DropdownBlock title={"Tier 3 (Levels 5 - 7)"}>
+                <DataTable<WeaponData>
+                    title="Physical Weapons"
+                    data={weapons[2].physical}
+                    getIdentifier={weaponIdentifier}
+                    onSelect={onWeaponSelect}
+                    dataHandlers={WeaponDisplayHandlers}
+                />
+                <DataTable<WeaponData>
+                    title="Magical Weapons"
+                    data={weapons[2].magical}
+                    getIdentifier={weaponIdentifier}
+                    onSelect={onWeaponSelect}
+                    dataHandlers={WeaponDisplayHandlers}
+                />
+            </DropdownBlock>
+            <DropdownBlock title={"Tier 4 (Levels 8 - 10)"}>
+                <DataTable<WeaponData>
+                    title="Physical Weapons"
+                    data={weapons[3].physical}
+                    getIdentifier={weaponIdentifier}
+                    onSelect={onWeaponSelect}
+                    dataHandlers={WeaponDisplayHandlers}
+                />
+                <DataTable<WeaponData>
+                    title="Magical Weapons"
+                    data={weapons[3].magical}
+                    getIdentifier={weaponIdentifier}
+                    onSelect={onWeaponSelect}
+                    dataHandlers={WeaponDisplayHandlers}
+                />
+            </DropdownBlock>
         </DataTableContainer>
     );
-    /*
-    return (
-        <div className={styles.tableListContainer}>
-            <WeaponList
-                title="Physical Weapons"
-                weapons={weapons.physical}
-                onWeaponSelect={onWeaponSelect}
-            />
-            <WeaponList
-                title="Magic Weapons"
-                subtitle="All magic weapons require a Spellcast trait"
-                weapons={weapons.magical}
-                onWeaponSelect={onWeaponSelect}
-            />
-        </div>
-    );
-    */
 };

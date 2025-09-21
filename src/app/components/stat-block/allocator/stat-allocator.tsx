@@ -14,21 +14,12 @@ import {
     ModifierField,
     ModifierKey,
     abilityToModifierFieldMap,
+    abilityUsesArray,
 } from "@dh_sheets/app/constants";
 import { setModifierForField } from "@dh_sheets/app/redux/character-data-store/actions";
-import { useAppDispatch, useAppSelector } from "@dh_sheets/app/redux/hooks";
+import { useAppDispatch } from "@dh_sheets/app/redux/hooks";
 
 import styles from "./stat-allocator.module.css";
-import { useStatModifiers } from "@dh_sheets/app/components/stat-block/util";
-
-const abilityUsesArray = [
-    ["Sprint", "Leap", "Maneuver"],
-    ["Lift", "Smash", "Grapple"],
-    ["Control", "Hide", "Tinker"],
-    ["Perceive", "Sense", "Navigate"],
-    ["Charm", "Perform", "Deceive"],
-    ["Recall", "Analyze", "Comprehend"],
-];
 
 const modifierKeys = [
     // Initial stat modifications

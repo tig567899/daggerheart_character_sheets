@@ -1,10 +1,9 @@
-import classNames from "classnames";
 import { useCallback } from "react";
 import { useSelector } from "react-redux";
 
-import { getBaseHpByClass } from "@dh_sheets/app/charClassUtil";
+import { getBaseHpByClass } from "@dh_sheets/app/char-class-util";
 import { ArmorThresholds } from "@dh_sheets/app/components/health-block/armor-thresholds";
-import { FillableResource } from "@dh_sheets/app/components/health-block/fillable-resource";
+import { FillableResource } from "@dh_sheets/app/components/parts/fillable-resource/fillable-resource";
 import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
 import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";
 import { ModifierField } from "@dh_sheets/app/constants";

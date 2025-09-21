@@ -10,4 +10,18 @@
 
 .levelBlock {
     margin-left: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.levelButtons {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.levelButton { 
+    width: 100%;
+    margin-bottom: 5px;
 }

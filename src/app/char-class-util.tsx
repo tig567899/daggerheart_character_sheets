@@ -1,5 +1,5 @@
 import { CharClass, Domains } from "@dh_sheets/app/constants";
-import { BardSubclassData, DruidSubclassData, GuardianSubclassData } from "@dh_sheets/app/data/subclass-data";
+import { BardSubclassData, DruidSubclassData, GuardianSubclassData, RangerSubclassData, RogueSubclassData, SeraphSubclassData, SorcererSubclassData, WarriorSubclassData, WizardSubclassData } from "@dh_sheets/app/data/subclass-data";
 import { Ability, SubclassData } from "@dh_sheets/app/types";
 
 export function getBaseEvasionByClass(className: CharClass) {
@@ -103,13 +103,18 @@ export function getSubclassesByClass(className: CharClass): SubclassData[] {
         case CharClass.GUARDIAN:
             return GuardianSubclassData;
         case CharClass.RANGER:
+            return RangerSubclassData;
         case CharClass.ROGUE:
+            return RogueSubclassData;
         case CharClass.SERAPH:
+            return SeraphSubclassData;
         case CharClass.SORCERER:
+            return SorcererSubclassData;
         case CharClass.WARRIOR:
+            return WarriorSubclassData;
         case CharClass.WIZARD:
+            return WizardSubclassData;
     }
-    return [];
 }
 
 export function getHopeFeatureByClass(className: CharClass): Ability {

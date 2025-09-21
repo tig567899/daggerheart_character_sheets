@@ -8,6 +8,8 @@ export interface FramedStatProps {
     label?: string;
     small?: boolean;
     usePlus?: boolean;
+    displayLabelAbove?: boolean;
+    subText?: string;
     onChange?: (name: string, value: number) => void;
 }
 
@@ -15,10 +17,13 @@ export const FixedFramedStat = ({
     usePlus,
     value,
     label,
+    displayLabelAbove,
+    subText,
     small,
 }: FramedStatProps) => {
     return (
         <div className={styles.framedStatContainer}>
+            {displayLabelAbove && label}
             <div
                 className={classNames(styles.statDisplay, {
                     [styles.displaySmall]: small,
@@ -27,8 +32,9 @@ export const FixedFramedStat = ({
                 {`${
                     usePlus && typeof value === "number" && value > 0 ? "+" : ""
                 }${value}`}
-            </div>{" "}
-            {label}
+            </div>
+            {!displayLabelAbove && label}
+            <div className={styles.subText}>{subText}</div>
         </div>
     );
 };

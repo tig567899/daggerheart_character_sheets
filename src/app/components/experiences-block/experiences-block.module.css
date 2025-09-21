@@ -8,3 +8,7 @@
     width: 100%;
     flex: 1 0;
 }
+
+.clearButton {
+    margin-left: 6px;
+}

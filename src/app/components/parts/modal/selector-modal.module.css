@@ -11,6 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    visibility: visible;
 }
 
 .modal {
@@ -71,6 +72,12 @@
 /* TODO: Possibly add support for multiple buttons */
 .actionButtons {
     position: absolute;
-    bottom: 5px;
-    right: 6px;
+    bottom: 12px;
+    right: 12px;
+}
+
+.triggerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

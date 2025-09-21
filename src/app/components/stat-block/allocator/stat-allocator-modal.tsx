@@ -1,10 +1,7 @@
-import classNames from "classnames";
 import { useCallback, useRef, useState } from "react";
 
 import { BaseModal } from "@dh_sheets/app/components/parts/modal/base-modal";
 import { StatAllocator } from "@dh_sheets/app/components/stat-block/allocator/stat-allocator";
-
-import styles from "../../selector-modal.module.css";
 
 export const INITIAL_MOD_PLUS_2 = "initial_mod_plus_2";
 export const INIIAL_MOD_PLUS_1_1 = "initial_mod_plus_1_1";

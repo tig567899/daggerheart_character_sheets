@@ -23,6 +23,11 @@
     td:first-child {
         padding: 6px;
     }
+
+    td:last-child {
+        padding-right: 12px;
+        padding-left: 6px;
+    }
 }
 
 .table {
@@ -36,6 +41,11 @@
 
         &:first-child {
             padding: 6px;
+        }
+
+        &:last-child {
+            padding-right: 6px;
+            padding-left: 6px;
         }
     }
 }

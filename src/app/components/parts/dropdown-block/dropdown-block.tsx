@@ -22,8 +22,6 @@ export const DropdownBlock = ({
         [collapsed],
     );
 
-    const image = chevronRight;
-
     return (
         <div className={styles.container}>
             <div className={styles.dropdownParent} onClick={onToggleCollapsed}>

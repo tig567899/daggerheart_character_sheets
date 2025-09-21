@@ -1,6 +1,8 @@
 import classNames from "classnames";
+import { useContext } from "react";
 
-import { getSubclassesByClass } from "@dh_sheets/app/charClassUtil";
+import { getSubclassesByClass } from "@dh_sheets/app/char-class-util";
+import { PageContext } from "@dh_sheets/app/context";
 import { getClassData } from "@dh_sheets/app/redux/character-data-store/selector";
 import { useAppSelector } from "@dh_sheets/app/redux/hooks";
 
@@ -8,6 +10,7 @@ import styles from "./subclass-picker.module.css";
 
 interface PickerProps {
     updateSelection: (index: number) => void;
+    classIndex: number;
     selectedIndex?: number;
 }
 
@@ -15,12 +18,19 @@ const masteryLevels = ["Foundation", "Specialization", "Mastery"];
 
 export const SubclassPicker = ({
     updateSelection,
+    classIndex,
     selectedIndex,
 }: PickerProps) => {
+    const pageContext = useContext(PageContext);
+
     const { charClass } = useAppSelector(getClassData);
-    const subclasses = getSubclassesByClass(charClass[0]);
+    const subclasses = getSubclassesByClass(charClass[classIndex]);
     return (
-        <ul className={styles.gallery}>
+        <ul
+            className={classNames(styles.gallery, {
+                [styles.galleryNarrow]: pageContext.limitedWidth,
+            })}
+        >
             {subclasses.map((subclass, index) => {
                 return (
                     <div

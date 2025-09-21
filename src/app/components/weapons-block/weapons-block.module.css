@@ -24,11 +24,13 @@
 
 .addWeaponButton {
     margin-top: 6px;
+    width: 100%;
 }
 
 .weaponInfoLayout {
     display: flex;
     flex-direction: column;
+    margin-top: 12px;
 }
 
 .weaponInfoCategory {
@@ -42,14 +44,17 @@
 
 .changeWeapon {
     margin-left: 6px;
+    height: 100%;
 }
 
 .removeWeapon {
     margin-left: auto;
+    height: 100%;
 }
 
 .weaponInfoDisplay {
     display: flex;
+    margin: 0 3px;
 }
 
 .featureBox {

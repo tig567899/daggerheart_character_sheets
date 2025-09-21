@@ -7,6 +7,13 @@ export function getBaseProficiencyByLevel(level: number): number {
     return 4;
 }
 
+export function getTierByLevel(level: number): number {
+    if (level === 1) return 1;
+    if (level < 5) return 2;
+    if (level < 8) return 3;
+    return 4;
+}
+
 export function isExperienceModifierField(field: ModifierField): boolean {
     return (
         field === ModifierField.EXPERIENCE_UNSELECTED ||
@@ -15,16 +22,5 @@ export function isExperienceModifierField(field: ModifierField): boolean {
         field === ModifierField.EXPERIENCE_3 ||
         field === ModifierField.EXPERIENCE_4 ||
         field === ModifierField.EXPERIENCE_5
-    );
-}
-
-export function shouldCacheModifier(field: ModifierField): boolean {
-    return (
-        field === ModifierField.AGILITY ||
-        field === ModifierField.STRENGTH ||
-        field === ModifierField.FINESSE ||
-        field === ModifierField.INSTINCT ||
-        field === ModifierField.PRESENCE ||
-        field === ModifierField.KNOWLEDGE
     );
 }

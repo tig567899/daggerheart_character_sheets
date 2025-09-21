@@ -1,3 +1,5 @@
+import { ReactElement } from "react";
+
 import { LabeledDisplayBox } from "@dh_sheets/app/components/parts/labeled-display-box/labeled-display-box";
 import { ArmorData } from "@dh_sheets/app/types";
 
@@ -5,20 +7,22 @@ import styles from "./armor-block.module.css";
 
 export interface ArmorProps {
     armor: ArmorData;
-    onEdit: () => void;
+    changeButton: ReactElement;
     onRemove: () => void;
 }
 
-export const ArmorInfoLayout = ({ armor, onEdit, onRemove }: ArmorProps) => {
+export const ArmorInfoLayout = ({
+    armor,
+    changeButton,
+    onRemove,
+}: ArmorProps) => {
     return (
         <div className={styles.infoLayout}>
             <div className={styles.infoCategory}>
                 <button onClick={onRemove} className={styles.removeArmor}>
                     Remove
                 </button>
-                <button onClick={onEdit} className={styles.changeArmor}>
-                    Change
-                </button>
+                <div className={styles.changeArmor}>{changeButton}</div>
             </div>
             <div className={styles.infoDisplay}>
                 <LabeledDisplayBox label="Name" contents={armor.name} />
@@ -44,7 +48,7 @@ export const ArmorInfoLayout = ({ armor, onEdit, onRemove }: ArmorProps) => {
                                 key={`${armor.name}-display-feature-${index}`}
                                 className={styles.feature}
                             >
-                                <b>{feature.name}</b>: {feature.description} {feature.modifiers ? '(Automatic)' : null}
+                                <b>{feature.name}</b>: {feature.description}
                             </div>
                         );
                     })}

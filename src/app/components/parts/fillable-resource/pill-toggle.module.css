@@ -1,0 +1,52 @@
+.pill {
+    border-radius: 10px;
+    width: 30px;
+    height: 15px;
+    border: 1px solid black;
+    margin-left: 5px;
+    cursor: pointer;
+    display: flex;
+}
+
+.filledPill {
+    background-color: black;
+}
+
+.resourceContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.disabled {
+    border-color: grey;
+}
+
+.grid {
+    width: 120px;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.pillDisplay {
+    display: flex;
+    align-items: center;
+    margin-right: 6px;
+}
+
+.hasGrid {
+    margin-top:  unset;
+}
+
+.crossOut {
+    height: 1px;
+    width: 100%;
+    background-color: grey;
+    align-self: center;
+    transform: rotate(30deg);
+    cursor: auto;
+}
+
+.label {
+    min-width: 65px;
+}

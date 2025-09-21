@@ -4,8 +4,10 @@ import {
     AbilityName,
     Dice,
     DistanceRange,
+    LevelUpKey,
     ModifierField,
     ModifierKey,
+    SecondarySelectionValue,
     WeaponBurden,
 } from "@dh_sheets/app/constants";
 
@@ -36,6 +38,11 @@ export interface ArmorData {
     features: EquipmentFeature[];
 }
 
+export interface ItemData {
+    name: string;
+    description?: string;
+}
+
 export interface Ability {
     name: string;
     description: (string | ReactElement | JSX.Element)[];
@@ -45,7 +52,7 @@ export interface Ability {
 
 export interface EquipmentFeature {
     name: string;
-    description: string;
+    description: string | JSX.Element;
     modifiers?: Modifier[];
 }
 
@@ -71,4 +78,26 @@ export interface SubclassData {
     masteryFeatures: Ability[];
 }
 
-export { WeaponBurden };
+export interface LevelUpChoice {
+    levelUpKey: LevelUpKey;
+    description: string;
+    modifiers?: Modifier[];
+    disables?: LevelUpKey[];
+}
+
+export interface LevelUpOption {
+    levelUpKey: LevelUpKey;
+    description: string;
+    maxNumber: number;
+    requiresTwo?: boolean;
+    secondarySelection?: SecondarySelectionValue;
+    disables?: LevelUpKey[];
+}
+
+export interface Experiences {
+    exp1: string;
+    exp2: string;
+    exp3: string;
+    exp4: string;
+    exp5: string;
+}

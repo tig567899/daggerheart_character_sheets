@@ -2,10 +2,11 @@ import { createReducer } from "@reduxjs/toolkit";
 
 import { CharClass } from "@dh_sheets/app/constants";
 import {
-    addExperience,
     addInventoryItem,
     addInventoryWeapon,
+    addLevelUpChoices,
     loadDataFromCookies,
+    pruneLevelChoicesToLevel,
     removeModifier,
     setActiveArmor,
     setAncestry,
@@ -13,14 +14,20 @@ import {
     setCharacterName,
     setCharacterPronouns,
     setCommunity,
+    setCurrentArmor,
     setCurrentHp,
     setCurrentStress,
     setExperience,
+    setGoldBags,
+    setGoldChests,
+    setGoldHandfuls,
     setHope,
     setInventoryItemAt,
     setInventoryWeaponAt,
+    setLevel,
     setModifierForField,
     setPrimaryWeapon,
+    setSecondarySubclassIndex,
     setSecondaryWeapon,
     setSubclassIndex,
 } from "@dh_sheets/app/redux/character-data-store/actions";
@@ -54,14 +61,24 @@ const initialState: CharacterDataState = {
         inventoryItems: [],
     },
     features: [],
-    experiences: ["", ""],
+    experiences: {
+        exp1: "",
+        exp2: "",
+        exp3: "",
+        exp4: "",
+        exp5: "",
+    },
     modifiers: {},
+    levelUpChoices: [],
 };
 
 export const characterData = createReducer(initialState, (builder) => {
     builder
         .addCase(loadDataFromCookies, (state, action) => {
-            return action.payload;
+            return {
+                ...state,
+                ...action.payload,
+            };
         })
         .addCase(setCharacterName, (state, action) => {
             if (action.payload === state.headerData.name) {
@@ -100,7 +117,7 @@ export const characterData = createReducer(initialState, (builder) => {
                 classData: {
                     ...state.classData,
                     charClass: [action.payload, ...remainingClasses],
-                    subclass: undefined
+                    subclass: undefined,
                 },
             };
         })
@@ -128,26 +145,44 @@ export const characterData = createReducer(initialState, (builder) => {
                 },
             };
         })
-        .addCase(setExperience, (state, action) => {
-            if (action.payload.index > state.experiences.length) {
-                return;
+        .addCase(setCurrentArmor, (state, action) => {
+            if (action.payload === state.characterStateData.armorConsumed) {
+                return state;
             }
-
-            const experiencesCopy = [
-                ...state.experiences.slice(0, action.payload.index),
-                action.payload.experience,
-                ...state.experiences.slice(action.payload.index + 1),
-            ];
-
             return {
                 ...state,
-                experiences: experiencesCopy,
+                characterStateData: {
+                    ...state.characterStateData,
+                    armorConsumed: action.payload,
+                },
             };
         })
-        .addCase(addExperience, (state, action) => {
+        .addCase(setExperience, (state, action) => {
+            const existingExp = { ...state.experiences };
+
+            switch (action.payload.index) {
+                case 0:
+                    existingExp.exp1 = action.payload.experience;
+                    break;
+                case 1:
+                    existingExp.exp2 = action.payload.experience;
+                    break;
+                case 2:
+                    existingExp.exp3 = action.payload.experience;
+                    break;
+                case 3:
+                    existingExp.exp4 = action.payload.experience;
+                    break;
+                case 4:
+                    existingExp.exp5 = action.payload.experience;
+                    break;
+                default:
+                    return;
+            }
+
             return {
                 ...state,
-                experiences: [...state.experiences, action.payload],
+                experiences: existingExp,
             };
         })
         .addCase(setHope, (state, action) => {
@@ -280,15 +315,17 @@ export const characterData = createReducer(initialState, (builder) => {
                 ...state,
                 ancestry: action.payload,
             };
-        }).addCase(setCommunity, (state, action) => {
+        })
+        .addCase(setCommunity, (state, action) => {
             if (action.payload === state.community) {
                 return state;
             }
             return {
                 ...state,
                 community: action.payload,
-            }
-        }).addCase(setSubclassIndex, (state, action) => {
+            };
+        })
+        .addCase(setSubclassIndex, (state, action) => {
             if (action.payload === state.classData.subclass) {
                 return state;
             }
@@ -297,7 +334,73 @@ export const characterData = createReducer(initialState, (builder) => {
                 classData: {
                     ...state.classData,
                     subclass: action.payload,
-                }
+                },
+            };
+        })
+        .addCase(setSecondarySubclassIndex, (state, action) => {
+            if (action.payload === state.classData.secondSubclass) {
+                return state;
             }
+            return {
+                ...state,
+                classData: {
+                    ...state.classData,
+                    secondSubclass: action.payload,
+                },
+            };
+        })
+        .addCase(setGoldHandfuls, (state, action) => {
+            return {
+                ...state,
+                characterStateData: {
+                    ...state.characterStateData,
+                    goldHandfuls: action.payload,
+                },
+            };
+        })
+        .addCase(setGoldBags, (state, action) => {
+            return {
+                ...state,
+                characterStateData: {
+                    ...state.characterStateData,
+                    goldBags: action.payload,
+                },
+            };
+        })
+        .addCase(setGoldChests, (state, action) => {
+            return {
+                ...state,
+                characterStateData: {
+                    ...state.characterStateData,
+                    goldChests: action.payload,
+                },
+            };
+        })
+        .addCase(setLevel, (state, action) => {
+            return {
+                ...state,
+                classData: {
+                    ...state.classData,
+                    level: action.payload,
+                },
+            };
+        })
+        .addCase(addLevelUpChoices, (state, action) => {
+            return {
+                ...state,
+                levelUpChoices: [
+                    ...state.levelUpChoices,
+                    action.payload.upgrades,
+                ],
+            };
+        })
+        .addCase(pruneLevelChoicesToLevel, (state, action) => {
+            return {
+                ...state,
+                levelUpChoices: state.levelUpChoices.slice(
+                    0,
+                    action.payload - 1,
+                ),
+            };
         });
 });

@@ -1,0 +1,105 @@
+.addWeaponButton {
+    margin-top: 6px;
+    width: 100%;
+}
+
+.weaponInfoLayout {
+    display: flex;
+    flex-direction: column;
+}
+
+.weaponInfoCategory {
+    align-self: flex-start;
+    font-size: 18px;
+    margin-bottom: 6px;
+    display: flex;
+    width: 100%;
+    margin-top: 6px;
+}
+
+.changeWeapon {
+    margin-left: 6px;
+    height: 100%;
+}
+
+.removeWeapon {
+    margin-left: auto;
+    height: 100%;
+}
+
+.weaponInfoDisplay {
+    display: flex;
+}
+
+.featureBox {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 6px;
+}
+
+.weaponFeature {
+    font-size: 14px;
+}
+
+.divider {
+    width: 1px;
+    height: 15px;
+    margin: 0 3px;
+    background-color: gray;
+}
+
+.inputContainer {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+
+    .itemName {
+        padding: 6px;
+        border-radius: 5px;
+    }
+
+    .itemDescription {
+        resize: none;
+        font-family: sans-serif;
+        margin-top: 12px;
+        height: 100px;
+        border-radius: 5px;
+        padding: 6px;
+    }
+}
+
+.itemList {
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.horizontalDivider {
+    height: 1px;
+    margin: 10px 0;
+    background-color: lightgray;
+}
+
+.itemDetailContainer {
+    padding: 0 3px;
+
+    &:hover {
+        .itemChangeButtons {
+            visibility: visible;
+        }
+    }
+}
+
+.itemNameDescription {
+    font-weight: bold;
+    margin-bottom: 3px;
+    display: flex;
+    width: 100%;
+
+    .itemChangeButtons {
+        visibility: hidden;
+        margin-left: auto;
+        display: flex;
+        flex-direction: row;
+    }
+}

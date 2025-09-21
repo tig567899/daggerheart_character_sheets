@@ -1,13 +1,16 @@
-import { useCallback, useRef } from "react";
+import { useCallback } from "react";
 import { useSelector } from "react-redux";
 
 import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
+import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";
 import { ModalTrigger } from "@dh_sheets/app/components/parts/modal/modal-trigger";
 import { CircleFillable } from "@dh_sheets/app/components/weapons-block/circle-fillable";
 import { WeaponSelectorModal } from "@dh_sheets/app/components/weapons-block/selector-modal/weapon-selector-modal";
 import { WeaponInfoLayout } from "@dh_sheets/app/components/weapons-block/weapon-info";
 import { CharClass, WeaponBurden } from "@dh_sheets/app/constants";
 import {
+    removeModifier,
+    setModifierForField,
     setPrimaryWeapon,
     setSecondaryWeapon,
 } from "@dh_sheets/app/redux/character-data-store/actions";
@@ -20,7 +23,6 @@ import { WeaponData } from "@dh_sheets/app/types";
 import { getBaseProficiencyByLevel } from "@dh_sheets/app/util";
 
 import styles from "./weapons-block.module.css";
-import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";
 
 const MAX_PROFICIENCY = 6;
 export enum WeaponSlot {
@@ -29,26 +31,46 @@ export enum WeaponSlot {
 }
 
 export const WeaponsBlock = () => {
-    const modalTriggerRef = useRef<any>(null);
     const classData = useSelector(getClassData);
     const { primaryWeapon, secondaryWeapon } = useSelector(getEquipmentData);
     const dispatch = useAppDispatch();
 
     const resourceInputArray = [];
 
-    const onPrimaryWeaponSelectDialogOpen = useCallback(
-        () => modalTriggerRef.current?.openModalId(WeaponSlot.PRIMARY),
-        [modalTriggerRef],
+    const removeWeaponFeatures = useCallback(
+        (weapon: WeaponData) => {
+            weapon.features.forEach((feature) =>
+                feature.modifiers?.forEach((modifier) => {
+                    dispatch(removeModifier(modifier.modifierKey));
+                }),
+            );
+        },
+        [dispatch],
     );
-    const onSecondaryWeaponSelectDialogOpen = useCallback(
-        () => modalTriggerRef.current?.openModalId(WeaponSlot.SECONDARY),
-        [modalTriggerRef],
+
+    const addWeaponFeatures = useCallback(
+        (weapon: WeaponData) => {
+            weapon.features.forEach((feature) =>
+                feature.modifiers?.forEach((modifier) => {
+                    dispatch(
+                        setModifierForField({
+                            modifierKey: modifier.modifierKey,
+                            modifier: modifier.bonus,
+                            modifierField: modifier.field,
+                        }),
+                    );
+                }),
+            );
+        },
+        [dispatch],
     );
 
     const onWeaponSelect = useCallback(
-        ( id: string, weapon?: WeaponData) => {
+        (id: string, weapon: WeaponData) => {
             switch (id) {
                 case WeaponSlot.PRIMARY:
+                    if (primaryWeapon) removeWeaponFeatures(primaryWeapon);
+                    addWeaponFeatures(weapon);
                     dispatch(setPrimaryWeapon(weapon));
                     break;
                 case WeaponSlot.SECONDARY:
@@ -56,19 +78,31 @@ export const WeaponsBlock = () => {
                     break;
             }
         },
-        [dispatch],
+        [
+            dispatch,
+            primaryWeapon,
+            addWeaponFeatures,
+            removeWeaponFeatures,
+        ],
     );
 
     const onRemovePrimaryWeapon = useCallback(() => {
+        if (primaryWeapon) removeWeaponFeatures(primaryWeapon);
+
         dispatch(setPrimaryWeapon());
-    }, [dispatch]);
+    }, [dispatch, primaryWeapon, removeWeaponFeatures]);
 
     const onRemoveSecondaryWeapon = useCallback(() => {
         dispatch(setSecondaryWeapon());
     }, [dispatch]);
 
     const renderModal = useCallback(
-        (onSelect: (...props: any) => void, onClose: () => void, modalId: string, key: string) => {
+        (
+            onSelect: (...props: any) => void,
+            onClose: () => void,
+            modalId: string,
+            key: string,
+        ) => {
             return (
                 <WeaponSelectorModal
                     key={key}
@@ -79,6 +113,32 @@ export const WeaponsBlock = () => {
             );
         },
         [],
+    );
+
+    const renderWeaponModalTrigger = useCallback(
+        ({
+            label,
+            style,
+            keyPrefix,
+            onSelect,
+            modalDataKey,
+        }: {
+            label: string;
+            style: string;
+            keyPrefix: string;
+            onSelect: (id: string, data: WeaponData) => void;
+            modalDataKey: WeaponSlot;
+        }) => (
+            <ModalTrigger
+                renderModal={renderModal}
+                onSelect={onSelect}
+                keyPrefix={keyPrefix}
+                buttonStyle={style}
+                buttonLabel={label}
+                modalDataKey={modalDataKey}
+            />
+        ),
+        [renderModal],
     );
 
     const proficiency = getBaseProficiencyByLevel(classData.level);
@@ -99,22 +159,35 @@ export const WeaponsBlock = () => {
                 <WeaponInfoLayout
                     categoryName="Primary"
                     weapon={primaryWeapon}
-                    onEdit={onPrimaryWeaponSelectDialogOpen}
+                    changeButton={renderWeaponModalTrigger({
+                        label: "Change",
+                        style: "",
+                        keyPrefix: "primary-weapon-select-modal",
+                        onSelect: onWeaponSelect,
+                        modalDataKey: WeaponSlot.PRIMARY,
+                    })}
                     onRemove={onRemovePrimaryWeapon}
                 />
             ) : (
-                <button
-                    onClick={onPrimaryWeaponSelectDialogOpen}
-                    className={styles.addWeaponButton}
-                >
-                    Set primary weapon
-                </button>
+                renderWeaponModalTrigger({
+                    label: "Set primary weapon",
+                    style: styles.addWeaponButton,
+                    keyPrefix: "primary-weapon-select-modal",
+                    onSelect: onWeaponSelect,
+                    modalDataKey: WeaponSlot.PRIMARY,
+                })
             )}
             {secondaryWeapon ? (
                 <WeaponInfoLayout
                     categoryName="Secondary"
                     weapon={secondaryWeapon}
-                    onEdit={onSecondaryWeaponSelectDialogOpen}
+                    changeButton={renderWeaponModalTrigger({
+                        label: "Change",
+                        style: "",
+                        keyPrefix: "secondary-weapon-select-modal",
+                        onSelect: onWeaponSelect,
+                        modalDataKey: WeaponSlot.SECONDARY,
+                    })}
                     onRemove={onRemoveSecondaryWeapon}
                 />
             ) : primaryWeapon?.burden === WeaponBurden.TWO_HANDED &&
@@ -122,19 +195,14 @@ export const WeaponsBlock = () => {
               !classData.charClass.some(
                   (charClass) => charClass === CharClass.WARRIOR,
               ) ? null : (
-                <button
-                    onClick={onSecondaryWeaponSelectDialogOpen}
-                    className={styles.addWeaponButton}
-                >
-                    Set secondary weapon
-                </button>
+                renderWeaponModalTrigger({
+                    label: "Set secondary weapon",
+                    style: styles.addWeaponButton,
+                    keyPrefix: "secondary-weapon-select-modal",
+                    onSelect: onWeaponSelect,
+                    modalDataKey: WeaponSlot.SECONDARY,
+                })
             )}
-            <ModalTrigger
-                ref={modalTriggerRef}
-                renderModal={renderModal}
-                keyPrefix="weapon-select-modal"
-                onSelect={onWeaponSelect}
-            />
         </FramedBlock>
     );
 };

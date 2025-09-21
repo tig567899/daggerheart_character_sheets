@@ -6,9 +6,14 @@
     width: 100%;
 }
 
+.vertical {
+    flex-direction: column;
+}
+
 .statContainer {
     margin-left: 6px;
     margin-right: 6px;
+    margin-bottom: 12px;
 }
 
 .statBlock {
@@ -20,4 +25,32 @@
     padding-right: 12px;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.statBlockNarrow {
+    margin-left: unset;
+    border: none;
+    width: 100%;
+    flex-direction: column;
+}
+
+.statGroup {
+    display: grid;
+    grid-template-columns: 16% 16% 16% 16% 16% 16%;
+}
+
+.statGroupNarrow {
+    grid-template-columns: 33% 33% 33%;
+    margin-bottom: 12px;
+}
+
+.verticalDivider {
+    width: 1px;
+    background-color: black;
+    margin: 6px 18px;
+}
+
+.limitedWidthDefenses {
+    justify-content: center;
+    flex-grow: 1;
 }

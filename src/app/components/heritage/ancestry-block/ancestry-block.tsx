@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 
 import { AncestryInfo } from "@dh_sheets/app/components/heritage/ancestry-block/ancestry-info";
@@ -19,7 +19,6 @@ import { Ancestry } from "@dh_sheets/app/types";
 import styles from "../heritage-block.module.css";
 
 export const AncestryBlock = () => {
-    const modalTriggerRef = useRef<any>(null);
     const ancestryName = useSelector(getPrimaryAncestry);
     const { ancestry, index } = useMemo(() => {
         const index = AncestriesList.findIndex(
@@ -28,6 +27,7 @@ export const AncestryBlock = () => {
 
         return { ancestry: AncestriesList[index], index };
     }, [ancestryName]);
+
     const dispatch = useAppDispatch();
 
     const renderModal = useCallback(
@@ -72,26 +72,38 @@ export const AncestryBlock = () => {
         [dispatch, ancestry],
     );
 
-    const onEdit = useCallback(() => {
-        modalTriggerRef.current?.openModalId();
-    }, [modalTriggerRef]);
+    const renderAncestryModalTrigger = useCallback(
+        ({ label, style }: { label: string; style: string }) => (
+            <ModalTrigger
+                renderModal={renderModal}
+                onSelect={onSetAncestry}
+                keyPrefix={"ancestry-select-modal"}
+                buttonStyle={style}
+                buttonLabel={label}
+            />
+        ),
+        [renderModal, onSetAncestry],
+    );
 
     return (
         <FramedBlock>
             <BlockTitle title="Ancestry" />
             {ancestry ? (
-                <AncestryInfo ancestry={ancestry} onEdit={onEdit} />
+                <AncestryInfo
+                    ancestry={ancestry}
+                    changeButton={renderAncestryModalTrigger({
+                        label: "Change",
+                        style: styles.changeButton,
+                    })}
+                />
             ) : (
-                <button onClick={onEdit} className={styles.setButton}>
-                    Set ancestry
-                </button>
+                <div className={styles.setButton}>
+                    {renderAncestryModalTrigger({
+                        label: "Set ancestry",
+                        style: styles.setButton,
+                    })}
+                </div>
             )}
-            <ModalTrigger
-                ref={modalTriggerRef}
-                renderModal={renderModal}
-                onSelect={onSetAncestry}
-                keyPrefix="ancestry-select-modal"
-            />
         </FramedBlock>
     );
 };

@@ -1,8 +1,12 @@
 import { createSelector } from "@reduxjs/toolkit";
 
-import { ModifierField, ModifierKey } from "@dh_sheets/app/constants";
+import {
+    LevelUpKey,
+    ModifierField,
+    ModifierKey,
+} from "@dh_sheets/app/constants";
 import { CharacterDataState } from "@dh_sheets/app/redux/character-data-store/types";
-import { Modifier } from "@dh_sheets/app/types";
+import { Experiences, LevelUpChoice, Modifier } from "@dh_sheets/app/types";
 import { getBaseProficiencyByLevel } from "@dh_sheets/app/util";
 
 export const getCharacterData = (store: {
@@ -25,7 +29,7 @@ export const getCharacterStateData = (store: {
 
 export const getExperiences = (store: {
     characterData: CharacterDataState;
-}): string[] => store.characterData.experiences;
+}): Experiences => store.characterData.experiences;
 
 export const getGoldHandfuls = (store: {
     characterData: CharacterDataState;
@@ -107,3 +111,31 @@ export const getCommunity = (store: {
 export const getSubclassIndex = (store: {
     characterData: CharacterDataState;
 }): number | undefined => store.characterData.classData.subclass;
+
+const getLevelUpChoices = (store: {
+    characterData: CharacterDataState;
+}): LevelUpChoice[] => store.characterData.levelUpChoices.flat();
+
+export const getLevelUpChoicesByTier = createSelector(
+    [
+        getLevelUpChoices,
+        (
+            _store: { characterData: CharacterDataState },
+            filters?: Set<LevelUpKey>,
+        ) => filters,
+    ],
+    (levelUpOptions: LevelUpChoice[], filters?: Set<LevelUpKey>) => {
+        return levelUpOptions.filter(
+            (option) => filters?.has(option.levelUpKey) ?? true,
+        );
+    },
+);
+
+export const getDisabledLevelUpKeys = createSelector(
+    [getLevelUpChoices],
+    (levelUpOptions: LevelUpChoice[]): LevelUpKey[] => {
+        return levelUpOptions
+            .flatMap((option) => option.disables)
+            .filter((key) => key !== undefined);
+    },
+);

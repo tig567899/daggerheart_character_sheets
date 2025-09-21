@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-import { getBaseFeaturesByClass } from "@dh_sheets/app/charClassUtil";
+import { getBaseFeaturesByClass } from "@dh_sheets/app/char-class-util";
 import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
 import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";
 import { getClassData } from "@dh_sheets/app/redux/character-data-store/selector";
@@ -13,7 +13,7 @@ export const ClassFeatureBlock = () => {
         getBaseFeaturesByClass(charClass),
     );
 
-    const title = featuresByClass.length ? 'Class Feature' : 'Class Features';
+    const title = featuresByClass.flat().length === 1 ? 'Class Feature' : 'Class Features';
 
     return (
         <FramedBlock>

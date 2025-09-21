@@ -1,4 +1,4 @@
-import { ModifierField, ModifierKey } from "@dh_sheets/app/constants";
+import { ModifierField } from "@dh_sheets/app/constants";
 import { getModifierByField } from "@dh_sheets/app/redux/character-data-store/selector";
 import { useAppSelector } from "@dh_sheets/app/redux/hooks";
 
@@ -21,6 +21,9 @@ export const useStatModifiers = () => {
     const knowledgeMod = useAppSelector((state) =>
         getModifierByField(state, ModifierField.KNOWLEDGE),
     );
+    const allStatsMod = useAppSelector((state) =>
+        getModifierByField(state, ModifierField.ALL_STATS),
+    );
 
     return {
         agilityMod,
@@ -29,5 +32,6 @@ export const useStatModifiers = () => {
         instinctMod,
         presenceMod,
         knowledgeMod,
+        allStatsMod,
     };
 };

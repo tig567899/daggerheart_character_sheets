@@ -3,25 +3,6 @@
     flex-direction: column;
 }
 
-.pill {
-    border-radius: 10px;
-    width: 30px;
-    height: 15px;
-    border: 1px solid black;
-    margin-left: 5px;
-    cursor: pointer;
-}
-
-.filledPill {
-    background-color: black;
-}
-
-.resourceContainer {
-    display: flex;
-    align-items: center;
-    margin-top: 8px;
-}
-
 .armorThresholds {
     display: flex;
     align-items: center;

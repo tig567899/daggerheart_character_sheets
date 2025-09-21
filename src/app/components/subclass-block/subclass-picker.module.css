@@ -7,6 +7,12 @@
     margin-right: 15px;
 }
 
+.galleryNarrow {
+    grid-auto-flow: row;
+    overflow-y: auto;
+    margin-bottom: 12px;
+}
+
 
 .card {
     min-width: 40%;

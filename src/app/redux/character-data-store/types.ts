@@ -1,5 +1,5 @@
 import { CharClass } from "@dh_sheets/app/constants";
-import { ArmorData, Modifier, WeaponData } from "@dh_sheets/app/types";
+import { ArmorData, Experiences, ItemData, LevelUpChoice, Modifier, WeaponData } from "@dh_sheets/app/types";
 
 export interface CharacterDataState {
     // Values which will very likely not change after character creation.
@@ -12,6 +12,7 @@ export interface CharacterDataState {
         level: number;
         charClass: CharClass[];
         subclass?: number;
+        secondSubclass?: number;
     };
     // Temporary values that will change throughout a play session
     characterStateData: {
@@ -30,12 +31,13 @@ export interface CharacterDataState {
         secondaryWeapon?: WeaponData;
         armor?: ArmorData;
         inventoryWeapons: WeaponData[];
-        inventoryItems: string[];
+        inventoryItems: ItemData[];
     };
-    experiences: string[];
+    experiences: Experiences;
     features: string[];
     modifiers: Record<string, Modifier>;
     ancestry?: string;
     secondaryAncestry?: string;
     community?: string;
+    levelUpChoices: LevelUpChoice[][];
 }

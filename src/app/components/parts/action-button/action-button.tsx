@@ -1,6 +1,4 @@
 import classNames from "classnames";
-import { PropsWithChildren } from "react";
-
 import styles from "./action-button.module.css";
 
 interface ButtonProps {

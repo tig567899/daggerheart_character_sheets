@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useCookies } from "react-cookie";
 
 import { ArmorBlock } from "@dh_sheets/app/components/armor-block/armor-block";
 import { ClassFeatureBlock } from "@dh_sheets/app/components/class-feature-block/class-feature-block";
@@ -18,27 +17,27 @@ import { CharacterStatRow } from "@dh_sheets/app/components/stat-block/character
 import { SubclassBlock } from "@dh_sheets/app/components/subclass-block/subclass-block";
 import { WeaponsBlock } from "@dh_sheets/app/components/weapons-block/weapons-block";
 import { COOKIE_KEY } from "@dh_sheets/app/constants";
+import { PageContext } from "@dh_sheets/app/context";
 import { loadDataFromCookies } from "@dh_sheets/app/redux/character-data-store/actions";
 import { CharacterDataState } from "@dh_sheets/app/redux/character-data-store/types";
 import { useAppDispatch } from "@dh_sheets/app/redux/hooks";
 
 import styles from "./page-layout.module.css";
 
-interface CookieValues {
-    charData?: CharacterDataState;
-}
+const LIMITED_WIDTH_MAX = 900;
 
 export default function Home() {
     const dispatch = useAppDispatch();
     const [windowWidth, setWindowWidth] = useState<number>(0);
 
-    const [cookies] = useCookies<"charData", CookieValues>([COOKIE_KEY]);
     useEffect(() => {
-        if (!cookies.charData || typeof cookies.charData === "string") {
+        const existingData = localStorage.getItem(COOKIE_KEY);
+        if (!existingData) {
             return;
         }
-        dispatch(loadDataFromCookies(cookies.charData));
-    }, [cookies.charData, dispatch]);
+        const charData: CharacterDataState = JSON.parse(decodeURIComponent(existingData));
+        dispatch(loadDataFromCookies(charData));
+    }, [dispatch]);
 
     const handleResize = useCallback(() => {
         setWindowWidth(window.innerWidth);
@@ -48,7 +47,9 @@ export default function Home() {
         window.addEventListener("resize", handleResize);
         setWindowWidth(window.innerWidth);
         return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    }, [handleResize]);
+
+    const limitedWidth = windowWidth < LIMITED_WIDTH_MAX;
 
     const fullSizeLayout = useMemo(
         () => (
@@ -94,11 +95,20 @@ export default function Home() {
         [],
     );
 
+    const pageContext = useMemo(() => {
+        return {
+            theme: "light",
+            limitedWidth,
+        };
+    }, [limitedWidth]);
+
     return (
-        <div className={styles.pageLayout}>
-            <CharacterInfoHeader />
-            <CharacterStatRow />
-            {windowWidth > 600 ? fullSizeLayout : limitedWidthLayout}
-        </div>
+        <PageContext.Provider value={pageContext}>
+            <div className={styles.pageLayout}>
+                <CharacterInfoHeader />
+                <CharacterStatRow />
+                {limitedWidth ? limitedWidthLayout : fullSizeLayout}
+            </div>
+        </PageContext.Provider>
     );
 }

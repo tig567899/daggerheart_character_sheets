@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 
 import { CommunityInfo } from "@dh_sheets/app/components/heritage/community-block/community-info";
@@ -15,7 +15,6 @@ import { Community } from "@dh_sheets/app/types";
 import styles from "../heritage-block.module.css";
 
 export const CommunityBlock = () => {
-    const modalTriggerRef = useRef<any>(null);
     const communityName = useSelector(getCommunity);
     const { community, index } = useMemo(() => {
         const index = CommunitiesList.findIndex(
@@ -52,26 +51,37 @@ export const CommunityBlock = () => {
         [dispatch],
     );
 
-    const onEdit = useCallback(() => {
-        modalTriggerRef.current?.openModalId();
-    }, [modalTriggerRef]);
-
+    const renderCommunityModalTrigger = useCallback(
+        ({ label, style }: { label: string; style: string }) => (
+            <ModalTrigger
+                renderModal={renderModal}
+                onSelect={onSetCommunity}
+                keyPrefix={"community-select-modal"}
+                buttonStyle={style}
+                buttonLabel={label}
+            />
+        ),
+        [renderModal, onSetCommunity],
+    );
     return (
         <FramedBlock>
             <BlockTitle title="Community" />
             {community ? (
-                <CommunityInfo community={community} onEdit={onEdit} />
+                <CommunityInfo
+                    community={community}
+                    changeButton={renderCommunityModalTrigger({
+                        label: "Change",
+                        style: styles.changeButton,
+                    })}
+                />
             ) : (
-                <button onClick={onEdit} className={styles.setButton}>
-                    Set community
-                </button>
+                <div className={styles.setButton}>
+                    {renderCommunityModalTrigger({
+                        label: "Set community",
+                        style: styles.setButton,
+                    })}
+                </div>
             )}
-            <ModalTrigger
-                ref={modalTriggerRef}
-                renderModal={renderModal}
-                onSelect={onSetCommunity}
-                keyPrefix={"community-select-modal"}
-            />
         </FramedBlock>
     );
 };

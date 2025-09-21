@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { ReactElement, useCallback } from "react";
 
 import { Ability, SubclassData } from "@dh_sheets/app/types";
 
@@ -8,14 +8,14 @@ interface AncestryProps {
     subclass: SubclassData;
     specializationUnlocked?: boolean;
     masteryUnlocked?: boolean;
-    onEdit: () => void;
+    changeButton: ReactElement;
 }
 
 export const SubclassInfo = ({
     subclass,
     specializationUnlocked,
     masteryUnlocked,
-    onEdit,
+    changeButton,
 }: AncestryProps) => {
     const renderSubclassFeatureList = useCallback(
         (features: Ability[], masteryLevel: string) => {
@@ -47,10 +47,16 @@ export const SubclassInfo = ({
         <div className={styles.infoLayout}>
             <div className={styles.infoCategory}>
                 {subclass.name}
-                <button onClick={onEdit} className={styles.changeButton}>
-                    Change
-                </button>
+                <div className={styles.changeButton}>{changeButton}</div>
             </div>
+            {subclass.spellcastTrait ? (
+                <div className={styles.abilityBlock}>
+                    <div className={styles.abilityName}>Spellcasting Trait</div>
+                    <div className={styles.abilityDescription}>
+                        {subclass.spellcastTrait}
+                    </div>
+                </div>
+            ) : null}
             {renderSubclassFeatureList(
                 subclass.foundationFeatures,
                 "Foundation",

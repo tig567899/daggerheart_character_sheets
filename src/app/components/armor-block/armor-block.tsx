@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback } from "react";
 import { useSelector } from "react-redux";
 
 import { ArmorInfoLayout } from "@dh_sheets/app/components/armor-block/armor-info";
@@ -18,7 +18,6 @@ import { ArmorData } from "@dh_sheets/app/types";
 import styles from "./armor-block.module.css";
 
 export const ArmorBlock = () => {
-    const modalTriggerRef = useRef<any>(null);
     const { armor } = useSelector(getEquipmentData);
     const dispatch = useAppDispatch();
 
@@ -52,7 +51,7 @@ export const ArmorBlock = () => {
                 dispatch(removeModifier(modifier.modifierKey));
             }),
         );
-    }, [dispatch]);
+    }, [dispatch, armor?.features]);
 
     const renderModal = useCallback(
         (
@@ -72,9 +71,18 @@ export const ArmorBlock = () => {
         [],
     );
 
-    const openModal = useCallback(() => {
-        modalTriggerRef.current?.openModalId();
-    }, [modalTriggerRef]);
+    const renderAncestryModalTrigger = useCallback(
+        ({ label, style }: { label: string; style: string }) => (
+            <ModalTrigger
+                renderModal={renderModal}
+                onSelect={onArmorSelect}
+                keyPrefix={"armor-select-modal"}
+                buttonStyle={style}
+                buttonLabel={label}
+            />
+        ),
+        [renderModal, onArmorSelect],
+    );
 
     return (
         <FramedBlock>
@@ -82,20 +90,18 @@ export const ArmorBlock = () => {
             {armor ? (
                 <ArmorInfoLayout
                     armor={armor}
-                    onEdit={openModal}
+                    changeButton={renderAncestryModalTrigger({
+                        label: "Change",
+                        style: "",
+                    })}
                     onRemove={onRemoveArmor}
                 />
             ) : (
-                <button onClick={openModal} className={styles.addArmorButton}>
-                    Set active armor
-                </button>
+                renderAncestryModalTrigger({
+                    label: "Set active armor",
+                    style: styles.addArmorButton,
+                })
             )}
-            <ModalTrigger
-                ref={modalTriggerRef}
-                renderModal={renderModal}
-                onSelect={onArmorSelect}
-                keyPrefix={"armor-select-modal"}
-            />
         </FramedBlock>
     );
 };

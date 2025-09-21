@@ -1,10 +1,14 @@
 import { useCallback } from "react";
 import { useSelector } from "react-redux";
 
+import { getSubclassesByClass } from "@dh_sheets/app/char-class-util";
+import { LevelUpModal } from "@dh_sheets/app/components/header/modal/level-up-modal";
 import { FixedFramedStat } from "@dh_sheets/app/components/parts/framed-stat/framed-stat";
+import { ModalTrigger } from "@dh_sheets/app/components/parts/modal/modal-trigger";
 import { SaveableInput } from "@dh_sheets/app/components/parts/saveable-input/saveable-input";
 import { CharClass } from "@dh_sheets/app/constants";
 import {
+    removeModifier,
     setCharacterClass,
     setCharacterName,
     setCharacterPronouns,
@@ -13,14 +17,25 @@ import {
     getCharacterData,
     getClassData,
 } from "@dh_sheets/app/redux/character-data-store/selector";
+import { levelDownThunk } from "@dh_sheets/app/redux/character-data-store/thunks/level-down";
+import { levelUpThunk } from "@dh_sheets/app/redux/character-data-store/thunks/level-up";
 import { useAppDispatch } from "@dh_sheets/app/redux/hooks";
+import { LevelUpChoice } from "@dh_sheets/app/types";
 
 import styles from "./character-info-header.module.css";
 
 export const CharacterInfoHeader = () => {
     const characterData = useSelector(getCharacterData);
-    const classData = useSelector(getClassData);
+    const {
+        level,
+        charClass,
+        subclass: subclassIndex,
+    } = useSelector(getClassData);
     const dispatch = useAppDispatch();
+    const subclass =
+        subclassIndex === undefined
+            ? null
+            : getSubclassesByClass(charClass[0])[subclassIndex];
 
     const onNameSave = useCallback(
         (name: string) => {
@@ -38,9 +53,47 @@ export const CharacterInfoHeader = () => {
 
     const onCharClassChange = useCallback(
         (changeEvent: any) => {
+            if (subclass) {
+                [
+                    subclass.foundationFeatures,
+                    subclass.specializationFeatures,
+                    subclass.masteryFeatures,
+                ].forEach((abilities) => {
+                    abilities.forEach((ability) =>
+                        ability.modifier?.forEach((modifier) => {
+                            dispatch(removeModifier(modifier.modifierKey));
+                        }),
+                    );
+                });
+            }
             dispatch(setCharacterClass(changeEvent.target.value));
         },
+        [dispatch, subclass],
+    );
+
+    const onLevelDown = useCallback(() => {
+        dispatch(levelDownThunk());
+    }, [dispatch]);
+
+    const onLevelUpComplete = useCallback(
+        (options: LevelUpChoice[]) => {
+            dispatch(levelUpThunk(options));
+        },
         [dispatch],
+    );
+
+    const renderModal = useCallback(
+        (
+            onSelect: (...props: any) => void,
+            onClose: () => void,
+            modalId: string,
+            key: string,
+        ) => {
+            return (
+                <LevelUpModal onSelect={onSelect} onClose={onClose} key={key} />
+            );
+        },
+        [],
     );
 
     return (
@@ -65,7 +118,7 @@ export const CharacterInfoHeader = () => {
 
             <select
                 className={styles.headerInput}
-                value={classData.charClass[0]}
+                value={charClass[0]}
                 onChange={onCharClassChange}
             >
                 {Object.values(CharClass).map((charClass) => (
@@ -74,7 +127,19 @@ export const CharacterInfoHeader = () => {
             </select>
 
             <div className={styles.levelBlock}>
-                <FixedFramedStat value={classData.level} label="Level" />
+                <FixedFramedStat value={level} label="Level" />
+                <div className={styles.levelButtons}>
+                    <ModalTrigger
+                        renderModal={renderModal}
+                        keyPrefix={"level-up"}
+                        onSelect={onLevelUpComplete}
+                        buttonStyle={styles.levelButton}
+                        buttonLabel={"Level Up"}
+                    />
+                    <button disabled={level === 1} onClick={onLevelDown}>
+                        Level Down
+                    </button>
+                </div>
             </div>
         </div>
     );

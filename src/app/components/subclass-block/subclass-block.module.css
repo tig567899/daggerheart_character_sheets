@@ -1,3 +1,16 @@
 .setButton {
     margin-top: 5px;
+    width: 100%;
+}
+
+.changeButton {
+    margin-left: auto;
+}
+
+.buttonContainer {
+    width: 100%;
+}
+
+.existingChangeButton {
+    margin-left: auto;
 }

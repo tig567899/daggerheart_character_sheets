@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { ReactElement, useCallback, useState } from "react";
 
 import { Community } from "@dh_sheets/app/types";
 
@@ -6,10 +6,10 @@ import styles from "../heritage-block.module.css";
 
 interface CommunityProps {
     community: Community;
-    onEdit: () => void;
+    changeButton: ReactElement;
 }
 
-export const CommunityInfo = ({ community, onEdit }: CommunityProps) => {
+export const CommunityInfo = ({ community, changeButton }: CommunityProps) => {
     const [descriptionExpanded, setDescriptionExpanded] = useState(false);
     const description = descriptionExpanded
         ? community.background
@@ -25,9 +25,7 @@ export const CommunityInfo = ({ community, onEdit }: CommunityProps) => {
         <div className={styles.infoLayout}>
             <div className={styles.infoCategory}>
                 {community.name}
-                <button onClick={onEdit} className={styles.changeButton}>
-                    Change
-                </button>
+                <div className={styles.changeButton}>{changeButton}</div>
             </div>
             <div className={styles.infoDescription}>
                 {description}{" "}
@@ -35,7 +33,9 @@ export const CommunityInfo = ({ community, onEdit }: CommunityProps) => {
                     See {descriptionExpanded ? "less" : "more"}
                 </a>
             </div>
-            <div className={styles.rolePlayDescription}>{community.rolePlayTips}</div>
+            <div className={styles.rolePlayDescription}>
+                {community.rolePlayTips}
+            </div>
             Community Feature
             <div>
                 <div

@@ -38,7 +38,7 @@ export const ArmorSelectorModal = ({ onSelect, onClose }: ArmorProps) => {
                 render: renderCustomArmorLayout,
             },
         ],
-        [],
+        [renderArmorListLayout],
     );
 
     return (

@@ -43,7 +43,6 @@ export const SaveableInput = ({
                     [styles.staticInputPlaceholder]: !initialInput,
                 })}
             >
-                {" "}
                 {initialInput ? initialInput : name}
             </div>
             <button className={styles.staticEditButton} onClick={edit}>

@@ -8,7 +8,10 @@ interface ModalProps extends PropsWithChildren {
     onSelect?: (selection: any) => void;
     title?: string;
     disableSubmit?: boolean;
+    hideSubmit?: boolean;
     short?: boolean;
+    closeLabel?: string;
+    submitLabel?: string;
 }
 
 export const BaseModal = ({
@@ -16,8 +19,11 @@ export const BaseModal = ({
     onSelect,
     title,
     disableSubmit,
+    hideSubmit,
     short,
+    closeLabel,
     children,
+    submitLabel,
 }: ModalProps) => {
     const absorbClick = useCallback(
         (e: React.MouseEvent) => e.stopPropagation(),
@@ -30,15 +36,15 @@ export const BaseModal = ({
                 className={classNames(styles.modal, { [styles.short]: short })}
             >
                 <button className={styles.closeButton} onClick={onClose}>
-                    Close
+                    {closeLabel ?? "Close"}
                 </button>
                 <div className={styles.selectorTitle}>{title}</div>
                 {children}
 
-                {onSelect ? (
+                {onSelect && !hideSubmit ? (
                     <div className={styles.actionButtons}>
                         <button disabled={disableSubmit} onClick={onSelect}>
-                            Submit
+                            {submitLabel ?? "Submit"}
                         </button>
                     </div>
                 ) : null}

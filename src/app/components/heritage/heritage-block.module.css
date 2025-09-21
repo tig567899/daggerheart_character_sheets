@@ -1,5 +1,6 @@
 .setButton {
     margin-top: 5px;
+    width: 100%;
 }
 
 .infoLayout {
@@ -37,6 +38,8 @@
 
 .changeButton {
     margin-left: auto;
+    display: flex;
+    justify-content: center;
 }
 
 .abilityBlock {
@@ -53,4 +56,5 @@
 
 .abilityDescription {
     font-size: 14px;
+    line-height: 18px;
 }
