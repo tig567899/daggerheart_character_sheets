@@ -36,7 +36,7 @@ export const CommunityInfo = ({ community, changeButton }: CommunityProps) => {
             <div className={styles.rolePlayDescription}>
                 {community.rolePlayTips}
             </div>
-            Community Feature
+            <div className={styles.featuresHeader}>Community Feature</div>{" "}
             <div>
                 <div
                     className={styles.abilityBlock}

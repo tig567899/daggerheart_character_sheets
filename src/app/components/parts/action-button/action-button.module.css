@@ -1,3 +1,60 @@
 .baseButton {
-    padding: 12px;
+    padding: 2px;
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+
+    &:not(.disabled):hover {
+        box-shadow: 0 0 2px 2px var(--foreground-bright);
+    }
+}
+
+.bordered {
+    border: 1px solid var(--foreground-secondary);
+}
+
+.large {
+    width: 30px;
+    height: 30px;
+}
+
+.medium {
+    height: 24px;
+    width: 24px;
+}
+
+.small {
+    height: 18px;
+    width: 18px;
+    padding: 1px;
+}
+
+.iconSvg {
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    place-content: center;
+}
+
+.labelWithIcon {
+    margin-left: 6px;
+}
+
+.buttonLabel {
+    color: var(--foreground-secondary);
+}
+
+.disabled {
+    border-color: var(--background-secondary);
+    background-color: var(--background-secondary);
+    cursor: auto;
+
+    .buttonLabel {
+        color: var(--foreground-tertiary);
+    }
 }

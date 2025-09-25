@@ -7,8 +7,9 @@ import {
 } from "react";
 
 import styles from "./selector-modal.module.css";
+import { ActionButton, ActionButtonProps } from "@dh_sheets/app/components/parts/action-button/action-button";
 
-interface ModalTriggerProps {
+interface ModalTriggerProps extends ActionButtonProps {
     renderModal: (
         onClose: () => void,
         onSelect: (...props: any) => void,
@@ -17,8 +18,6 @@ interface ModalTriggerProps {
     ) => ReactElement;
     onSelect?: (...props: any) => void;
     keyPrefix: string;
-    buttonStyle: string;
-    buttonLabel: string;
     modalDataKey?: string;
     disabled?: boolean;
 }
@@ -29,10 +28,9 @@ export const ModalTrigger = forwardRef(
             renderModal,
             onSelect,
             keyPrefix,
-            buttonStyle,
-            buttonLabel,
             modalDataKey,
             disabled,
+            ...others
         }: ModalTriggerProps,
         ref,
     ) => {
@@ -64,13 +62,11 @@ export const ModalTrigger = forwardRef(
 
         return (
             <div className={styles.triggerContainer}>
-                <button
+                <ActionButton
                     disabled={disabled}
-                    className={buttonStyle}
                     onClick={openModalId}
-                >
-                    {buttonLabel}
-                </button>
+                    {...others}
+                />
                 <div>
                     {modalId
                         ? renderModal(

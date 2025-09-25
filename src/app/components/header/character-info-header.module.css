@@ -1,11 +1,20 @@
 .headerContainer {
     display: flex;
+    margin-bottom: 12px;
+}
+
+.narrowHeader {
+    flex-direction: column;
+}
+
+.characterInfo {
+    display: flex;
 }
 
 .headerInput {
     display: flex;
     margin-left: 6px;
-    height: 100%;
+    height: fit-content
 }
 
 .levelBlock {
@@ -15,10 +24,32 @@
     align-items: center;
 }
 
+.levelBlockVert {
+    margin-left: 0;
+    align-self: center;
+    margin-top: 12px;
+}
+
+.name {
+    font-size: 24px;
+    margin-bottom: 12px;
+    display: flex;
+    width: 300px;
+
+    input {
+        font-size: 24px;
+    }
+}
+
+.pronouns {
+    font-size: 14px;
+    width: 200px;
+}
+
 .levelButtons {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
 }
 
 .levelButton { 

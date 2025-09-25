@@ -1,9 +1,7 @@
+import classNames from "classnames";
+import { useCallback } from "react";
 
-import classNames from 'classnames';
-import { useCallback } from 'react';
-
-import styles from './weapons-block.module.css';
-
+import styles from "./weapons-block.module.css";
 
 export interface ToggleProps {
     circleKey: number;
@@ -23,11 +21,11 @@ export const CircleFillable = ({
     // TODO: Make the dots hearts
     return (
         <div
-            className={classNames(styles.circle)}
+            className={classNames(styles.circle, {
+                [styles.circleFilled]: filled,
+            })}
             key={`diamond-fillable-${circleKey}`}
             onClick={onClick}
-        >
-            {filled ? <div className={styles.circleFilled}/> : null}
-        </div>
+        ></div>
     );
-}
+};

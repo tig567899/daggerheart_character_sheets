@@ -5,12 +5,14 @@
     gap: 12px;
     margin-left: 15px;
     margin-right: 15px;
+    padding: 6px 12px;
 }
 
 .galleryNarrow {
     grid-auto-flow: row;
     overflow-y: auto;
-    margin-bottom: 12px;
+    margin-bottom: 45px;
+    padding: 12px 6px;
 }
 
 
@@ -24,7 +26,8 @@
 }
 
 .cardSelected {
-    border: 1px black solid;
+    border: 1px var(--foreground-bright) solid;
+    box-shadow: 0 0 2px 2px var(--foreground-bright);
 }
 
 .name {

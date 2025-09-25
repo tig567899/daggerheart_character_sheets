@@ -1,7 +1,10 @@
-import { ReactElement } from "react";
+import { ReactElement, useMemo } from "react";
 
+import { ActionButton } from "@dh_sheets/app/components/parts/action-button/action-button";
 import { LabeledDisplayBox } from "@dh_sheets/app/components/parts/labeled-display-box/labeled-display-box";
 import { ArmorData } from "@dh_sheets/app/types";
+
+import { ClearIcon } from "@icons/clear-icon";
 
 import styles from "./armor-block.module.css";
 
@@ -16,12 +19,18 @@ export const ArmorInfoLayout = ({
     changeButton,
     onRemove,
 }: ArmorProps) => {
+    const clearIcon = useMemo(() => <ClearIcon />, []);
+
     return (
         <div className={styles.infoLayout}>
             <div className={styles.infoCategory}>
-                <button onClick={onRemove} className={styles.removeArmor}>
-                    Remove
-                </button>
+                <ActionButton
+                    onClick={onRemove}
+                    icon={clearIcon}
+                    label={"Remove"}
+                    className={styles.removeArmor}
+                    isIconButton
+                />
                 <div className={styles.changeArmor}>{changeButton}</div>
             </div>
             <div className={styles.infoDisplay}>

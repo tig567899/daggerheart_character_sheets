@@ -1,12 +1,15 @@
-import { useCallback } from "react";
+import classNames from "classnames";
+import { useCallback, useContext } from "react";
 import { useSelector } from "react-redux";
 
 import { getSubclassesByClass } from "@dh_sheets/app/char-class-util";
 import { LevelUpModal } from "@dh_sheets/app/components/header/modal/level-up-modal";
+import { ActionButton } from "@dh_sheets/app/components/parts/action-button/action-button";
 import { FixedFramedStat } from "@dh_sheets/app/components/parts/framed-stat/framed-stat";
 import { ModalTrigger } from "@dh_sheets/app/components/parts/modal/modal-trigger";
 import { SaveableInput } from "@dh_sheets/app/components/parts/saveable-input/saveable-input";
-import { CharClass } from "@dh_sheets/app/constants";
+import { CharClass, IconSize } from "@dh_sheets/app/constants";
+import { PageContext } from "@dh_sheets/app/context";
 import {
     removeModifier,
     setCharacterClass,
@@ -25,6 +28,7 @@ import { LevelUpChoice } from "@dh_sheets/app/types";
 import styles from "./character-info-header.module.css";
 
 export const CharacterInfoHeader = () => {
+    const pageContext = useContext(PageContext);
     const characterData = useSelector(getCharacterData);
     const {
         level,
@@ -97,49 +101,74 @@ export const CharacterInfoHeader = () => {
     );
 
     return (
-        <div className={styles.headerContainer}>
-            <div>Daggerheart Character Sheet</div>
-            <div className={styles.headerInput}>
-                <SaveableInput
-                    initialInput={characterData.headerData?.name}
-                    inputType="string"
-                    onSave={onNameSave}
-                    name="Name"
-                />
-            </div>
-            <div className={styles.headerInput}>
-                <SaveableInput
-                    initialInput={characterData.headerData?.pronouns}
-                    inputType="string"
-                    onSave={onPronounsSave}
-                    name="Pronouns"
-                />
+        <div
+            className={classNames(styles.headerContainer, {
+                [styles.narrowHeader]: pageContext.limitedWidth,
+            })}
+        >
+            <div className={styles.characterInfo}>
+                <div>
+                    <div
+                        className={classNames(styles.headerInput, styles.name)}
+                    >
+                        <SaveableInput
+                            initialInput={characterData.headerData?.name}
+                            inputType="string"
+                            onSave={onNameSave}
+                            name="Name"
+                            size={IconSize.LARGE}
+                        />
+                    </div>
+                    <div
+                        className={classNames(
+                            styles.headerInput,
+                            styles.pronouns,
+                        )}
+                    >
+                        <SaveableInput
+                            initialInput={characterData.headerData?.pronouns}
+                            inputType="string"
+                            onSave={onPronounsSave}
+                            name="Pronouns"
+                            size={IconSize.SMALL}
+                        />
+                    </div>
+                </div>
             </div>
 
-            <select
-                className={styles.headerInput}
-                value={charClass[0]}
-                onChange={onCharClassChange}
+            <div
+                className={classNames(styles.levelBlock, {
+                    [styles.levelBlockVert]: pageContext.limitedWidth,
+                })}
             >
-                {Object.values(CharClass).map((charClass) => (
-                    <option key={charClass}>{charClass}</option>
-                ))}
-            </select>
-
-            <div className={styles.levelBlock}>
-                <FixedFramedStat value={level} label="Level" />
                 <div className={styles.levelButtons}>
                     <ModalTrigger
                         renderModal={renderModal}
                         keyPrefix={"level-up"}
                         onSelect={onLevelUpComplete}
-                        buttonStyle={styles.levelButton}
-                        buttonLabel={"Level Up"}
+                        className={styles.levelButton}
+                        label={"Level Up"}
+                        bordered
                     />
-                    <button disabled={level === 1} onClick={onLevelDown}>
-                        Level Down
-                    </button>
+                    <ActionButton
+                        label={"Level Down"}
+                        disabled={level === 1}
+                        onClick={onLevelDown}
+                        className={styles.levelButton}
+                        bordered
+                    />
                 </div>
+                <FixedFramedStat value={level} label="Level" />
+
+                <select
+                    className={styles.headerInput}
+                    value={charClass[0]}
+                    onChange={onCharClassChange}
+                >
+                    {Object.values(CharClass).map((charClass) => (
+                        <option key={charClass}>{charClass}</option>
+                    ))}
+                </select>
             </div>
         </div>
     );

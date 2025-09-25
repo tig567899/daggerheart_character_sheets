@@ -35,7 +35,9 @@ export default function Home() {
         if (!existingData) {
             return;
         }
-        const charData: CharacterDataState = JSON.parse(decodeURIComponent(existingData));
+        const charData: CharacterDataState = JSON.parse(
+            decodeURIComponent(existingData),
+        );
         dispatch(loadDataFromCookies(charData));
     }, [dispatch]);
 
@@ -104,8 +106,11 @@ export default function Home() {
 
     return (
         <PageContext.Provider value={pageContext}>
-            <div className={styles.pageLayout}>
+            <div className={styles.pageHeaderBackground}>
+                <div className={styles.pageTitle}>Daggerheart Character Sheet</div>
                 <CharacterInfoHeader />
+            </div>
+            <div className={styles.pageLayout}>
                 <CharacterStatRow />
                 {limitedWidth ? limitedWidthLayout : fullSizeLayout}
             </div>

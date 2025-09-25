@@ -77,7 +77,13 @@
 .horizontalDivider {
     height: 1px;
     margin: 10px 0;
-    background-color: lightgray;
+    background-color: var(--foreground-tertiary);
+}
+
+.horizontalOneSideDivider {
+    height: 1px;
+    margin-top: 16px;
+    background-color: var(--foreground-tertiary);
 }
 
 .itemDetailContainer {
@@ -95,11 +101,20 @@
     margin-bottom: 3px;
     display: flex;
     width: 100%;
+    align-items: center;
 
     .itemChangeButtons {
         visibility: hidden;
         margin-left: auto;
         display: flex;
         flex-direction: row;
+
+        @media (pointer: coarse) {
+            visibility: visible;
+        }
     }
+}
+
+.weaponBlock {
+    margin-bottom: 12px;
 }

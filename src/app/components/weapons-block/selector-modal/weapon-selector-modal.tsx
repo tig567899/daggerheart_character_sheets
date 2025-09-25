@@ -11,6 +11,7 @@ import {
     Tier4PrimaryWeapons,
 } from "@dh_sheets/app/data/weapon-data-store";
 import { WeaponData } from "@dh_sheets/app/types";
+import { WeaponSlot } from "@dh_sheets/app/components/weapons-block/weapons-block";
 
 export interface WeaponProps {
     id: string;
@@ -36,9 +37,10 @@ export const WeaponSelectorModal = ({ id, onSelect, onClose }: WeaponProps) => {
                     Tier3PrimaryWeapons,
                     Tier4PrimaryWeapons,
                 ]}
+                isSecondary={id === WeaponSlot.SECONDARY}
             />
         ),
-        [onWeaponSelect],
+        [onWeaponSelect, id],
     );
     const renderCustomWeaponLayout = useCallback(() => <div>TBD</div>, []);
 

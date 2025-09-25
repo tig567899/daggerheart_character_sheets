@@ -1,7 +1,9 @@
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import classNames from "classnames";
 import React, {
     forwardRef,
     useCallback,
+    useContext,
     useEffect,
     useImperativeHandle,
     useState,
@@ -16,6 +18,7 @@ import {
     abilityToModifierFieldMap,
     abilityUsesArray,
 } from "@dh_sheets/app/constants";
+import { PageContext } from "@dh_sheets/app/context";
 import { setModifierForField } from "@dh_sheets/app/redux/character-data-store/actions";
 import { useAppDispatch } from "@dh_sheets/app/redux/hooks";
 
@@ -49,6 +52,7 @@ interface AllocatorProps {
 
 export const StatAllocator = forwardRef(
     ({ onAllocatedNumberChanged }: AllocatorProps, ref) => {
+        const pageContext = useContext(PageContext);
         const dispatch = useAppDispatch();
 
         const [agilityModKey, setAgilityModKey] = useState<ModifierKey | null>(
@@ -262,7 +266,9 @@ export const StatAllocator = forwardRef(
 
         return (
             <div className={styles.container}>
-                <div className={styles.modifierDestinationRow}>
+                <div
+                    className={classNames(styles.modifierDestinationRow)}
+                >
                     {Object.values(AbilityName)
                         .slice(0, 6)
                         .map((ability, index) => {
@@ -274,7 +280,9 @@ export const StatAllocator = forwardRef(
                             return (
                                 <div
                                     key={`stat-allocator-${ability}`}
-                                    className={styles.dragTargetContainer}
+                                    className={classNames(styles.dragTargetContainer, {
+                                        [styles.narrowAllocatorDestination]: pageContext.limitedWidth
+                                    })}
                                 >
                                     <div className={styles.dragTargetTitle}>
                                         {ability}

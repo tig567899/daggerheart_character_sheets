@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useMemo } from "react";
 
 import { FixedFramedStat } from "@dh_sheets/app/components/parts/framed-stat/framed-stat";
 import { ModalTrigger } from "@dh_sheets/app/components/parts/modal/modal-trigger";
@@ -13,6 +13,8 @@ import {
 import { PageContext } from "@dh_sheets/app/context";
 import { getModifierById } from "@dh_sheets/app/redux/character-data-store/selector";
 import { useAppSelector } from "@dh_sheets/app/redux/hooks";
+
+import { EditIcon } from "@icons/edit-icon";
 
 import styles from "./character-stat-row.module.css";
 
@@ -60,16 +62,20 @@ export const StatsBlock = () => {
         [],
     );
 
+    const editIcon = useMemo(() => <EditIcon />, []);
+
     const renderModalTrigger = useCallback(
         ({ label, style }: { label: string; style: string }) => (
             <ModalTrigger
                 renderModal={renderModal}
                 keyPrefix="stats-modal-trigger"
-                buttonStyle={style}
-                buttonLabel={label}
+                className={style}
+                label={label}
+                icon={editIcon}
+                isIconButton
             />
         ),
-        [renderModal],
+        [renderModal, editIcon],
     );
 
     return (

@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { PropsWithChildren, useCallback, useState } from "react";
 
-import chevronRight from "@icons/chevron-right.svg";
+import { UpChevron } from "@icons/up-chevron";
 
 import styles from "./dropdown-block.module.css";
 
@@ -26,15 +26,14 @@ export const DropdownBlock = ({
         <div className={styles.container}>
             <div className={styles.dropdownParent} onClick={onToggleCollapsed}>
                 {title}
-                <img
+                <UpChevron
                     className={classNames(styles.expandIndicator, {
                         [styles.expandIndicatorCollapsed]: !collapsed,
                     })}
-                    src={chevronRight.src}
-                    alt={collapsed ? "expand" : "collapse"}
-                ></img>
+                    aria-label={collapsed ? "expand" : "collapse"}
+                />
             </div>
             {collapsed ? null : children}
-        </div>
+    </div>
     );
 };

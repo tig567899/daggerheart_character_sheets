@@ -173,7 +173,7 @@ export const LevelUpBaseScreen = ({
             setUpgrade(upgrade);
             setOptionSelected(null);
         },
-        [optionSelected, setUpgrade, choiceCountByKey],
+        [optionSelected, setUpgrade],
     );
 
     const clearUpgrade = useCallback(() => {

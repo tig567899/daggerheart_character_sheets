@@ -10,6 +10,11 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    flex-wrap: wrap;
+}
+
+.narrowAllocatorDestination {
+    width: 33%;
 }
 
 .dragTargetContainer {
@@ -70,7 +75,7 @@
     cursor: pointer;
 }
 
-.modifierRowDescription{
+.modifierRowDescription {
     align-self: center;
     margin-top: 20px;
     font-style: italic;

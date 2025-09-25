@@ -15,3 +15,9 @@
     align-items: center;
     text-align: center;
 }
+
+.thresholdReminder {
+    font-size: 14px;
+    font-style: italic;
+    color: var(--foreground-tertiary)
+}

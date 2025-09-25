@@ -1,0 +1,7 @@
+.gTag {
+    stroke: var(--foreground-secondary);
+}
+
+.pathFill {
+    fill: var(--foreground-secondary);
+}

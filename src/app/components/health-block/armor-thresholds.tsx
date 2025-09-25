@@ -22,15 +22,15 @@ export const ArmorThresholds = () => {
     return (
         <div className={styles.armorThresholds}>
             <div className={styles.thresholdDescription}>
-                <span>Minor Damage</span> <i>Mark 1 HP</i>
+                <span>Minor Damage</span> <span className={styles.thresholdReminder}>Mark 1 HP</span>
             </div>
             <FixedFramedStat label="" value={majorThreshold} small />
             <div className={styles.thresholdDescription}>
-                <span>Major Damage</span> <i>Mark 2 HP</i>
+                <span>Major Damage</span> <span className={styles.thresholdReminder}>Mark 2 HP</span>
             </div>
             <FixedFramedStat label="" value={severeThreshold} small />
             <div className={styles.thresholdDescription}>
-                <span>Severe Damage</span> <i>Mark 3 HP</i>
+                <span>Severe Damage</span> <span className={styles.thresholdReminder}>Mark 3 HP</span>
             </div>
         </div>
     );

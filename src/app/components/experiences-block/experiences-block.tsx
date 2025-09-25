@@ -33,13 +33,6 @@ export const ExperiencesBlock = () => {
         [dispatch],
     );
 
-    const onRemoveExperience = useCallback(
-        (index: number) => {
-            dispatch(setExperience({ experience: "", index }));
-        },
-        [dispatch],
-    );
-
     return (
         <FramedBlock>
             <BlockTitle title="Experiences" />
@@ -60,13 +53,6 @@ export const ExperiencesBlock = () => {
                                     onSave={onSaveExperiences}
                                 />
                             </div>
-
-                            <button
-                                className={styles.clearButton}
-                                onClick={() => onRemoveExperience(index)}
-                            >
-                                Clear
-                            </button>
 
                             <FixedFramedStat label="" value={2 + experienceModifiers[index]} usePlus small />
                         </div>

@@ -1,15 +1,27 @@
+.pillContainer {
+    display: flex;
+    padding-left: 5px;
+    cursor: pointer;
+}
+
 .pill {
     border-radius: 10px;
     width: 30px;
     height: 15px;
-    border: 1px solid black;
-    margin-left: 5px;
-    cursor: pointer;
+    border: 1px solid var(--foreground-secondary);
     display: flex;
 }
 
 .filledPill {
-    background-color: black;
+    background-color: var(--foreground-bright);
+}
+
+.previewFilled {
+    background-color: var(--foreground-soft);
+}
+
+.previewUnfilled {
+    border: 1px dashed var(--foreground-secondary);
 }
 
 .resourceContainer {
@@ -19,7 +31,8 @@
 }
 
 .disabled {
-    border-color: grey;
+    border-color: var(--foreground-tertiary);
+    cursor: auto;
 }
 
 .grid {
@@ -35,13 +48,13 @@
 }
 
 .hasGrid {
-    margin-top:  unset;
+    margin-top: unset;
 }
 
 .crossOut {
     height: 1px;
     width: 100%;
-    background-color: grey;
+    background-color: var(--foreground-tertiary);
     align-self: center;
     transform: rotate(30deg);
     cursor: auto;
@@ -49,4 +62,8 @@
 
 .label {
     min-width: 65px;
+}
+
+.round {
+    width: 15px;
 }

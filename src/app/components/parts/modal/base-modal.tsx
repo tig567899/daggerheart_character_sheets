@@ -1,5 +1,10 @@
 import classNames from "classnames";
-import { JSX, PropsWithChildren, useCallback, useState } from "react";
+import { JSX, PropsWithChildren, useCallback, useMemo, useState } from "react";
+
+import { ActionButton } from "@dh_sheets/app/components/parts/action-button/action-button";
+import { IconSize } from "@dh_sheets/app/constants";
+
+import { ClearIcon } from "@icons/clear-icon";
 
 import styles from "./selector-modal.module.css";
 
@@ -29,15 +34,22 @@ export const BaseModal = ({
         (e: React.MouseEvent) => e.stopPropagation(),
         [],
     );
+    const clearIcon = useMemo(() => <ClearIcon size={IconSize.LARGE} />, []);
     return (
         <div onClick={onClose} className={styles.modalContainer}>
             <div
                 onClick={absorbClick}
                 className={classNames(styles.modal, { [styles.short]: short })}
             >
-                <button className={styles.closeButton} onClick={onClose}>
-                    {closeLabel ?? "Close"}
-                </button>
+                <ActionButton
+                    className={styles.closeButton}
+                    onClick={onClose}
+                    icon={clearIcon}
+                    label={closeLabel ?? "Close"}
+                    isIconButton
+                    size={IconSize.LARGE}
+                />
+
                 <div className={styles.selectorTitle}>{title}</div>
                 {children}
 

@@ -40,18 +40,21 @@ export const GoldBlock = () => {
                     maxValue={9}
                     value={goldHandfuls}
                     onValueChange={changeGoldHandfuls}
+                    small
                 />
                 <FillableResource
                     name={"Bags"}
                     maxValue={9}
                     value={goldBags}
                     onValueChange={changeGoldBags}
+                    small
                 />
                 <FillableResource
                     name={"Chest"}
                     maxValue={1}
                     value={goldChests}
                     onValueChange={changeGoldChests}
+                    small
                 />
             </div>
         </FramedBlock>

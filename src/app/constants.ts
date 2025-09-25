@@ -141,7 +141,7 @@ export enum ModifierKey {
     BELLARMOI_FINE_ARMOR = "bellarmoi_fine_armor",
     SAVIOR_CHAIN_STATS = "savior_chainmail_stats",
     SAVIOR_CHAIN_EVA = "savior_chainmail_evasion",
-    // Weapon Bonuses
+    // Primary Weapon Bonuses
     HEAVY_WEAPON = "heavy_weapon_evasion",
     MASSIVE_WEAPON = "massive_weapon_evasion",
     CUMBERSOME_WEAPON = "cumbersome_weapon_finesse",
@@ -149,6 +149,13 @@ export enum ModifierKey {
     BRAVE_WEAPON_SEV = "brave_weapon_severe",
     PROTECTIVE_WEAPON = "protective_weapon_armor",
     DESTRUCTIVE_WEAPON = "destructive_weapon_agility",
+
+    // Secondary Weapon Bonuses
+    PROTECTIVE_SECONDARY_WEAPON = 'protective_secondary_weapon_armor',
+    BARRIER_WEAPON_ARMOR = 'barrier_weapon_armor',
+    BARRIER_WEAPON_EVA = 'barrier_weapon_evasion',
+    DOUBLE_DUTY_WEAPON = 'double_duty_weapon_armor',
+
     // Subclass bonuses
     STALWART_GUARDIAN_FOUND_MAJ = "stalwart_guardian_foundation_major",
     STALWART_GUARDIAN_FOUND_SEV = "stalwart_guardian_foundation_severe",
@@ -300,5 +307,12 @@ export enum SecondarySelectionValue {
     SUBCLASS,
     MULTICLASS,
 }
+
+export enum IconSize {
+    SMALL = 16,
+    MEDIUM = 18,
+    LARGE = 24,
+}
+
 
 export const COOKIE_KEY = "charData";

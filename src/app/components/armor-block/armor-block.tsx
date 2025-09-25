@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 
 import { ArmorInfoLayout } from "@dh_sheets/app/components/armor-block/armor-info";
@@ -14,6 +14,9 @@ import {
 import { getEquipmentData } from "@dh_sheets/app/redux/character-data-store/selector";
 import { useAppDispatch } from "@dh_sheets/app/redux/hooks";
 import { ArmorData } from "@dh_sheets/app/types";
+
+import { EditIcon } from "@icons/edit-icon";
+import { PlusIcon } from "@icons/plus-icon";
 
 import styles from "./armor-block.module.css";
 
@@ -71,17 +74,31 @@ export const ArmorBlock = () => {
         [],
     );
 
-    const renderAncestryModalTrigger = useCallback(
-        ({ label, style }: { label: string; style: string }) => (
+    const plusIcon = useMemo(() => <PlusIcon />, []);
+    const editIcon = useMemo(() => <EditIcon />, []);
+
+    const renderArmorModalTrigger = useCallback(
+        ({
+            label,
+            style,
+            isEdit,
+        }: {
+            label: string;
+            style: string;
+            isEdit?: boolean;
+        }) => (
             <ModalTrigger
                 renderModal={renderModal}
                 onSelect={onArmorSelect}
                 keyPrefix={"armor-select-modal"}
-                buttonStyle={style}
-                buttonLabel={label}
+                className={style}
+                label={label}
+                icon={isEdit ? editIcon : plusIcon}
+                isIconButton={isEdit}
+                bordered={!isEdit}
             />
         ),
-        [renderModal, onArmorSelect],
+        [renderModal, onArmorSelect, editIcon, plusIcon],
     );
 
     return (
@@ -90,14 +107,15 @@ export const ArmorBlock = () => {
             {armor ? (
                 <ArmorInfoLayout
                     armor={armor}
-                    changeButton={renderAncestryModalTrigger({
+                    changeButton={renderArmorModalTrigger({
                         label: "Change",
                         style: "",
+                        isEdit: true,
                     })}
                     onRemove={onRemoveArmor}
                 />
             ) : (
-                renderAncestryModalTrigger({
+                renderArmorModalTrigger({
                     label: "Set active armor",
                     style: styles.addArmorButton,
                 })

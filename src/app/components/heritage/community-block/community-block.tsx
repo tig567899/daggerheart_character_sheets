@@ -6,13 +6,17 @@ import { CommunityModal } from "@dh_sheets/app/components/heritage/community-blo
 import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
 import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";
 import { ModalTrigger } from "@dh_sheets/app/components/parts/modal/modal-trigger";
+import { IconSize } from "@dh_sheets/app/constants";
 import { CommunitiesList } from "@dh_sheets/app/data/community-data";
 import { setCommunity } from "@dh_sheets/app/redux/character-data-store/actions";
 import { getCommunity } from "@dh_sheets/app/redux/character-data-store/selector";
 import { useAppDispatch } from "@dh_sheets/app/redux/hooks";
 import { Community } from "@dh_sheets/app/types";
 
+import { EditIcon } from "@icons/edit-icon";
+
 import styles from "../heritage-block.module.css";
+import { PlusIcon } from "@icons/plus-icon";
 
 export const CommunityBlock = () => {
     const communityName = useSelector(getCommunity);
@@ -51,17 +55,32 @@ export const CommunityBlock = () => {
         [dispatch],
     );
 
+    const plusIcon = useMemo(() => <PlusIcon />, []);
+    const editIcon = useMemo(() => <EditIcon size={IconSize.LARGE} />, []);
+
     const renderCommunityModalTrigger = useCallback(
-        ({ label, style }: { label: string; style: string }) => (
+        ({
+            label,
+            style,
+            isEdit,
+        }: {
+            label: string;
+            style: string;
+            isEdit?: boolean;
+        }) => (
             <ModalTrigger
                 renderModal={renderModal}
                 onSelect={onSetCommunity}
                 keyPrefix={"community-select-modal"}
-                buttonStyle={style}
-                buttonLabel={label}
+                className={style}
+                label={label}
+                icon={isEdit ? editIcon : plusIcon}
+                size={isEdit ? IconSize.LARGE : undefined}
+                isIconButton={isEdit}
+                bordered={!isEdit}
             />
         ),
-        [renderModal, onSetCommunity],
+        [renderModal, onSetCommunity, editIcon, plusIcon],
     );
     return (
         <FramedBlock>
@@ -72,6 +91,7 @@ export const CommunityBlock = () => {
                     changeButton={renderCommunityModalTrigger({
                         label: "Change",
                         style: styles.changeButton,
+                        isEdit: true,
                     })}
                 />
             ) : (

@@ -3,7 +3,7 @@
 }
 
 .featureName {
-    font-weight: bold;
+    color: var(--foreground-secondary);
     margin-top: 12px;
     margin-bottom: 6px;
 }

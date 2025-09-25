@@ -11,6 +11,7 @@ import { WeaponData } from "@dh_sheets/app/types";
 export interface WeaponTier {
     physical: WeaponData[];
     magical: WeaponData[];
+    secondary: WeaponData[];
 }
 
 export const Tier1PrimaryWeapons: WeaponTier = {
@@ -356,6 +357,139 @@ export const Tier1PrimaryWeapons: WeaponTier = {
                 },
             ],
             damageType: "mag",
+        },
+    ],
+    secondary: [
+        {
+            name: "Shortsword",
+            trait: AbilityName.AGILITY,
+            range: DistanceRange.MELEE,
+            dice: Dice.D8,
+            modifier: 0,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Paired",
+                    description:
+                        "+2 to primary weapon damage to targets within Melee range",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Round Shield",
+            trait: AbilityName.STRENGTH,
+            range: DistanceRange.MELEE,
+            dice: Dice.D4,
+            modifier: 0,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Protective",
+                    description: "+1 to Armor Score",
+                    modifiers: [
+                        {
+                            field: ModifierField.ARMOR_SCORE,
+                            bonus: 1,
+                            modifierKey:
+                                ModifierKey.PROTECTIVE_SECONDARY_WEAPON,
+                        },
+                    ],
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Tower Shield",
+            trait: AbilityName.STRENGTH,
+            range: DistanceRange.MELEE,
+            dice: Dice.D6,
+            modifier: 0,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Barrier",
+                    description: "+2 to Armor Score; −1 to Evasion",
+                    modifiers: [
+                        {
+                            field: ModifierField.ARMOR_SCORE,
+                            bonus: 2,
+                            modifierKey: ModifierKey.BARRIER_WEAPON_ARMOR,
+                        },
+                        {
+                            field: ModifierField.EVASION,
+                            bonus: -1,
+                            modifierKey: ModifierKey.BARRIER_WEAPON_EVA,
+                        },
+                    ],
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Small Dagger",
+            trait: AbilityName.FINESSE,
+            range: DistanceRange.MELEE,
+            dice: Dice.D8,
+            modifier: 0,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Paired",
+                    description:
+                        "+2 to primary weapon damage to targets within Melee range",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Whip",
+            trait: AbilityName.PRESENCE,
+            range: DistanceRange.VERY_CLOSE,
+            dice: Dice.D6,
+            modifier: 0,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Startling",
+                    description:
+                        "Mark a Stress to crack the whip and force all adversaries within Melee range back to Close range.",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Grappler",
+            trait: AbilityName.FINESSE,
+            range: DistanceRange.CLOSE,
+            dice: Dice.D6,
+            modifier: 0,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Hooked",
+                    description:
+                        "On a successful attack, you can pull the target into Melee range.",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Hand Crossbow",
+            trait: AbilityName.FINESSE,
+            range: DistanceRange.FAR,
+            dice: Dice.D6,
+            modifier: 1,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [],
+            damageType: "phy",
+            isSecondary: true,
         },
     ],
 };
@@ -990,6 +1124,197 @@ export const Tier2PrimaryWeaons: WeaponTier = {
             damageType: "mag",
         },
     ],
+    secondary: [
+        {
+            name: "Improved Shortsword",
+            trait: AbilityName.AGILITY,
+            range: DistanceRange.MELEE,
+            dice: Dice.D8,
+            modifier: 2,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Paired",
+                    description:
+                        "+3 to primary weapon damage to targets within Melee range",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Improved Round Shield",
+            trait: AbilityName.STRENGTH,
+            range: DistanceRange.MELEE,
+            dice: Dice.D4,
+            modifier: 2,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Protective",
+                    description: "+2 to Armor Score",
+                    modifiers: [
+                        {
+                            field: ModifierField.ARMOR_SCORE,
+                            bonus: 1,
+                            modifierKey:
+                                ModifierKey.PROTECTIVE_SECONDARY_WEAPON,
+                        },
+                    ],
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Improved Tower Shield",
+            trait: AbilityName.STRENGTH,
+            range: DistanceRange.MELEE,
+            dice: Dice.D6,
+            modifier: 2,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Barrier",
+                    description: "+3 to Armor Score; −1 to Evasion",
+                    modifiers: [
+                        {
+                            field: ModifierField.ARMOR_SCORE,
+                            bonus: 3,
+                            modifierKey: ModifierKey.BARRIER_WEAPON_ARMOR,
+                        },
+                        {
+                            field: ModifierField.EVASION,
+                            bonus: -1,
+                            modifierKey: ModifierKey.BARRIER_WEAPON_EVA,
+                        },
+                    ],
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Improved Small Dagger",
+            trait: AbilityName.FINESSE,
+            range: DistanceRange.MELEE,
+            dice: Dice.D8,
+            modifier: 2,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Paired",
+                    description:
+                        "+3 to primary weapon damage to targets within Melee range",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Improved Whip",
+            trait: AbilityName.PRESENCE,
+            range: DistanceRange.VERY_CLOSE,
+            dice: Dice.D6,
+            modifier: 2,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Startling",
+                    description:
+                        "Mark a Stress to crack the whip and force all adversaries within Melee range back to Close range.",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Improved Grappler",
+            trait: AbilityName.FINESSE,
+            range: DistanceRange.CLOSE,
+            dice: Dice.D6,
+            modifier: 2,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Hooked",
+                    description:
+                        "On a successful attack, you can pull the target into Melee range.",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Improved Hand Crossbow",
+            trait: AbilityName.FINESSE,
+            range: DistanceRange.FAR,
+            dice: Dice.D6,
+            modifier: 3,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Spiked Shield",
+            trait: AbilityName.STRENGTH,
+            range: DistanceRange.MELEE,
+            dice: Dice.D6,
+            modifier: 2,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Double Duty",
+                    description:
+                        "+1 to Armor Score; +1 to primary weapon damage within Melee range",
+                    modifiers: [
+                        {
+                            field: ModifierField.ARMOR_SCORE,
+                            bonus: 1,
+                            modifierKey: ModifierKey.DOUBLE_DUTY_WEAPON,
+                        },
+                    ],
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Parrying Dagger",
+            trait: AbilityName.FINESSE,
+            range: DistanceRange.MELEE,
+            dice: Dice.D6,
+            modifier: 2,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Parry",
+                    description:
+                        "When you are attacked, roll this weapon's damage dice. If any of the attacker's damage dice rolled the same value as your dice, the matching results are discarded from the attacker's damage dice before the damage you take is totaled.",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Returning Axe",
+            trait: AbilityName.AGILITY,
+            range: DistanceRange.CLOSE,
+            dice: Dice.D6,
+            modifier: 4,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Returning",
+                    description:
+                        "When this weapon is thrown within its range, it appears in your hand immediately after the attack.",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+    ],
 };
 
 export const Tier3PrimaryWeapons: WeaponTier = {
@@ -1248,14 +1573,14 @@ export const Tier3PrimaryWeapons: WeaponTier = {
                         {
                             field: ModifierField.EVASION,
                             bonus: -1,
-                            modifierKey: ModifierKey.BRAVE_WEAPON_EVA
+                            modifierKey: ModifierKey.BRAVE_WEAPON_EVA,
                         },
                         {
                             field: ModifierField.SEVERE_THRESHOLD,
                             bonus: 3,
-                            modifierKey: ModifierKey.BRAVE_WEAPON_SEV
+                            modifierKey: ModifierKey.BRAVE_WEAPON_SEV,
                         },
-                    ]
+                    ],
                 },
             ],
             damageType: "phy",
@@ -1657,6 +1982,190 @@ export const Tier3PrimaryWeapons: WeaponTier = {
                 },
             ],
             damageType: "mag",
+        },
+    ],
+    secondary: [
+        {
+            name: "Advanced Shortsword",
+            trait: AbilityName.AGILITY,
+            range: DistanceRange.MELEE,
+            dice: Dice.D8,
+            modifier: 4,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Paired",
+                    description:
+                        "+4 to primary weapon damage to targets within Melee range",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Advanced Round Shield",
+            trait: AbilityName.STRENGTH,
+            range: DistanceRange.MELEE,
+            dice: Dice.D4,
+            modifier: 4,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Protective",
+                    description: "+3 to Armor Score",
+                    modifiers: [
+                        {
+                            field: ModifierField.ARMOR_SCORE,
+                            bonus: 1,
+                            modifierKey:
+                                ModifierKey.PROTECTIVE_SECONDARY_WEAPON,
+                        },
+                    ],
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Advanced Tower Shield",
+            trait: AbilityName.STRENGTH,
+            range: DistanceRange.MELEE,
+            dice: Dice.D6,
+            modifier: 4,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Barrier",
+                    description: "+4 to Armor Score; −1 to Evasion",
+                    modifiers: [
+                        {
+                            field: ModifierField.ARMOR_SCORE,
+                            bonus: 2,
+                            modifierKey: ModifierKey.BARRIER_WEAPON_ARMOR,
+                        },
+                        {
+                            field: ModifierField.EVASION,
+                            bonus: -1,
+                            modifierKey: ModifierKey.BARRIER_WEAPON_EVA,
+                        },
+                    ],
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Advanced Small Dagger",
+            trait: AbilityName.FINESSE,
+            range: DistanceRange.MELEE,
+            dice: Dice.D8,
+            modifier: 4,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Paired",
+                    description:
+                        "+4 to primary weapon damage to targets within Melee range",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Advanced Whip",
+            trait: AbilityName.PRESENCE,
+            range: DistanceRange.VERY_CLOSE,
+            dice: Dice.D6,
+            modifier: 4,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Startling",
+                    description:
+                        "Mark a Stress to crack the whip and force all adversaries within Melee range back to Close range.",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Advanced Grappler",
+            trait: AbilityName.FINESSE,
+            range: DistanceRange.CLOSE,
+            dice: Dice.D6,
+            modifier: 4,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Hooked",
+                    description:
+                        "On a successful attack, you can pull the target into Melee range.",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Advanced Hand Crossbow",
+            trait: AbilityName.FINESSE,
+            range: DistanceRange.FAR,
+            dice: Dice.D6,
+            modifier: 5,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Buckler",
+            trait: AbilityName.AGILITY,
+            range: DistanceRange.MELEE,
+            dice: Dice.D4,
+            modifier: 4,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Deflecting",
+                    description:
+                        "When you are attacked, you can mark an Armor Slot to gain a bonus to your Evasion equal to your available Armor Slots against the attack.",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Powered Gauntlet",
+            trait: AbilityName.KNOWLEDGE,
+            range: DistanceRange.CLOSE,
+            dice: Dice.D6,
+            modifier: 4,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Charged",
+                    description:
+                        "Mark a Stress to gain a +1 bonus to your Proficiency on a primary weapon attack.",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Hand Sling",
+            trait: AbilityName.FINESSE,
+            range: DistanceRange.VERY_CLOSE,
+            dice: Dice.D6,
+            modifier: 4,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Versatile",
+                    description:
+                        "This weapon can also be used with these statistics—Finesse, Close, d8+4.",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
         },
     ],
 };
@@ -2301,6 +2810,190 @@ export const Tier4PrimaryWeapons: WeaponTier = {
                 },
             ],
             damageType: "mag",
+        },
+    ],
+    secondary: [
+        {
+            name: "Legendary Shortsword",
+            trait: AbilityName.AGILITY,
+            range: DistanceRange.MELEE,
+            dice: Dice.D8,
+            modifier: 0,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Paired",
+                    description:
+                        "+2 to primary weapon damage to targets within Melee range",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Legendary Round Shield",
+            trait: AbilityName.STRENGTH,
+            range: DistanceRange.MELEE,
+            dice: Dice.D4,
+            modifier: 0,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Protective",
+                    description: "+1 to Armor Score",
+                    modifiers: [
+                        {
+                            field: ModifierField.ARMOR_SCORE,
+                            bonus: 1,
+                            modifierKey:
+                                ModifierKey.PROTECTIVE_SECONDARY_WEAPON,
+                        },
+                    ],
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Legendary Tower Shield",
+            trait: AbilityName.STRENGTH,
+            range: DistanceRange.MELEE,
+            dice: Dice.D6,
+            modifier: 0,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Barrier",
+                    description: "+2 to Armor Score; −1 to Evasion",
+                    modifiers: [
+                        {
+                            field: ModifierField.ARMOR_SCORE,
+                            bonus: 2,
+                            modifierKey: ModifierKey.BARRIER_WEAPON_ARMOR,
+                        },
+                        {
+                            field: ModifierField.EVASION,
+                            bonus: -1,
+                            modifierKey: ModifierKey.BARRIER_WEAPON_EVA,
+                        },
+                    ],
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Legendary Small Dagger",
+            trait: AbilityName.FINESSE,
+            range: DistanceRange.MELEE,
+            dice: Dice.D8,
+            modifier: 0,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Paired",
+                    description:
+                        "+2 to primary weapon damage to targets within Melee range",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Legendary Whip",
+            trait: AbilityName.PRESENCE,
+            range: DistanceRange.VERY_CLOSE,
+            dice: Dice.D6,
+            modifier: 0,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Startling",
+                    description:
+                        "Mark a Stress to crack the whip and force all adversaries within Melee range back to Close range.",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Legendary Grappler",
+            trait: AbilityName.FINESSE,
+            range: DistanceRange.CLOSE,
+            dice: Dice.D6,
+            modifier: 0,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Hooked",
+                    description:
+                        "On a successful attack, you can pull the target into Melee range.",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Legendary Hand Crossbow",
+            trait: AbilityName.FINESSE,
+            range: DistanceRange.FAR,
+            dice: Dice.D6,
+            modifier: 1,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Braveshield",
+            trait: AbilityName.AGILITY,
+            range: DistanceRange.MELEE,
+            dice: Dice.D4,
+            modifier: 6,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Sheltering",
+                    description:
+                        "When you mark an Armor Slot, it reduces damage for you and all allies within Melee range of you who took the same damage.",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Knuckle Claws",
+            trait: AbilityName.STRENGTH,
+            range: DistanceRange.MELEE,
+            dice: Dice.D6,
+            modifier: 8,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Doubled Up",
+                    description:
+                        "When you make an attack with your primary weapon, you can deal damage to another target within Melee range.",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
+        },
+        {
+            name: "Primer Shard",
+            trait: AbilityName.INSTINCT,
+            range: DistanceRange.VERY_CLOSE,
+            dice: Dice.D4,
+            modifier: 0,
+            burden: WeaponBurden.ONE_HANDED,
+            features: [
+                {
+                    name: "Locked On",
+                    description:
+                        "On a successful attack, your next attack against the same target with your primary weapon automatically succeeds.",
+                },
+            ],
+            damageType: "phy",
+            isSecondary: true,
         },
     ],
 };

@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 import { getSubclassesByClass } from "@dh_sheets/app/char-class-util";
 import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
@@ -6,7 +6,7 @@ import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed
 import { ModalTrigger } from "@dh_sheets/app/components/parts/modal/modal-trigger";
 import { SubclassInfo } from "@dh_sheets/app/components/subclass-block/subclass-info";
 import { SubclassModal } from "@dh_sheets/app/components/subclass-block/subclass-modal";
-import { ModifierField } from "@dh_sheets/app/constants";
+import { IconSize, ModifierField } from "@dh_sheets/app/constants";
 import {
     getClassData,
     getModifierByField,
@@ -16,6 +16,9 @@ import {
     switchSecondarySubclass,
 } from "@dh_sheets/app/redux/character-data-store/thunks/switch-subclass";
 import { useAppDispatch, useAppSelector } from "@dh_sheets/app/redux/hooks";
+
+import { EditIcon } from "@icons/edit-icon";
+import { PlusIcon } from "@icons/plus-icon";
 
 import styles from "./subclass-block.module.css";
 
@@ -97,6 +100,9 @@ export const SubclassBlock = () => {
         [dispatch, secondSubclass],
     );
 
+    const plusIcon = useMemo(() => <PlusIcon />, []);
+    const editIcon = useMemo(() => <EditIcon size={IconSize.LARGE} />, []);
+
     const renderSubclassModalTrigger = useCallback(
         ({
             label,
@@ -104,23 +110,29 @@ export const SubclassBlock = () => {
             keyPrefix,
             onSelect,
             modalDataKey,
+            isEdit,
         }: {
             label: string;
             style: string;
             keyPrefix: string;
             onSelect: (index: number) => void;
             modalDataKey: SubclassSelection;
+            isEdit?: boolean;
         }) => (
             <ModalTrigger
                 renderModal={renderModal}
                 onSelect={onSelect}
                 keyPrefix={keyPrefix}
-                buttonStyle={style}
-                buttonLabel={label}
+                className={style}
+                label={label}
                 modalDataKey={modalDataKey}
+                icon={isEdit ? editIcon : plusIcon}
+                size={isEdit ? IconSize.LARGE : undefined}
+                isIconButton={isEdit}
+                bordered={!isEdit}
             />
         ),
-        [renderModal],
+        [renderModal, editIcon, plusIcon],
     );
 
     return (
@@ -135,6 +147,7 @@ export const SubclassBlock = () => {
                         keyPrefix: "subclass-select-modal",
                         onSelect: changeSubclass,
                         modalDataKey: SubclassSelection.PRIMARY,
+                        isEdit: true,
                     })}
                     specializationUnlocked={specializationUnlocked}
                     masteryUnlocked={masteryUnlocked}

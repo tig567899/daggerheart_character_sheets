@@ -4,7 +4,7 @@ import { Ability, SubclassData } from "@dh_sheets/app/types";
 
 import styles from "../heritage/heritage-block.module.css";
 
-interface AncestryProps {
+interface SubclassProps {
     subclass: SubclassData;
     specializationUnlocked?: boolean;
     masteryUnlocked?: boolean;
@@ -16,28 +16,30 @@ export const SubclassInfo = ({
     specializationUnlocked,
     masteryUnlocked,
     changeButton,
-}: AncestryProps) => {
+}: SubclassProps) => {
     const renderSubclassFeatureList = useCallback(
         (features: Ability[], masteryLevel: string) => {
             return (
                 <div key={`features-level-${masteryLevel}`}>
-                    <div className={styles.subTitle}>
+                    <div className={styles.featuresHeader}>
                         {masteryLevel}{" "}
                         {features.length === 1 ? "Feature" : "Features"}
                     </div>
-                    {features.map((ability) => (
-                        <div
-                            className={styles.abilityBlock}
-                            key={`${subclass.name}-${masteryLevel}-${ability.name}`}
-                        >
-                            <div className={styles.abilityName}>
-                                {ability.name}
+                    <div className={styles.abilityBlockGroup}>
+                        {features.map((ability) => (
+                            <div
+                                className={styles.abilityBlock}
+                                key={`${subclass.name}-${masteryLevel}-${ability.name}`}
+                            >
+                                <div className={styles.abilityName}>
+                                    {ability.name}
+                                </div>
+                                <div className={styles.abilityDescription}>
+                                    {ability.description}
+                                </div>
                             </div>
-                            <div className={styles.abilityDescription}>
-                                {ability.description}
-                            </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             );
         },

@@ -6,6 +6,12 @@
 .infoLayout {
     display: flex;
     flex-direction: column;
+
+    &:hover {
+        .infoCategory {
+            visibility: visible;
+        }
+    }
 }
 
 .infoCategory {
@@ -14,6 +20,11 @@
     margin-bottom: 6px;
     display: flex;
     width: 100%;
+    visibility: hidden;
+
+    @media (pointer: coarse) {
+        visibility: visible;
+    }
 }
 
 .changeArmor {
@@ -43,5 +54,5 @@
     width: 1px;
     height: 15px;
     margin: 0 3px;
-    background-color: gray;
+    background-color: var(--foreground-secondary);
 }

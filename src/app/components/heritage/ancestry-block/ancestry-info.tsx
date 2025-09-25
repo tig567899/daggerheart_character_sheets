@@ -33,7 +33,9 @@ export const AncestryInfo = ({
                     See {descriptionExpanded ? "less" : "more"}
                 </a>
             </div>
-            Ancestry Features
+            <div className={styles.featuresHeader}>
+                Ancestry Features
+            </div>
             <div>
                 {ancestry.abilities.map((ability) => (
                     <div

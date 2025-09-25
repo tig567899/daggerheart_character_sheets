@@ -10,6 +10,7 @@
 
 .hopeFeatureDescription {
     font-size: 14px;
+    line-height: 18px;
 }
 
 .hopeCounterContainer {
@@ -21,7 +22,7 @@
 }
 
 .hopeCounter {
-    background-color: lightgray;
+    background-color: var(--foreground-soft);
     border-radius: 20px;
     height: 40px;
     width: 80%;
@@ -52,7 +53,7 @@
 .diamondFilled {
     width: 20px;
     height: 20px;
-    background-color: darkgray;
+    background-color: var(--foreground-bright);
     border-radius: 10px;
 }
 

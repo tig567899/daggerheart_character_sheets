@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 
 import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
@@ -10,7 +10,6 @@ import { WeaponInfoLayout } from "@dh_sheets/app/components/weapons-block/weapon
 import { CharClass, WeaponBurden } from "@dh_sheets/app/constants";
 import {
     removeModifier,
-    setModifierForField,
     setPrimaryWeapon,
     setSecondaryWeapon,
 } from "@dh_sheets/app/redux/character-data-store/actions";
@@ -18,9 +17,13 @@ import {
     getClassData,
     getEquipmentData,
 } from "@dh_sheets/app/redux/character-data-store/selector";
+import { equipWeapon } from "@dh_sheets/app/redux/character-data-store/thunks/equip-weapon";
 import { useAppDispatch } from "@dh_sheets/app/redux/hooks";
 import { WeaponData } from "@dh_sheets/app/types";
 import { getBaseProficiencyByLevel } from "@dh_sheets/app/util";
+
+import { EditIcon } from "@icons/edit-icon";
+import { PlusIcon } from "@icons/plus-icon";
 
 import styles from "./weapons-block.module.css";
 
@@ -48,42 +51,11 @@ export const WeaponsBlock = () => {
         [dispatch],
     );
 
-    const addWeaponFeatures = useCallback(
-        (weapon: WeaponData) => {
-            weapon.features.forEach((feature) =>
-                feature.modifiers?.forEach((modifier) => {
-                    dispatch(
-                        setModifierForField({
-                            modifierKey: modifier.modifierKey,
-                            modifier: modifier.bonus,
-                            modifierField: modifier.field,
-                        }),
-                    );
-                }),
-            );
+    const onWeaponSelect = useCallback(
+        (id: string, newWeapon: WeaponData) => {
+            dispatch(equipWeapon({ newWeapon }));
         },
         [dispatch],
-    );
-
-    const onWeaponSelect = useCallback(
-        (id: string, weapon: WeaponData) => {
-            switch (id) {
-                case WeaponSlot.PRIMARY:
-                    if (primaryWeapon) removeWeaponFeatures(primaryWeapon);
-                    addWeaponFeatures(weapon);
-                    dispatch(setPrimaryWeapon(weapon));
-                    break;
-                case WeaponSlot.SECONDARY:
-                    dispatch(setSecondaryWeapon(weapon));
-                    break;
-            }
-        },
-        [
-            dispatch,
-            primaryWeapon,
-            addWeaponFeatures,
-            removeWeaponFeatures,
-        ],
     );
 
     const onRemovePrimaryWeapon = useCallback(() => {
@@ -93,8 +65,9 @@ export const WeaponsBlock = () => {
     }, [dispatch, primaryWeapon, removeWeaponFeatures]);
 
     const onRemoveSecondaryWeapon = useCallback(() => {
+        if (secondaryWeapon) removeWeaponFeatures(secondaryWeapon);
         dispatch(setSecondaryWeapon());
-    }, [dispatch]);
+    }, [dispatch, secondaryWeapon, removeWeaponFeatures]);
 
     const renderModal = useCallback(
         (
@@ -115,6 +88,9 @@ export const WeaponsBlock = () => {
         [],
     );
 
+    const plusIcon = useMemo(() => <PlusIcon />, []);
+    const editIcon = useMemo(() => <EditIcon />, []);
+
     const renderWeaponModalTrigger = useCallback(
         ({
             label,
@@ -122,23 +98,28 @@ export const WeaponsBlock = () => {
             keyPrefix,
             onSelect,
             modalDataKey,
+            isEdit,
         }: {
             label: string;
             style: string;
             keyPrefix: string;
             onSelect: (id: string, data: WeaponData) => void;
             modalDataKey: WeaponSlot;
+            isEdit?: boolean;
         }) => (
             <ModalTrigger
                 renderModal={renderModal}
                 onSelect={onSelect}
                 keyPrefix={keyPrefix}
-                buttonStyle={style}
-                buttonLabel={label}
                 modalDataKey={modalDataKey}
+                className={style}
+                label={label}
+                icon={isEdit ? editIcon : plusIcon}
+                isIconButton={isEdit}
+                bordered={!isEdit}
             />
         ),
-        [renderModal],
+        [renderModal, editIcon, plusIcon],
     );
 
     const proficiency = getBaseProficiencyByLevel(classData.level);
@@ -148,7 +129,6 @@ export const WeaponsBlock = () => {
         );
     }
 
-    // TODO: Add Hand Diagram
     return (
         <FramedBlock>
             <BlockTitle title="Active Weapons" />
@@ -165,6 +145,7 @@ export const WeaponsBlock = () => {
                         keyPrefix: "primary-weapon-select-modal",
                         onSelect: onWeaponSelect,
                         modalDataKey: WeaponSlot.PRIMARY,
+                        isEdit: true,
                     })}
                     onRemove={onRemovePrimaryWeapon}
                 />
@@ -187,6 +168,7 @@ export const WeaponsBlock = () => {
                         keyPrefix: "secondary-weapon-select-modal",
                         onSelect: onWeaponSelect,
                         modalDataKey: WeaponSlot.SECONDARY,
+                        isEdit: true,
                     })}
                     onRemove={onRemoveSecondaryWeapon}
                 />

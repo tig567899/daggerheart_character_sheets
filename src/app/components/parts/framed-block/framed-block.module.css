@@ -1,5 +1,5 @@
 .framedBlock {
-    border: 1px solid black;
+    border: 1px solid var(--foreground);
     border-radius: 5px;
     padding: 6px;
     padding-bottom: 12px;
@@ -9,7 +9,7 @@
 }
 
 .titleBlock {
-    border: 1px solid black;
+    border: 1px solid var(--foreground-secondary);
     display: flex;
     align-self: center;
     width: 100%;
