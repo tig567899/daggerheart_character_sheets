@@ -5,6 +5,7 @@ import { ModifierField } from "@dh_sheets/app/constants";
 import {
     removeModifier,
     setModifierForField,
+    setSecondarySubclassIndex,
     setSubclassIndex,
 } from "@dh_sheets/app/redux/character-data-store/actions";
 import { getModifierByField } from "@dh_sheets/app/redux/character-data-store/selector";
@@ -129,5 +130,5 @@ export const switchSecondarySubclass =
 
         enableSave();
 
-        dispatch(setSubclassIndex(newSubclassIndex));
+        dispatch(setSecondarySubclassIndex(newSubclassIndex));
     };

@@ -40,7 +40,7 @@
 }
 
 .featureBox {
-    border: 1px solid black;
+    border: 1px solid var(--foreground-bright);
     border-radius: 10px;
     padding: 10px;
     margin-top: 6px;
@@ -48,11 +48,12 @@
 
 .feature {
     font-size: 14px;
+    margin-top: 3px;
 }
 
 .divider {
     width: 1px;
     height: 15px;
     margin: 0 3px;
-    background-color: var(--foreground-secondary);
+    background-color: var(--foreground-bright);
 }

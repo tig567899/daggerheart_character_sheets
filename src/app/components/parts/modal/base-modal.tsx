@@ -55,9 +55,12 @@ export const BaseModal = ({
 
                 {onSelect && !hideSubmit ? (
                     <div className={styles.actionButtons}>
-                        <button disabled={disableSubmit} onClick={onSelect}>
-                            {submitLabel ?? "Submit"}
-                        </button>
+                        <ActionButton
+                            label={submitLabel ?? "Submit"}
+                            onClick={onSelect}
+                            disabled={disableSubmit}
+                            bordered
+                        />
                     </div>
                 ) : null}
             </div>

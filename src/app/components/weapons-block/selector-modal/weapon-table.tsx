@@ -60,12 +60,14 @@ interface Props {
     weapons: WeaponTier[];
     onWeaponSelect: (weapon: WeaponData) => void;
     isSecondary?: boolean;
+    isBoth?: boolean;
 }
 
 export const WeaponTable = ({
     weapons,
     onWeaponSelect,
     isSecondary,
+    isBoth,
 }: Props) => {
     const renderPrimaryWeaponDataFromWeaponTier = useCallback(
         (tier: WeaponTier, tierTitle: string) => {
@@ -117,14 +119,14 @@ export const WeaponTable = ({
     ];
     return (
         <DataTableContainer>
-            {!isSecondary &&
+            {(!isSecondary || isBoth)&&
                 tierTitles.map((title, index) =>
                     renderPrimaryWeaponDataFromWeaponTier(
                         weapons[index],
                         title,
                     ),
                 )}
-            {isSecondary &&
+            {(isSecondary || isBoth) &&
                 tierTitles.map((title, index) =>
                     renderSecondaryWeaponDataFromWeaponTier(
                         weapons[index],

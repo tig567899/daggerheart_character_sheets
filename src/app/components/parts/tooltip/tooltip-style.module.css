@@ -1,0 +1,75 @@
+.triggerContainer {
+    position: relative;
+
+    &:hover {
+        .tooltipContainer {
+            visibility: visible;
+        }
+    }
+}
+
+.tooltipContainer {
+    position: absolute;
+    visibility: hidden;
+    width: 200;
+    background-color: var(--foreground);
+    border: 1px solid var(--foreground-secondary);
+    color: var(--background);
+    border-radius: 6px;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.up {
+    bottom: 110%;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    &:after {
+        content: " ";
+        position: absolute;
+        top: 100%; /* At the bottom of the tooltip */
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: black transparent transparent transparent;
+    }
+}
+
+.right {
+    left: 110%;
+    top: 50%;
+    transform: translate(0, -50%);
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent black transparent transparent;
+    }
+}
+
+.left {
+    right: 110%;
+    top: 50%;
+    transform: translate(0, -50%);
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent transparent black ;
+    }
+}

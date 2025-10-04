@@ -1,4 +1,4 @@
-import { ReactElement, useMemo } from "react";
+import { ReactElement, useCallback, useMemo } from "react";
 
 import { ActionButton } from "@dh_sheets/app/components/parts/action-button/action-button";
 import { LabeledDisplayBox } from "@dh_sheets/app/components/parts/labeled-display-box/labeled-display-box";
@@ -11,13 +11,15 @@ import { RightHandIcon } from "@icons/right-hand-icon";
 
 import styles from "./weapons-block.module.css";
 import { EquipIcon } from "@icons/equip-icon";
+import { BagIcon } from "@icons/bag-icon";
 
 export interface WeaponProps {
     categoryName: string; // Primary, Secondary, Inventory, etc.
     weapon: WeaponData;
     changeButton: ReactElement;
-    onRemove: () => void;
+    onRemove: (returnToInventory?: boolean) => void;
     onEquip?: () => void;
+    useUnequip?: boolean;
 }
 
 export const WeaponInfoLayout = ({
@@ -26,12 +28,18 @@ export const WeaponInfoLayout = ({
     changeButton,
     onRemove,
     onEquip,
+    useUnequip,
 }: WeaponProps) => {
     const modifierText = weapon.modifier ? `+${weapon.modifier}` : "";
     const clearIcon = useMemo(() => <ClearIcon />, []);
     const leftHandIcon = useMemo(() => <LeftHandIcon />, []);
     const rightHandIcon = useMemo(() => <RightHandIcon />, []);
     const equipIcon = useMemo(() => <EquipIcon />, []);
+    const bagIcon = useMemo(() => <BagIcon />, []);
+
+    const onUnequip = useCallback(() => {
+        onRemove(true);
+    }, [onRemove])
 
     let handednessText = "One-handed, primary";
     if (weapon.burden === WeaponBurden.TWO_HANDED) {
@@ -60,13 +68,22 @@ export const WeaponInfoLayout = ({
                         <ActionButton
                             onClick={onEquip}
                             icon={equipIcon}
-                            label={"Clear"}
+                            label={"Equip"}
+                            className={styles.changeWeapon}
+                            isIconButton
+                        />
+                    ) : null}
+                    {useUnequip ? (
+                        <ActionButton
+                            onClick={onUnequip}
+                            icon={bagIcon}
+                            label={"Unequip"}
                             className={styles.changeWeapon}
                             isIconButton
                         />
                     ) : null}
                     <ActionButton
-                        onClick={onRemove}
+                        onClick={() => onRemove()}
                         icon={clearIcon}
                         label={"Clear"}
                         className={styles.changeWeapon}

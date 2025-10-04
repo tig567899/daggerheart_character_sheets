@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 
+import { ActionButton } from "@dh_sheets/app/components/parts/action-button/action-button";
 import {
     getClassData,
     getExperiences,
@@ -91,20 +92,21 @@ export const LevelUpExperienceSelection = ({
                     );
                 })}
             </div>
-            <div>
-                <button
+            <div className={styles.asiActionButtonGroup}>
+                <ActionButton
                     className={styles.asiActionButton}
                     onClick={cancelUpgrade}
-                >
-                    Back
-                </button>
-                <button
+                    label={"Back"}
+                    bordered
+                />
+
+                <ActionButton
                     className={styles.asiActionButton}
                     onClick={onSubmit}
                     disabled={numberSelected < 2}
-                >
-                    Confirm
-                </button>
+                    label={"Confirm"}
+                    bordered
+                />
             </div>
         </div>
     );

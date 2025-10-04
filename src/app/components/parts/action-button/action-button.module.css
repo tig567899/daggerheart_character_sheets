@@ -15,7 +15,7 @@
 }
 
 .bordered {
-    border: 1px solid var(--foreground-secondary);
+    border: 1px solid var(--foreground-bright);
 }
 
 .large {
@@ -34,6 +34,10 @@
     padding: 1px;
 }
 
+.textButton {
+    width: unset;
+}
+
 .iconSvg {
     max-width: 100%;
     max-height: 100%;
@@ -46,7 +50,7 @@
 }
 
 .buttonLabel {
-    color: var(--foreground-secondary);
+    color: var(--foreground-bright);
 }
 
 .disabled {

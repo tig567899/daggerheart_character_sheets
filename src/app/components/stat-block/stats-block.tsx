@@ -4,7 +4,10 @@ import { useCallback, useContext, useMemo } from "react";
 import { FixedFramedStat } from "@dh_sheets/app/components/parts/framed-stat/framed-stat";
 import { ModalTrigger } from "@dh_sheets/app/components/parts/modal/modal-trigger";
 import { StatAllocatorModal } from "@dh_sheets/app/components/stat-block/allocator/stat-allocator-modal";
-import { useStatModifiers } from "@dh_sheets/app/components/stat-block/util";
+import {
+    useStatModLists,
+    useStatModifiers,
+} from "@dh_sheets/app/components/stat-block/util";
 import {
     AbilityNames,
     ModifierKey,
@@ -39,6 +42,8 @@ export const StatsBlock = () => {
         presenceMod + allStatsMod,
         knowledgeMod + allStatsMod,
     ];
+
+    const statLists = useStatModLists();
 
     const initialModifiersAreSet =
         useAppSelector((state) =>
@@ -100,6 +105,8 @@ export const StatsBlock = () => {
                             usePlus
                             displayLabelAbove
                             subText={abilityUsesArray[index].join(", ")}
+                            modifiers={statLists[index]}
+                            baseNumber={0}
                         />
                     </div>
                 ))}

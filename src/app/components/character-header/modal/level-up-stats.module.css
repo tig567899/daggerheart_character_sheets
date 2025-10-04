@@ -1,0 +1,188 @@
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.selectedOptionsBlock {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-left: 20px;
+}
+
+.resetButton {
+    align-self: unset;
+    width: fit-content;
+    margin-top: 6px;
+}
+
+.divider {
+    height: 1px;
+    background-color: var(--foreground-bright);
+    margin: 12px;
+}
+
+.baseScreenParent {
+    overflow: auto;
+    position: relative;
+
+    &:before {
+        display: block;
+        content: "";
+        width: 100%;
+        height: 20px;
+        background: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 1) 50%,
+            rgba(255, 255, 255, 0) 80%
+        );
+        position: sticky;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    &:after {
+        display: block;
+        content: "";
+        width: 100%;
+        height: 20px;
+        background: linear-gradient(
+            to top,
+            rgba(255, 255, 255, 1) 50%,
+            rgba(255, 255, 255, 0) 100%
+        );
+        position: sticky;
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+}
+
+.baseScreenContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 20%;
+    overflow-y: auto;
+    padding-top: 4px;
+}
+
+.optionCard {
+    width: 75%;
+    padding: 15px;
+    border: 1px var(--foreground-bright) solid;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+
+    &:focus,
+    &:hover {
+        box-shadow: 0 0 3px 3px var(--foreground-bright);
+    }
+}
+
+.optionDescription {
+    margin-bottom: 3px;
+}
+
+.statSelectionContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.statSelection {
+    margin-bottom: 12px;
+    margin-top: 6px;
+    display: flex;
+    flex-direction: row;
+    max-width: 95%;
+}
+
+.statInput {
+    margin: 0 6px;
+    width: 150px;
+}
+
+.asiActionButtonGroup {
+    display: flex;
+    flex-direction: row;
+}
+
+.asiActionButton {
+    margin: 0 6px;
+    width: 60px;
+}
+
+.tierUpTitle {
+    font-weight: bold;
+}
+
+.tierUpDescription {
+    font-size: 14px;
+}
+
+.expSelection {
+    margin: 6px 0;
+    width: 40%;
+}
+
+.expRow {
+    display: flex;
+    align-content: center;
+    margin: 10px 0;
+
+    label {
+        height: fit-content;
+        align-self: center;
+    }
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.selectionHeading {
+    font-size: 18px;
+    line-height: 21px;
+}
+
+.selectionCard {
+    border: 1px solid var(--foreground-bright);
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 12px;
+    margin: 0 6px;
+    display: flex;
+    flex-direction: column;
+
+    &.cardSelected {
+        box-shadow: 0 0 3px 3px var(--foreground-bright);
+    }
+    width: 50%;
+}
+
+.abilityBlock {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.abilityName {
+    margin-bottom: 6px;
+    color: var(--foreground-secondary);
+}
+
+.selectionName {
+    font-size: 18px;
+    border-bottom: 1px solid var(--foreground-bright);
+}

@@ -1,28 +1,38 @@
 import { useCallback, useMemo, useState } from "react";
 
-import { LevelUpExperienceSelection } from "@dh_sheets/app/components/header/modal/level-up-experience-selection";
-import { LevelUpStatSelection } from "@dh_sheets/app/components/header/modal/level-up-stat-selection";
+import { LevelUpExperienceSelection } from "@dh_sheets/app/components/character-header/modal/level-up-experience-selection";
+import { LevelUpMulticlassSelection } from "@dh_sheets/app/components/character-header/modal/level-up-multiclass";
+import { LevelUpStatSelection } from "@dh_sheets/app/components/character-header/modal/level-up-stat-selection";
+import { LevelUpSubclassSelection } from "@dh_sheets/app/components/character-header/modal/level-up-subclass-selection";
 import {
     constructModifierForAsiOption,
     constructModifierForExpOption,
+    constructModifierForMulticlass,
     getModifierFromLevelUpOption,
-} from "@dh_sheets/app/components/header/modal/util";
+    maybeGetAdditionalModifiersForSubclassSpecialization,
+} from "@dh_sheets/app/components/character-header/modal/util";
+import { getSubclassBlockForCharacter } from "@dh_sheets/app/components/subclass-block/util";
 import {
     AbilityName,
+    CharClass,
     LevelUpKey,
+    ModifierField,
     ModifierFieldToAbilityNameMap,
+    ModifierKey,
     SecondarySelectionValue,
     Tier2LevelUpKeys,
     Tier3LevelUpKeys,
     Tier4LevelUpKeys,
 } from "@dh_sheets/app/constants";
 import { getLevelUpOptionsByTier } from "@dh_sheets/app/data/level-up-data";
+import { setMulticlassCharClass } from "@dh_sheets/app/redux/character-data-store/actions";
 import {
     getClassData,
     getDisabledLevelUpKeys,
     getLevelUpChoicesByTier,
+    getModifierByField,
 } from "@dh_sheets/app/redux/character-data-store/selector";
-import { useAppSelector } from "@dh_sheets/app/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@dh_sheets/app/redux/hooks";
 import { LevelUpChoice, LevelUpOption } from "@dh_sheets/app/types";
 import { getTierByLevel } from "@dh_sheets/app/util";
 
@@ -41,10 +51,23 @@ export const LevelUpBaseScreen = ({
     chosenUpgrade,
     newExperience,
 }: LevelUpProps) => {
+    const dispatch = useAppDispatch();
     const [optionSelected, setOptionSelected] = useState<LevelUpOption | null>(
         null,
     );
-    const { charClass, level } = useAppSelector(getClassData);
+    const { charClass, level, subclass, secondSubclass } =
+        useAppSelector(getClassData);
+
+    const subclassPoints = useAppSelector((state) =>
+        getModifierByField(state, ModifierField.MAIN_SUBCLASS),
+    );
+
+    const subclassData = getSubclassBlockForCharacter(charClass[0], subclass);
+    const secondSubclassData = getSubclassBlockForCharacter(
+        charClass[1],
+        secondSubclass,
+    );
+
     const tier = getTierByLevel(level + 1);
     const filters = useMemo(() => {
         switch (tier) {
@@ -115,10 +138,21 @@ export const LevelUpBaseScreen = ({
                 if (!modifier) {
                     return;
                 }
+
+                const subclassBlock = getSubclassBlockForCharacter(
+                    charClass[0],
+                    subclass,
+                );
+
+                const additionalModifiers =
+                    maybeGetAdditionalModifiersForSubclassSpecialization({
+                        subclassBlock,
+                        subclassPoints,
+                    });
                 const upgrade: LevelUpChoice = {
                     levelUpKey: option.levelUpKey,
                     description: option.description,
-                    modifiers: [modifier],
+                    modifiers: [modifier, ...additionalModifiers],
                     disables: option.disables,
                 };
                 setUpgrade(upgrade);
@@ -176,12 +210,63 @@ export const LevelUpBaseScreen = ({
         [optionSelected, setUpgrade],
     );
 
+    const onMulticlassSelect = useCallback(
+        (charClass: CharClass) => {
+            if (!optionSelected) {
+                return;
+            }
+            const modifiers = [constructModifierForMulticlass()];
+
+            const upgrade: LevelUpChoice = {
+                levelUpKey: optionSelected.levelUpKey,
+                description: `Multiclass: ${charClass}. Requires both upgrades`,
+                modifiers,
+                disables: optionSelected.disables,
+            };
+
+            setUpgrade(upgrade);
+            setOptionSelected(null);
+            dispatch(setMulticlassCharClass(charClass));
+        },
+        [optionSelected, setUpgrade, setMulticlassCharClass],
+    );
+
+    const onSubclassSelect = useCallback(
+        (value: number) => {
+            if (!optionSelected) {
+                return;
+            }
+
+            const modifiers = [{
+                field: value === 1 ? ModifierField.SECONDARY_SUBCLASS : ModifierField.MAIN_SUBCLASS,
+                bonus: 1,
+                modifierKey: ModifierKey.TIER_4_SUBCLASS,
+            }];
+
+            let subclassName = value === 0 ? subclassData?.name : secondSubclassData?.name;
+            if (!subclassName) {
+                subclassName = '(No subclass selected)'
+            }
+
+            const upgrade: LevelUpChoice = {
+                levelUpKey: optionSelected.levelUpKey,
+                description: `Unlock specialization for ${subclassName} ${charClass[value]}.`,
+                modifiers,
+                disables: optionSelected.disables,
+            }
+
+            setUpgrade(upgrade);
+            setOptionSelected(null);
+        },
+        [optionSelected, setUpgrade],
+    );
+
     const clearUpgrade = useCallback(() => {
         setOptionSelected(null);
     }, []);
 
     return (
-        <div>
+        <div className={styles.baseScreenParent}>
             {!optionSelected ? (
                 <div className={styles.baseScreenContainer}>
                     {optionsByTier.map((option, index) => {
@@ -222,6 +307,20 @@ export const LevelUpBaseScreen = ({
                     onSelection={onExperienceSelect}
                     cancelUpgrade={clearUpgrade}
                     additionalExperience={newExperience}
+                />
+            ) : null}
+            {optionSelected?.secondarySelection ===
+            SecondarySelectionValue.MULTICLASS ? (
+                <LevelUpMulticlassSelection
+                    onSelection={onMulticlassSelect}
+                    cancelUpgrade={clearUpgrade}
+                />
+            ) : null}
+            {optionSelected?.secondarySelection ===
+            SecondarySelectionValue.SUBCLASS ? (
+                <LevelUpSubclassSelection
+                    onSelection={onSubclassSelect}
+                    cancelUpgrade={clearUpgrade}
                 />
             ) : null}
         </div>

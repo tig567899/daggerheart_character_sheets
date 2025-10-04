@@ -9,6 +9,8 @@ import { CharacterDataState } from "@dh_sheets/app/redux/character-data-store/ty
 import { Experiences, LevelUpChoice, Modifier } from "@dh_sheets/app/types";
 import { getBaseProficiencyByLevel } from "@dh_sheets/app/util";
 
+export const getStore = (store: { characterData: CharacterDataState }) => store;
+
 export const getCharacterData = (store: {
     characterData: CharacterDataState;
 }): CharacterDataState => store.characterData;
@@ -51,7 +53,8 @@ export const getModifierByField = createSelector(
         getModifiers,
         getClassData,
         (_store, field: ModifierField) => field,
-        (_store, field, modsToExclude?: ModifierKey[]) => modsToExclude,
+        (_store, field: ModifierField, modsToExclude?: ModifierKey[]) =>
+            modsToExclude,
     ],
     (
         modifiers: Record<string, Modifier>,
@@ -87,6 +90,40 @@ export const getModifierByField = createSelector(
             }, 0);
         };
         return getModifier(field);
+    },
+);
+
+export const getModifierListByField = createSelector(
+    [
+        getStore,
+        getModifiers,
+        getClassData,
+        (_store, field: ModifierField) => field,
+    ],
+    (
+        store,
+        modifiers: Record<string, Modifier>,
+        { level },
+        field: ModifierField,
+    ): Modifier[] => {
+        return Object.values(modifiers)
+            .filter((mod) => mod.field === field)
+            .map((mod) => {
+                if (typeof mod.bonus === "number") {
+                    return mod;
+                }
+                let bonus = getModifierByField(store, mod.bonus, []);
+                if (mod.bonus === ModifierField.PROFICIENCY) {
+                    bonus += getBaseProficiencyByLevel(level);
+                }
+
+                return {
+                    field: mod.field,
+                    bonus,
+                    modifierKey: mod.modifierKey,
+                    additionalData: mod.additionalData,
+                };
+            });
     },
 );
 

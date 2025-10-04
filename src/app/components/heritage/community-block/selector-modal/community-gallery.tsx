@@ -14,7 +14,8 @@ export const CommunityGallery = ({
     selectedIndex,
 }: SelectorProps) => {
     return (
-        <ul className={styles.gallery}>
+        <div className={styles.galleryContainer}>
+            <ul className={styles.gallery}>
             {CommunitiesList.map((community, index) => {
                 const backgroundBrief = community.background.split(".")[0];
                 const ability = community.ability;
@@ -46,5 +47,7 @@ export const CommunityGallery = ({
                 );
             })}
         </ul>
+        </div>
+        
     );
 };

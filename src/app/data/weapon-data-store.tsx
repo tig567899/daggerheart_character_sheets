@@ -1156,7 +1156,7 @@ export const Tier2PrimaryWeaons: WeaponTier = {
                     modifiers: [
                         {
                             field: ModifierField.ARMOR_SCORE,
-                            bonus: 1,
+                            bonus: 2,
                             modifierKey:
                                 ModifierKey.PROTECTIVE_SECONDARY_WEAPON,
                         },
@@ -2016,7 +2016,7 @@ export const Tier3PrimaryWeapons: WeaponTier = {
                     modifiers: [
                         {
                             field: ModifierField.ARMOR_SCORE,
-                            bonus: 1,
+                            bonus: 3,
                             modifierKey:
                                 ModifierKey.PROTECTIVE_SECONDARY_WEAPON,
                         },
@@ -2040,7 +2040,7 @@ export const Tier3PrimaryWeapons: WeaponTier = {
                     modifiers: [
                         {
                             field: ModifierField.ARMOR_SCORE,
-                            bonus: 2,
+                            bonus: 4,
                             modifierKey: ModifierKey.BARRIER_WEAPON_ARMOR,
                         },
                         {
@@ -2844,7 +2844,7 @@ export const Tier4PrimaryWeapons: WeaponTier = {
                     modifiers: [
                         {
                             field: ModifierField.ARMOR_SCORE,
-                            bonus: 1,
+                            bonus: 4,
                             modifierKey:
                                 ModifierKey.PROTECTIVE_SECONDARY_WEAPON,
                         },
@@ -2864,11 +2864,11 @@ export const Tier4PrimaryWeapons: WeaponTier = {
             features: [
                 {
                     name: "Barrier",
-                    description: "+2 to Armor Score; −1 to Evasion",
+                    description: "+5 to Armor Score; −1 to Evasion",
                     modifiers: [
                         {
                             field: ModifierField.ARMOR_SCORE,
-                            bonus: 2,
+                            bonus: 5,
                             modifierKey: ModifierKey.BARRIER_WEAPON_ARMOR,
                         },
                         {

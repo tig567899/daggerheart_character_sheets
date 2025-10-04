@@ -6,6 +6,7 @@ import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed
 import { ModalTrigger } from "@dh_sheets/app/components/parts/modal/modal-trigger";
 import { SubclassInfo } from "@dh_sheets/app/components/subclass-block/subclass-info";
 import { SubclassModal } from "@dh_sheets/app/components/subclass-block/subclass-modal";
+import { getSubclassBlockForCharacter } from "@dh_sheets/app/components/subclass-block/util";
 import { IconSize, ModifierField } from "@dh_sheets/app/constants";
 import {
     getClassData,
@@ -35,15 +36,17 @@ export const SubclassBlock = () => {
         subclass: subclassIndex,
         secondSubclass: secondSubclassIndex,
     } = useAppSelector(getClassData);
-    const subclass =
-        subclassIndex === undefined
-            ? null
-            : getSubclassesByClass(charClass[0])[subclassIndex];
+    const subclass = getSubclassBlockForCharacter(charClass[0], subclassIndex);
 
-    const secondSubclass =
-        secondSubclassIndex === undefined
-            ? null
-            : getSubclassesByClass(charClass[0])[secondSubclassIndex];
+    const multiclassModifiers = useAppSelector((state) =>
+        getModifierByField(state, ModifierField.MULTICLASS),
+    );
+
+    const isMulticlassChar = multiclassModifiers > 0;
+    const secondSubclass = getSubclassBlockForCharacter(
+        charClass[1],
+        secondSubclassIndex,
+    );
 
     const subclassPoints = useAppSelector((state) =>
         getModifierByField(state, ModifierField.MAIN_SUBCLASS),
@@ -140,6 +143,7 @@ export const SubclassBlock = () => {
             <BlockTitle title="Subclass Features" />
             {subclass ? (
                 <SubclassInfo
+                    includedClass={isMulticlassChar ? charClass[0] : undefined}
                     subclass={subclass}
                     changeButton={renderSubclassModalTrigger({
                         label: "Change",
@@ -163,9 +167,10 @@ export const SubclassBlock = () => {
                     })}
                 </div>
             )}
-            {charClass[1] ? (
+            {isMulticlassChar && charClass[1] ? (
                 secondSubclass ? (
                     <SubclassInfo
+                        includedClass={isMulticlassChar ? charClass[1] : undefined}
                         subclass={secondSubclass}
                         changeButton={renderSubclassModalTrigger({
                             label: "Change",
@@ -173,6 +178,7 @@ export const SubclassBlock = () => {
                             keyPrefix: "subclass-2-select-modal",
                             onSelect: changeSecondarySubclass,
                             modalDataKey: SubclassSelection.SECONDARY,
+                            isEdit: true,
                         })}
                         specializationUnlocked={
                             multiClassSpecializationUnlocked

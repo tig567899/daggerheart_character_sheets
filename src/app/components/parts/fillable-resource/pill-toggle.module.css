@@ -8,7 +8,7 @@
     border-radius: 10px;
     width: 30px;
     height: 15px;
-    border: 1px solid var(--foreground-secondary);
+    border: 1px solid var(--foreground-bright);
     display: flex;
 }
 
@@ -21,7 +21,7 @@
 }
 
 .previewUnfilled {
-    border: 1px dashed var(--foreground-secondary);
+    border: 1px dashed var(--foreground-bright);
 }
 
 .resourceContainer {
@@ -36,7 +36,7 @@
 }
 
 .grid {
-    width: 120px;
+    width: 110px;
     flex-wrap: wrap;
     height: 100%;
 }

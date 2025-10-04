@@ -19,6 +19,7 @@ export const setCharacterPronouns = createAction<string>(
     "Set character pronouns",
 );
 export const setCharacterClass = createAction<CharClass>("Set character class");
+export const setMulticlassCharClass = createAction<CharClass>("Set multiclass character class");
 
 // Set experiences
 export const setExperience = createAction<{
@@ -75,6 +76,8 @@ export const setCommunity = createAction<string>("Set community");
 export const loadDataFromCookies = createAction<CharacterDataState>(
     "Load data from cookies",
 );
+
+export const resetData = createAction<{}>("Clear character sheet");
 
 export const setSubclassIndex = createAction<number>("Set subclass index");
 export const setSecondarySubclassIndex = createAction<number>(

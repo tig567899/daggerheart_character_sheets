@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useSelector } from "react-redux";
 
-import { useExperiencesModifiers } from "@dh_sheets/app/components/experiences-block/util";
+import { useExperienceModifiersList, useExperiencesModifiers } from "@dh_sheets/app/components/experiences-block/util";
 import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
 import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";
 import { FixedFramedStat } from "@dh_sheets/app/components/parts/framed-stat/framed-stat";
@@ -15,6 +15,7 @@ import { useAppDispatch } from "@dh_sheets/app/redux/hooks";
 import { getTierByLevel } from "@dh_sheets/app/util";
 
 import styles from "./experiences-block.module.css";
+import { TooltipDirection } from "@dh_sheets/app/components/parts/tooltip/tooltip-trigger";
 
 export const ExperiencesBlock = () => {
     const charExperiences = useSelector(getExperiences);
@@ -24,6 +25,7 @@ export const ExperiencesBlock = () => {
     const experienceCount = getTierByLevel(level) + 1;
 
     const experienceModifiers = useExperiencesModifiers();
+    const experienceModifiersList = useExperienceModifiersList();
 
     const onSaveExperiences = useCallback(
         (value: string, index?: number) => {
@@ -54,7 +56,7 @@ export const ExperiencesBlock = () => {
                                 />
                             </div>
 
-                            <FixedFramedStat label="" value={2 + experienceModifiers[index]} usePlus small />
+                            <FixedFramedStat label="" value={2 + experienceModifiers[index]} usePlus small baseNumber={2} modifiers={experienceModifiersList[index]} tooltipDirection={TooltipDirection.LEFT}/>
                         </div>
                     );
                 })}

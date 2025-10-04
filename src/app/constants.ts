@@ -72,8 +72,10 @@ export enum ModifierField {
     // Extra cards
     DOMAIN_CARDS = "domain",
     // Subclass
-    MAIN_SUBCLASS = 'subclass',
-    SECONDARY_SUBCLASS = 'secondary_subclass',
+    MAIN_SUBCLASS = "subclass",
+    SECONDARY_SUBCLASS = "secondary_subclass",
+    // Multiclass
+    MULTICLASS = "multiclass",
 }
 
 export const abilityToModifierFieldMap = new Map([
@@ -151,10 +153,10 @@ export enum ModifierKey {
     DESTRUCTIVE_WEAPON = "destructive_weapon_agility",
 
     // Secondary Weapon Bonuses
-    PROTECTIVE_SECONDARY_WEAPON = 'protective_secondary_weapon_armor',
-    BARRIER_WEAPON_ARMOR = 'barrier_weapon_armor',
-    BARRIER_WEAPON_EVA = 'barrier_weapon_evasion',
-    DOUBLE_DUTY_WEAPON = 'double_duty_weapon_armor',
+    PROTECTIVE_SECONDARY_WEAPON = "protective_secondary_weapon_armor",
+    BARRIER_WEAPON_ARMOR = "barrier_weapon_armor",
+    BARRIER_WEAPON_EVA = "barrier_weapon_evasion",
+    DOUBLE_DUTY_WEAPON = "double_duty_weapon_armor",
 
     // Subclass bonuses
     STALWART_GUARDIAN_FOUND_MAJ = "stalwart_guardian_foundation_major",
@@ -220,7 +222,135 @@ export enum ModifierKey {
     TIER_4_EVA = "tier_4_evasion",
     TIER_4_SUBCLASS = "tier_4_subclass_upgrade",
     TIER_4_PROFICIENCY = "tier_4_proficiency",
+
+    MULTICLASS = "multiclass",
 }
+
+export const ModifierKeyToDescripionMap = new Map<ModifierKey, string>([
+    // Initial stat modifications
+    [ModifierKey.INITIAL_MOD_PLUS_2, "initial modifier"],
+    [ModifierKey.INIIIAL_MOD_PLUS_1_1, "initial modifier"],
+    [ModifierKey.INIIIAL_MOD_PLUS_1_2, "initial modifier"],
+    [ModifierKey.INIIIAL_MOD_MINUS_1, "initial modifier"],
+
+    // Ancestry bonuses
+    [ModifierKey.CLANK_ANCESTRY_BONUS, "Clank ancestry"],
+    [ModifierKey.GALAPA_ANCESTRY_MAJOR_BONUS, "Galapa ancestry"],
+    [ModifierKey.GALAPA_ANCESTRY_SEVERE_BONUS, "Galapa ancestry"],
+    [ModifierKey.GIANT_ANCESTRY_BONUS, "Giant ancestry"],
+    [ModifierKey.HUMAN_ANCESTRY_BONUS, "Human ancestry"],
+    [ModifierKey.SIMIAH_ANCESTRY_BONUS, "Simiah ancestry"],
+
+    // Armor bonuses
+    [ModifierKey.GAMBESON_ARMOR, "Gambeson armor"],
+    [ModifierKey.CHAINMAIL_ARMOR, "Chainmail armor"],
+    [ModifierKey.FULL_PLATE_ARMOR_EVA, "Full Plate armor"],
+    [ModifierKey.FULL_PLATE_ARMOR_AGI, "Full Plate armor"],
+    [ModifierKey.BELLARMOI_FINE_ARMOR, "Bellamrmoi Fine Armor"],
+    [ModifierKey.SAVIOR_CHAIN_STATS, "Savior Chainmail armor"],
+    [ModifierKey.SAVIOR_CHAIN_EVA, "Savior Chainmail armor"],
+
+    // Primary Weapon Bonuses
+    [ModifierKey.HEAVY_WEAPON, "primary weapon"],
+    [ModifierKey.MASSIVE_WEAPON, "primary weapon"],
+    [ModifierKey.CUMBERSOME_WEAPON, "primary weapon"],
+    [ModifierKey.BRAVE_WEAPON_EVA, "primary weapon"],
+    [ModifierKey.BRAVE_WEAPON_SEV, "primary weapon"],
+    [ModifierKey.PROTECTIVE_WEAPON, "primary weapon"],
+    [ModifierKey.DESTRUCTIVE_WEAPON, "primary weapon"],
+
+    // Secondary Weapon Bonuses
+    [
+        ModifierKey.PROTECTIVE_SECONDARY_WEAPON,
+        "secondary weapon",
+    ],
+    [ModifierKey.BARRIER_WEAPON_ARMOR, "secondary weapon"],
+    [ModifierKey.BARRIER_WEAPON_EVA, "secondary weapon"],
+    [ModifierKey.DOUBLE_DUTY_WEAPON, "secondary weapon"],
+
+    // Subclass bonuses
+    [
+        ModifierKey.STALWART_GUARDIAN_FOUND_MAJ,
+        "Stalwart Guardian: Unwavering",
+    ],
+    [
+        ModifierKey.STALWART_GUARDIAN_FOUND_SEV,
+        "Stalwart Guardian: Unwavering",
+    ],
+    [ModifierKey.STALWART_GUARDIAN_SPEC_MAJ, "Stalwart Guardian: Unrelenting"],
+    [ModifierKey.STALWART_GUARDIAN_SPEC_SEV, "Stalwart Guardian: Unrelenting"],
+    [ModifierKey.STALWART_GUARDIAN_MAST_MAJ, "Stalwart Guardian: Undaunted"],
+    [
+        ModifierKey.STALWART_GUARDIAN_MAST_SEV,
+        "Stalwart Guardian: Undaunted",
+    ],
+    [
+        ModifierKey.VENGEANCE_GUARDIAN_FOUND_STRESS,
+        "Vengeance Guardian: At Ease",
+    ],
+    [ModifierKey.NIGHTWALKER_ROGUE_EVA, "Nightwalker Rogue: Fleeting Shadow"],
+    [ModifierKey.WINGED_SENTINEL_SERAPH_SEV, "Winged Sentinel Seraph: Ascendant"],
+    [
+        ModifierKey.KNOWLEDGE_WIZARD_FOUND_DOMAIN,
+        "School of Knowledge Wizard: Prepared",
+    ],
+    [ModifierKey.KNOWLEDGE_WIZARD_SPEC_DOMAIN, "School of Knowledge Wizard: Accomplished"],
+    [
+        ModifierKey.KNOWLEDGE_WIZARD_MAST_DOMAIN,
+        "School of Knowledge Wizard: Brilliant",
+    ],
+    [ModifierKey.WAR_WIZARD_HP, "School of War Wizard: Battlemage"],
+
+    // Level-Up Bonuses
+    [ModifierKey.TIER_2_ASI_1_1, "level up increase for tier 2"],
+    [ModifierKey.TIER_2_ASI_1_2, "level up increase for tier 2"],
+    [ModifierKey.TIER_2_ASI_2_1, "level up increase for tier 2"],
+    [ModifierKey.TIER_2_ASI_2_2, "level up increase for tier 2"],
+    [ModifierKey.TIER_2_ASI_3_1, "level up increase for tier 2"],
+    [ModifierKey.TIER_2_ASI_3_2, "level up increase for tier 2"],
+    [ModifierKey.TIER_2_HP_1, "level up increase for tier 2"],
+    [ModifierKey.TIER_2_HP_2, "level up increase for tier 2"],
+    [ModifierKey.TIER_2_STRESS_1, "level up increase for tier 2"],
+    [ModifierKey.TIER_2_STRESS_2, "level up increase for tier 2"],
+    [ModifierKey.TIER_2_EXP_1, "level up increase for tier 2"],
+    [ModifierKey.TIER_2_EXP_2, "level up increase for tier 2"],
+    [ModifierKey.TIER_2_DOMAIN, "level up increase for tier 2"],
+    [ModifierKey.TIER_2_EVA, "level up increase for tier 2"],
+
+    [ModifierKey.TIER_3_ASI_1_1, "level up increase for tier 3"],
+    [ModifierKey.TIER_3_ASI_1_2, "level up increase for tier 3"],
+    [ModifierKey.TIER_3_ASI_2_1, "level up increase for tier 3"],
+    [ModifierKey.TIER_3_ASI_2_2, "level up increase for tier 3"],
+    [ModifierKey.TIER_3_ASI_3_1, "level up increase for tier 3"],
+    [ModifierKey.TIER_3_ASI_3_2, "level up increase for tier 3"],
+    [ModifierKey.TIER_3_HP_1, "level up increase for tier 3"],
+    [ModifierKey.TIER_3_HP_2, "level up increase for tier 3"],
+    [ModifierKey.TIER_3_STRESS_1, "level up increase for tier 3"],
+    [ModifierKey.TIER_3_STRESS_2, "level up increase for tier 3"],
+    [ModifierKey.TIER_3_EXP_1, "level up increase for tier 3"],
+    [ModifierKey.TIER_3_EXP_2, "level up increase for tier 3"],
+    [ModifierKey.TIER_3_DOMAIN, "level up increase for tier 3"],
+    [ModifierKey.TIER_3_EVA, "level up increase for tier 3"],
+    [ModifierKey.TIER_3_SUBCLASS, "level up increase for tier 3"],
+    [ModifierKey.TIER_3_PROFICIENCY, "level up increase for tier 3"],
+
+    [ModifierKey.TIER_4_ASI_1_1, "level up increase for tier 4"],
+    [ModifierKey.TIER_4_ASI_1_2, "level up increase for tier 4"],
+    [ModifierKey.TIER_4_ASI_2_1, "level up increase for tier 4"],
+    [ModifierKey.TIER_4_ASI_2_2, "level up increase for tier 4"],
+    [ModifierKey.TIER_4_ASI_3_1, "level up increase for tier 4"],
+    [ModifierKey.TIER_4_ASI_3_2, "level up increase for tier 4"],
+    [ModifierKey.TIER_4_HP_1, "level up increase for tier 4"],
+    [ModifierKey.TIER_4_HP_2, "level up increase for tier 4"],
+    [ModifierKey.TIER_4_STRESS_1, "level up increase for tier 4"],
+    [ModifierKey.TIER_4_STRESS_2, "level up increase for tier 4"],
+    [ModifierKey.TIER_4_EXP_1, "level up increase for tier 4"],
+    [ModifierKey.TIER_4_EXP_2, "level up increase for tier 4"],
+    [ModifierKey.TIER_4_DOMAIN, "level up increase for tier 4"],
+    [ModifierKey.TIER_4_EVA, "level up increase for tier 4"],
+    [ModifierKey.TIER_4_SUBCLASS, "level up increase for tier 4"],
+    [ModifierKey.TIER_4_PROFICIENCY, "level up increase for tier 4"],
+]);
 
 export enum Domains {
     ARCANA = "Arcana",
@@ -299,7 +429,7 @@ export const TwoPointLevelUpKeys = new Set<LevelUpKey>([
     LevelUpKey.TIER_3_PROF,
     LevelUpKey.TIER_4_MULTI,
     LevelUpKey.TIER_4_PROF,
-])
+]);
 
 export enum SecondarySelectionValue {
     STATS,
@@ -313,6 +443,5 @@ export enum IconSize {
     MEDIUM = 18,
     LARGE = 24,
 }
-
 
 export const COOKIE_KEY = "charData";

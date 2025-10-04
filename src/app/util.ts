@@ -1,4 +1,4 @@
-import { ModifierField } from "@dh_sheets/app/constants";
+import { LevelUpKey, ModifierField } from "@dh_sheets/app/constants";
 
 export function getBaseProficiencyByLevel(level: number): number {
     if (level === 1) return 1;
@@ -22,5 +22,11 @@ export function isExperienceModifierField(field: ModifierField): boolean {
         field === ModifierField.EXPERIENCE_3 ||
         field === ModifierField.EXPERIENCE_4 ||
         field === ModifierField.EXPERIENCE_5
+    );
+}
+
+export function isSubclassLevelUpChoice(key: LevelUpKey): boolean {
+    return (
+        key === LevelUpKey.TIER_3_SUBCLASS || key === LevelUpKey.TIER_4_SUBCLASS
     );
 }

@@ -9,7 +9,7 @@
 }
 
 .titleBlock {
-    border: 1px solid var(--foreground-secondary);
+    border: 1px solid var(--foreground-bright);
     display: flex;
     align-self: center;
     width: 100%;

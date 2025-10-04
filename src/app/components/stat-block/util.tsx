@@ -1,5 +1,8 @@
 import { ModifierField } from "@dh_sheets/app/constants";
-import { getModifierByField } from "@dh_sheets/app/redux/character-data-store/selector";
+import {
+    getModifierByField,
+    getModifierListByField,
+} from "@dh_sheets/app/redux/character-data-store/selector";
 import { useAppSelector } from "@dh_sheets/app/redux/hooks";
 
 export const useStatModifiers = () => {
@@ -34,4 +37,38 @@ export const useStatModifiers = () => {
         knowledgeMod,
         allStatsMod,
     };
+};
+
+export const useStatModLists = () => {
+    const allStatsLists = useAppSelector((state) =>
+        getModifierListByField(state, ModifierField.ALL_STATS),
+    );
+
+    const agilityLists = useAppSelector((state) =>
+        getModifierListByField(state, ModifierField.AGILITY),
+    );
+    const strengthLists = useAppSelector((state) =>
+        getModifierListByField(state, ModifierField.STRENGTH),
+    );
+    const finesseLists = useAppSelector((state) =>
+        getModifierListByField(state, ModifierField.FINESSE),
+    );
+    const instinctLists = useAppSelector((state) =>
+        getModifierListByField(state, ModifierField.INSTINCT),
+    );
+    const presenceLists = useAppSelector((state) =>
+        getModifierListByField(state, ModifierField.PRESENCE),
+    );
+    const knowledgeLists = useAppSelector((state) =>
+        getModifierListByField(state, ModifierField.KNOWLEDGE),
+    );
+
+    return [
+        [...agilityLists, ...allStatsLists],
+        [...strengthLists, ...allStatsLists],
+        [...finesseLists, ...allStatsLists],
+        [...instinctLists, ...allStatsLists],
+        [...presenceLists, ...allStatsLists],
+        [...knowledgeLists, ...allStatsLists],
+    ];
 };

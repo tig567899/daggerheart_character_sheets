@@ -5,9 +5,9 @@ import {
     setLevel,
     setModifierForField,
 } from "@dh_sheets/app/redux/character-data-store/actions";
+import { disableSave, enableSave } from "@dh_sheets/app/redux/middleware";
 import { AppDispatch, RootState } from "@dh_sheets/app/redux/store";
 import { LevelUpChoice } from "@dh_sheets/app/types";
-import { disableSave, enableSave } from "@dh_sheets/app/redux/middleware";
 
 export const levelUpThunk =
     (
@@ -22,12 +22,14 @@ export const levelUpThunk =
 
         choices.forEach((choice) => {
             choice.modifiers?.forEach((modifier) => {
-                dispatch(setModifierForField({
-                    modifierKey: modifier.modifierKey,
-                    modifier: modifier.bonus,
-                    modifierField: modifier.field
-                }));
-            })
+                dispatch(
+                    setModifierForField({
+                        modifierKey: modifier.modifierKey,
+                        modifier: modifier.bonus,
+                        modifierField: modifier.field,
+                    }),
+                );
+            });
         });
 
         dispatch(addLevelUpChoices({ upgrades: choices }));

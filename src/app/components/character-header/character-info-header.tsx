@@ -3,26 +3,28 @@ import { useCallback, useContext } from "react";
 import { useSelector } from "react-redux";
 
 import { getSubclassesByClass } from "@dh_sheets/app/char-class-util";
-import { LevelUpModal } from "@dh_sheets/app/components/header/modal/level-up-modal";
+import { LevelUpModal } from "@dh_sheets/app/components/character-header/modal/level-up-modal";
 import { ActionButton } from "@dh_sheets/app/components/parts/action-button/action-button";
 import { FixedFramedStat } from "@dh_sheets/app/components/parts/framed-stat/framed-stat";
 import { ModalTrigger } from "@dh_sheets/app/components/parts/modal/modal-trigger";
 import { SaveableInput } from "@dh_sheets/app/components/parts/saveable-input/saveable-input";
-import { CharClass, IconSize } from "@dh_sheets/app/constants";
+import { CharClass, IconSize, ModifierField } from "@dh_sheets/app/constants";
 import { PageContext } from "@dh_sheets/app/context";
 import {
     removeModifier,
     setCharacterClass,
     setCharacterName,
     setCharacterPronouns,
+    setMulticlassCharClass,
 } from "@dh_sheets/app/redux/character-data-store/actions";
 import {
     getCharacterData,
     getClassData,
+    getModifierByField,
 } from "@dh_sheets/app/redux/character-data-store/selector";
 import { levelDownThunk } from "@dh_sheets/app/redux/character-data-store/thunks/level-down";
 import { levelUpThunk } from "@dh_sheets/app/redux/character-data-store/thunks/level-up";
-import { useAppDispatch } from "@dh_sheets/app/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@dh_sheets/app/redux/hooks";
 import { LevelUpChoice } from "@dh_sheets/app/types";
 
 import styles from "./character-info-header.module.css";
@@ -34,12 +36,24 @@ export const CharacterInfoHeader = () => {
         level,
         charClass,
         subclass: subclassIndex,
+        secondSubclass: secondSubclassIndex,
     } = useSelector(getClassData);
     const dispatch = useAppDispatch();
+    const multiclassModifiers = useAppSelector((state) =>
+        getModifierByField(state, ModifierField.MULTICLASS),
+    );
+
+    const isMulticlassChar = multiclassModifiers > 0;
+
     const subclass =
         subclassIndex === undefined
             ? null
             : getSubclassesByClass(charClass[0])[subclassIndex];
+
+    const secondarySubclass =
+        secondSubclassIndex === undefined
+            ? null
+            : getSubclassesByClass(charClass[1])[secondSubclassIndex];
 
     const onNameSave = useCallback(
         (name: string) => {
@@ -71,6 +85,25 @@ export const CharacterInfoHeader = () => {
                 });
             }
             dispatch(setCharacterClass(changeEvent.target.value));
+        },
+        [dispatch, subclass],
+    );
+
+    const onMultiClassChange = useCallback(
+        (changeEvent: any) => {
+            if (secondarySubclass) {
+                [
+                    secondarySubclass.foundationFeatures,
+                    secondarySubclass.specializationFeatures,
+                ].forEach((abilities) => {
+                    abilities.forEach((ability) =>
+                        ability.modifier?.forEach((modifier) => {
+                            dispatch(removeModifier(modifier.modifierKey));
+                        }),
+                    );
+                });
+            }
+            dispatch(setMulticlassCharClass(changeEvent.target.value));
         },
         [dispatch, subclass],
     );
@@ -165,10 +198,28 @@ export const CharacterInfoHeader = () => {
                     value={charClass[0]}
                     onChange={onCharClassChange}
                 >
-                    {Object.values(CharClass).map((charClass) => (
-                        <option key={charClass}>{charClass}</option>
-                    ))}
+                    {Object.values(CharClass)
+                        .filter((classOption) => classOption !== charClass[1])
+                        .map((charClass) => (
+                            <option key={charClass}>{charClass}</option>
+                        ))}
                 </select>
+
+                {isMulticlassChar && (
+                    <select
+                        className={styles.headerInput}
+                        value={charClass[1]}
+                        onChange={onMultiClassChange}
+                    >
+                        {Object.values(CharClass)
+                            .filter(
+                                (classOption) => classOption !== charClass[0],
+                            )
+                            .map((charClass) => (
+                                <option key={charClass}>{charClass}</option>
+                            ))}
+                    </select>
+                )}
             </div>
         </div>
     );

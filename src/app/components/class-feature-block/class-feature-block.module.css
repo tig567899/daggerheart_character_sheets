@@ -1,5 +1,6 @@
 .classTitle {
     font-size: 20px;
+    border-bottom: 1px solid var(--foreground-bright);
 }
 
 .featureName {
@@ -21,4 +22,5 @@
     font-size: 14px;
     font-style: italic;
     margin-top: 12px;
+    line-height: 18px;
 }

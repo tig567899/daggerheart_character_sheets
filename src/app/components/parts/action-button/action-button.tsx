@@ -23,6 +23,7 @@ export const ActionButton = ({
     size = IconSize.MEDIUM,
     bordered,
     disabled,
+    onClick,
     ...others
 }: ActionButtonProps) => {
     return (
@@ -33,8 +34,10 @@ export const ActionButton = ({
                 [styles.small]: size === IconSize.SMALL,
                 [styles.bordered]: bordered,
                 [styles.disabled]: disabled,
+                [styles.textButton]: !icon,
             })}
             aria-label={`${label}${disabled ? ", disabled" : ""}`}
+            onClick={disabled ? undefined : onClick}
             {...others}
         >
             <div className={styles.iconSvg}>{icon}</div>

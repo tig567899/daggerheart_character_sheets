@@ -6,7 +6,7 @@
 
 .labeledBoxContents {
     font-size: 14px;
-    border-bottom: 1px solid var(--foreground-secondary);
+    border-bottom: 1px solid var(--foreground-bright);
 }
 
 .labeledBoxLabel {

@@ -8,6 +8,7 @@ import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed
 import { ModalTrigger } from "@dh_sheets/app/components/parts/modal/modal-trigger";
 import { WeaponSelectorModal } from "@dh_sheets/app/components/weapons-block/selector-modal/weapon-selector-modal";
 import { WeaponInfoLayout } from "@dh_sheets/app/components/weapons-block/weapon-info";
+import { WeaponSlot } from "@dh_sheets/app/components/weapons-block/weapons-block";
 import {
     addInventoryItem,
     addInventoryWeapon,
@@ -134,6 +135,7 @@ export const InventoryBlock = () => {
             index,
             renderFunction,
             isEdit,
+            isWeaponModal,
         }: {
             label: string;
             style: string;
@@ -142,6 +144,7 @@ export const InventoryBlock = () => {
             index: number;
             renderFunction: (...props: any) => ReactElement;
             isEdit?: boolean;
+            isWeaponModal?: boolean;
         }) => (
             <ModalTrigger
                 renderModal={renderFunction}
@@ -152,7 +155,7 @@ export const InventoryBlock = () => {
                 icon={isEdit ? editIcon : plusIcon}
                 isIconButton={isEdit}
                 bordered={!isEdit}
-                modalDataKey={`${index}`}
+                modalDataKey={isWeaponModal ? WeaponSlot.BOTH : `${index}`}
             />
         ),
         [editIcon, plusIcon],
@@ -219,7 +222,7 @@ export const InventoryBlock = () => {
                         ) : null}
                         <WeaponInfoLayout
                             weapon={weapon}
-                            categoryName={"Inventory Weapon"}
+                            categoryName={`Inventory ${weapon.isSecondary ? "Secondary " : ""}Weapon`}
                             changeButton={renderModalTrigger({
                                 label: "Change",
                                 style: "",

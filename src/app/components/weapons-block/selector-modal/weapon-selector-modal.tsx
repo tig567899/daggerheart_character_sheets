@@ -21,7 +21,6 @@ export interface WeaponProps {
 
 export const WeaponSelectorModal = ({ id, onSelect, onClose }: WeaponProps) => {
     // Use this later
-    // const secondary = id === WeaponSlot.SECONDARY;
     const onWeaponSelect = useCallback(
         (weapon: WeaponData) => onSelect(id, weapon),
         [id, onSelect],

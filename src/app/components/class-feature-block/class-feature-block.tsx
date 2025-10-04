@@ -8,12 +8,15 @@ import { getClassData } from "@dh_sheets/app/redux/character-data-store/selector
 import styles from "./class-feature-block.module.css";
 
 export const ClassFeatureBlock = () => {
-    const classData = useSelector(getClassData);
-    const featuresByClass = classData.charClass.map((charClass) =>
+    const { charClass } = useSelector(getClassData);
+    const featuresByClass = charClass.map((charClass) =>
         getBaseFeaturesByClass(charClass),
     );
 
-    const title = featuresByClass.flat().length === 1 ? 'Class Feature' : 'Class Features';
+    const title =
+        featuresByClass.flat().length === 1
+            ? "Class Feature"
+            : "Class Features";
 
     return (
         <FramedBlock>
@@ -21,7 +24,9 @@ export const ClassFeatureBlock = () => {
             {featuresByClass.map((featureList, index) => (
                 <div key={`feature-list-${index}`}>
                     {featuresByClass.length > 1 ? (
-                        <div className={styles.classTitle}></div>
+                        <div className={styles.classTitle}>
+                            {charClass[index]}
+                        </div>
                     ) : null}
                     {featureList.map((feature) => (
                         <div key={`feature-${feature.name}`}>

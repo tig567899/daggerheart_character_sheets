@@ -6,7 +6,12 @@ import {
     ModifierKey,
     abilityToModifierFieldMap,
 } from "@dh_sheets/app/constants";
-import { LevelUpOption, Modifier } from "@dh_sheets/app/types";
+import {
+    Ability,
+    LevelUpOption,
+    Modifier,
+    SubclassData,
+} from "@dh_sheets/app/types";
 
 export function getModifierFromLevelUpOption(
     option: LevelUpOption,
@@ -271,3 +276,37 @@ export function constructModifierForExpOption(
         },
     ];
 }
+
+export function constructModifierForMulticlass() {
+    return {
+        field: ModifierField.MULTICLASS,
+        bonus: 1,
+        modifierKey: ModifierKey.MULTICLASS,
+    };
+}
+
+export const maybeGetAdditionalModifiersForSubclassSpecialization = ({
+    subclassBlock,
+    subclassPoints,
+}: {
+    subclassBlock?: SubclassData;
+    subclassPoints: number;
+}) => {
+    if (!subclassBlock) {
+        return [];
+    }
+
+    let newFeatures: Ability[] = [];
+    switch (subclassPoints + 1) {
+        case 1:
+            newFeatures = subclassBlock.specializationFeatures;
+            break;
+        case 2:
+            newFeatures = subclassBlock.masteryFeatures;
+            break;
+    }
+
+    return newFeatures
+        .flatMap((feature) => feature.modifier)
+        .filter((mod) => mod !== undefined);
+};

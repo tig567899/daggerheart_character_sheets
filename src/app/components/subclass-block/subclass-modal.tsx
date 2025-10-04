@@ -40,6 +40,7 @@ export const SubclassModal = ({
             short={!pageContext.limitedWidth}
             onSelect={onSubmit}
             onClose={onClose}
+            submitLabel="Select"
         >
             <SubclassPicker
                 updateSelection={setSubclassIndex}

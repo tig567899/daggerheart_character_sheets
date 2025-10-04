@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import { AbilityName, AbilityNames } from "@dh_sheets/app/constants";
 
 import styles from "./level-up-stats.module.css";
+import { ActionButton } from "@dh_sheets/app/components/parts/action-button/action-button";
 
 interface StatSelectionProps {
     takenStats: Set<AbilityName>;
@@ -65,9 +66,9 @@ export const LevelUpStatSelection = ({
                         ))}
                 </select>
             </div>
-            <div>
-                <button className={styles.asiActionButton} onClick={cancelUpgrade}>Back</button>
-                <button className={styles.asiActionButton} onClick={onSubmit}>Confirm</button>
+            <div className={styles.asiActionButtonGroup}>
+                <ActionButton className={styles.asiActionButton} onClick={cancelUpgrade} bordered label={"Back"} />
+                <ActionButton className={styles.asiActionButton} onClick={onSubmit} bordered label="Confirm"/>
             </div>
         </div>
     );

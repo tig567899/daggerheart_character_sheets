@@ -1,5 +1,6 @@
 import { ReactElement, useCallback } from "react";
 
+import { CharClass } from "@dh_sheets/app/constants";
 import { Ability, SubclassData } from "@dh_sheets/app/types";
 
 import styles from "../heritage/heritage-block.module.css";
@@ -9,6 +10,7 @@ interface SubclassProps {
     specializationUnlocked?: boolean;
     masteryUnlocked?: boolean;
     changeButton: ReactElement;
+    includedClass?: CharClass;
 }
 
 export const SubclassInfo = ({
@@ -16,11 +18,12 @@ export const SubclassInfo = ({
     specializationUnlocked,
     masteryUnlocked,
     changeButton,
+    includedClass,
 }: SubclassProps) => {
     const renderSubclassFeatureList = useCallback(
         (features: Ability[], masteryLevel: string) => {
             return (
-                <div key={`features-level-${masteryLevel}`}>
+                <div key={`features-level-${masteryLevel}`} className={styles.abilityBlock}>
                     <div className={styles.featuresHeader}>
                         {masteryLevel}{" "}
                         {features.length === 1 ? "Feature" : "Features"}
@@ -48,7 +51,7 @@ export const SubclassInfo = ({
     return (
         <div className={styles.infoLayout}>
             <div className={styles.infoCategory}>
-                {subclass.name}
+                {`${subclass.name}${includedClass ? ` (${includedClass})` : ""}`}
                 <div className={styles.changeButton}>{changeButton}</div>
             </div>
             {subclass.spellcastTrait ? (

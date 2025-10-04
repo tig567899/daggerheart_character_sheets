@@ -8,6 +8,7 @@ import {
     loadDataFromCookies,
     pruneLevelChoicesToLevel,
     removeModifier,
+    resetData,
     setActiveArmor,
     setAncestry,
     setCharacterClass,
@@ -26,6 +27,7 @@ import {
     setInventoryWeaponAt,
     setLevel,
     setModifierForField,
+    setMulticlassCharClass,
     setPrimaryWeapon,
     setSecondarySubclassIndex,
     setSecondaryWeapon,
@@ -74,6 +76,9 @@ const initialState: CharacterDataState = {
 
 export const characterData = createReducer(initialState, (builder) => {
     builder
+        .addCase(resetData, (_state, _action) => {
+            return initialState;
+        })
         .addCase(loadDataFromCookies, (state, action) => {
             return {
                 ...state,
@@ -118,6 +123,25 @@ export const characterData = createReducer(initialState, (builder) => {
                     ...state.classData,
                     charClass: [action.payload, ...remainingClasses],
                     subclass: undefined,
+                },
+            };
+        })
+        .addCase(setMulticlassCharClass, (state, action) => {
+            if (action.payload === state.classData.charClass[1]) {
+                return state;
+            }
+            const classes = [...state.classData.charClass];
+            if (classes.length === 1) {
+                classes.push(action.payload);
+            } else {
+                classes[1] = action.payload
+            }
+            return {
+                ...state,
+                classData: {
+                    ...state.classData,
+                    charClass: [...classes],
+                    secondSubclass: undefined,
                 },
             };
         })

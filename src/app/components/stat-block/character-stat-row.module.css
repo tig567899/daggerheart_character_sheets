@@ -47,7 +47,7 @@
 
 .verticalDivider {
     width: 1px;
-    background-color: var(--foreground-secondary);
+    background-color: var(--foreground-bright);
     margin: 6px 18px;
 }
 

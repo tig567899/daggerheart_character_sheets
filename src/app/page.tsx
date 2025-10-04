@@ -3,15 +3,16 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { ArmorBlock } from "@dh_sheets/app/components/armor-block/armor-block";
+import { CharacterInfoHeader } from "@dh_sheets/app/components/character-header/character-info-header";
 import { ClassFeatureBlock } from "@dh_sheets/app/components/class-feature-block/class-feature-block";
 import { ExperiencesBlock } from "@dh_sheets/app/components/experiences-block/experiences-block";
 import { GoldBlock } from "@dh_sheets/app/components/gold-block/gold-block";
-import { CharacterInfoHeader } from "@dh_sheets/app/components/header/character-info-header";
 import { HealthBlock } from "@dh_sheets/app/components/health-block/health-block";
 import { AncestryBlock } from "@dh_sheets/app/components/heritage/ancestry-block/ancestry-block";
 import { CommunityBlock } from "@dh_sheets/app/components/heritage/community-block/community-block";
 import { HopeBlock } from "@dh_sheets/app/components/hope-block/hope-block";
 import { InventoryBlock } from "@dh_sheets/app/components/inventory-block/inventory-block";
+import { PageTitleBlock } from "@dh_sheets/app/components/page-title/page-title";
 import { LayoutColumn } from "@dh_sheets/app/components/parts/framed-block/column";
 import { CharacterStatRow } from "@dh_sheets/app/components/stat-block/character-stat-row";
 import { SubclassBlock } from "@dh_sheets/app/components/subclass-block/subclass-block";
@@ -107,7 +108,7 @@ export default function Home() {
     return (
         <PageContext.Provider value={pageContext}>
             <div className={styles.pageHeaderBackground}>
-                <div className={styles.pageTitle}>Daggerheart Character Sheet</div>
+                <PageTitleBlock />
                 <CharacterInfoHeader />
             </div>
             <div className={styles.pageLayout}>

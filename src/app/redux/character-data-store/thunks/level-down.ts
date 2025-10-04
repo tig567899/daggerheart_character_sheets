@@ -15,7 +15,6 @@ export const levelDownThunk =
         const currentLevel = state.classData.level;
 
         // This should be true
-
         if (state.levelUpChoices.length === currentLevel - 1) {
             const lastOptions = state.levelUpChoices[currentLevel - 2];
             lastOptions.forEach((option) => {

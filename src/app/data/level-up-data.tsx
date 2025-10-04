@@ -119,6 +119,7 @@ export const Tier4LevelUpOptions: LevelUpOption[] = [
         levelUpKey: LevelUpKey.TIER_4_EXP,
         description: "Permanently gain a +1 bonus to two Experiences.",
         maxNumber: 1,
+        secondarySelection: SecondarySelectionValue.EXPERIENCES,
     },
     {
         levelUpKey: LevelUpKey.TIER_4_DOMAIN,
@@ -130,13 +131,13 @@ export const Tier4LevelUpOptions: LevelUpOption[] = [
         levelUpKey: LevelUpKey.TIER_4_EVA,
         description: "Permanently gain a +1 bonus to your Evasion.",
         maxNumber: 1,
-        secondarySelection: SecondarySelectionValue.EXPERIENCES,
     },
     {
         levelUpKey: LevelUpKey.TIER_4_SUBCLASS,
         description:
             "Take an upgraded subclass card. Then cross out the multiclass option for this tier",
         maxNumber: 1,
+        secondarySelection: SecondarySelectionValue.SUBCLASS,
         disables: [LevelUpKey.TIER_4_MULTI],
     },
     {

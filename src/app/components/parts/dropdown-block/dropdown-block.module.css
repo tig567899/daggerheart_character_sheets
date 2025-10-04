@@ -1,6 +1,6 @@
 .container {
     margin-bottom: 15px;
-    border: 1px solid var(--foreground-secondary);
+    border: 1px solid var(--foreground-bright);
     border-radius: 10px;
     padding: 0 15px 6px;
 }
@@ -20,7 +20,7 @@
 .expandIndicator {
     width: 24px;
     height: 24px;
-    margin-right: 20px;
+    margin-right: 6px;
     display: flex;
     flex-direction: column;
     justify-content: center;

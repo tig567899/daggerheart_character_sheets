@@ -1,11 +1,12 @@
 .hopeFeatureContainer {
     display: flex;
     flex-direction: column;
+    margin-top: 12px;
 }
 
 .hopeFeatureTitle {
     font-size: 18px;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
 }
 
 .hopeFeatureDescription {
@@ -26,7 +27,6 @@
     border-radius: 20px;
     height: 40px;
     width: 80%;
-    margin-bottom: 12px;
     margin-top: 6px;
     display: flex;
     align-items: center;

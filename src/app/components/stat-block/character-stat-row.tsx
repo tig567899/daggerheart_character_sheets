@@ -12,12 +12,14 @@ import {
     getClassData,
     getEquipmentData,
     getModifierByField,
+    getModifierListByField,
 } from "@dh_sheets/app/redux/character-data-store/selector";
 import { useAppDispatch, useAppSelector } from "@dh_sheets/app/redux/hooks";
 
 import styles from "./character-stat-row.module.css";
 import { FillableResource } from "@dh_sheets/app/components/parts/fillable-resource/fillable-resource";
 import { setCurrentArmor } from "@dh_sheets/app/redux/character-data-store/actions";
+import { TooltipDirection } from "@dh_sheets/app/components/parts/tooltip/tooltip-trigger";
 
 export const CharacterStatRow = () => {
     const dispatch = useAppDispatch();
@@ -31,10 +33,18 @@ export const CharacterStatRow = () => {
     const evasionModifier = useAppSelector((state) =>
         getModifierByField(state, ModifierField.EVASION),
     );
+
+    const evasionModList = useAppSelector((state) =>
+        getModifierListByField(state, ModifierField.EVASION),
+    );
     const equipment = useSelector(getEquipmentData);
     const armorValue = equipment.armor?.score ?? 0;
     const armorModifier = useAppSelector((state) =>
         getModifierByField(state, ModifierField.ARMOR_SCORE),
+    );
+
+    const armorModList = useAppSelector((state) =>
+        getModifierListByField(state, ModifierField.ARMOR_SCORE),
     );
 
     const onArmorChange = useCallback((value: number) => {
@@ -53,11 +63,18 @@ export const CharacterStatRow = () => {
                 <FixedFramedStat
                     value={baseEvasion + evasionModifier}
                     label="Evasion"
+                    modifiers={evasionModList}
+                    baseNumber={baseEvasion}
+                    tooltipDirection={TooltipDirection.RIGHT}
+                    baseSource="class"
                 />
                 {pageContext.limitedWidth ? <div className={styles.verticalDivider}/> : null}
                 <FixedFramedStat
                     value={armorValue + armorModifier}
                     label="Armor"
+                    modifiers={armorModList}
+                    baseNumber={armorValue}
+                    baseSource={equipment.armor?.name}
                 />
                 <FillableResource
                     name=""

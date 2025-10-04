@@ -10,14 +10,13 @@ import { WeaponInfoLayout } from "@dh_sheets/app/components/weapons-block/weapon
 import { CharClass, WeaponBurden } from "@dh_sheets/app/constants";
 import {
     removeModifier,
-    setPrimaryWeapon,
-    setSecondaryWeapon,
 } from "@dh_sheets/app/redux/character-data-store/actions";
 import {
     getClassData,
     getEquipmentData,
 } from "@dh_sheets/app/redux/character-data-store/selector";
 import { equipWeapon } from "@dh_sheets/app/redux/character-data-store/thunks/equip-weapon";
+import { unequipWeapon } from "@dh_sheets/app/redux/character-data-store/thunks/unequip-weapon";
 import { useAppDispatch } from "@dh_sheets/app/redux/hooks";
 import { WeaponData } from "@dh_sheets/app/types";
 import { getBaseProficiencyByLevel } from "@dh_sheets/app/util";
@@ -31,6 +30,7 @@ const MAX_PROFICIENCY = 6;
 export enum WeaponSlot {
     PRIMARY = "Primary",
     SECONDARY = "Secondary",
+    BOTH = "Both",
 }
 
 export const WeaponsBlock = () => {
@@ -58,16 +58,28 @@ export const WeaponsBlock = () => {
         [dispatch],
     );
 
-    const onRemovePrimaryWeapon = useCallback(() => {
-        if (primaryWeapon) removeWeaponFeatures(primaryWeapon);
+    const onRemovePrimaryWeapon = useCallback(
+        (returnToInventory?: boolean) => {
+            if (primaryWeapon)
+                dispatch(
+                    unequipWeapon({ weapon: primaryWeapon, returnToInventory }),
+                );
+        },
+        [dispatch, primaryWeapon],
+    );
 
-        dispatch(setPrimaryWeapon());
-    }, [dispatch, primaryWeapon, removeWeaponFeatures]);
-
-    const onRemoveSecondaryWeapon = useCallback(() => {
-        if (secondaryWeapon) removeWeaponFeatures(secondaryWeapon);
-        dispatch(setSecondaryWeapon());
-    }, [dispatch, secondaryWeapon, removeWeaponFeatures]);
+    const onRemoveSecondaryWeapon = useCallback(
+        (returnToInventory?: boolean) => {
+            if (secondaryWeapon)
+                dispatch(
+                    unequipWeapon({
+                        weapon: secondaryWeapon,
+                        returnToInventory,
+                    }),
+                );
+        },
+        [dispatch, secondaryWeapon],
+    );
 
     const renderModal = useCallback(
         (
@@ -148,6 +160,7 @@ export const WeaponsBlock = () => {
                         isEdit: true,
                     })}
                     onRemove={onRemovePrimaryWeapon}
+                    useUnequip
                 />
             ) : (
                 renderWeaponModalTrigger({
@@ -171,6 +184,7 @@ export const WeaponsBlock = () => {
                         isEdit: true,
                     })}
                     onRemove={onRemoveSecondaryWeapon}
+                    useUnequip
                 />
             ) : primaryWeapon?.burden === WeaponBurden.TWO_HANDED &&
               // Warriors ignore burden when selecting weapons
