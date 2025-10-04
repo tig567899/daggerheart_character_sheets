@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from "react";
 
-import { getSubclassesByClass } from "@dh_sheets/app/char-class-util";
 import { BlockTitle } from "@dh_sheets/app/components/parts/framed-block/block-title";
 import { FramedBlock } from "@dh_sheets/app/components/parts/framed-block/framed-block";
 import { ModalTrigger } from "@dh_sheets/app/components/parts/modal/modal-trigger";

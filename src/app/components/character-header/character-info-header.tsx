@@ -105,7 +105,7 @@ export const CharacterInfoHeader = () => {
             }
             dispatch(setMulticlassCharClass(changeEvent.target.value));
         },
-        [dispatch, subclass],
+        [dispatch, secondarySubclass],
     );
 
     const onLevelDown = useCallback(() => {

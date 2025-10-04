@@ -77,7 +77,7 @@ export const loadDataFromCookies = createAction<CharacterDataState>(
     "Load data from cookies",
 );
 
-export const resetData = createAction<{}>("Clear character sheet");
+export const resetData = createAction<unknown>("Clear character sheet");
 
 export const setSubclassIndex = createAction<number>("Set subclass index");
 export const setSecondarySubclassIndex = createAction<number>(

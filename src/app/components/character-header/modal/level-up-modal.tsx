@@ -1,10 +1,9 @@
-import { useCallback, useContext, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { LevelUpBaseScreen } from "@dh_sheets/app/components/character-header/modal/level-up-base-screen";
 import { ActionButton } from "@dh_sheets/app/components/parts/action-button/action-button";
 import { BaseModal } from "@dh_sheets/app/components/parts/modal/base-modal";
 import { TwoPointLevelUpKeys } from "@dh_sheets/app/constants";
-import { PageContext } from "@dh_sheets/app/context";
 import { setExperience } from "@dh_sheets/app/redux/character-data-store/actions";
 import { getClassData } from "@dh_sheets/app/redux/character-data-store/selector";
 import { useAppDispatch, useAppSelector } from "@dh_sheets/app/redux/hooks";
@@ -19,7 +18,6 @@ interface ModalProps {
 }
 
 export const LevelUpModal = ({ onClose, onSelect }: ModalProps) => {
-    const pageContext = useContext(PageContext);
     const [firstUpgrade, setFirstUpgrade] = useState<LevelUpChoice | null>(
         null,
     );

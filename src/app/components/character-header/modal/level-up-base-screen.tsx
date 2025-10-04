@@ -161,7 +161,7 @@ export const LevelUpBaseScreen = ({
 
             setOptionSelected(option);
         },
-        [setUpgrade, choiceCountByKey, charClass.length],
+        [setUpgrade, choiceCountByKey, charClass, subclass, subclassPoints],
     );
 
     const onAsiSelect = useCallback(
@@ -228,7 +228,7 @@ export const LevelUpBaseScreen = ({
             setOptionSelected(null);
             dispatch(setMulticlassCharClass(charClass));
         },
-        [optionSelected, setUpgrade, setMulticlassCharClass],
+        [optionSelected, setUpgrade, dispatch],
     );
 
     const onSubclassSelect = useCallback(
@@ -258,7 +258,7 @@ export const LevelUpBaseScreen = ({
             setUpgrade(upgrade);
             setOptionSelected(null);
         },
-        [optionSelected, setUpgrade],
+        [optionSelected, setUpgrade, charClass, secondSubclassData, subclassData],
     );
 
     const clearUpgrade = useCallback(() => {

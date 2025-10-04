@@ -9,9 +9,6 @@ import { WeaponSelectorModal } from "@dh_sheets/app/components/weapons-block/sel
 import { WeaponInfoLayout } from "@dh_sheets/app/components/weapons-block/weapon-info";
 import { CharClass, WeaponBurden } from "@dh_sheets/app/constants";
 import {
-    removeModifier,
-} from "@dh_sheets/app/redux/character-data-store/actions";
-import {
     getClassData,
     getEquipmentData,
 } from "@dh_sheets/app/redux/character-data-store/selector";
@@ -39,17 +36,6 @@ export const WeaponsBlock = () => {
     const dispatch = useAppDispatch();
 
     const resourceInputArray = [];
-
-    const removeWeaponFeatures = useCallback(
-        (weapon: WeaponData) => {
-            weapon.features.forEach((feature) =>
-                feature.modifiers?.forEach((modifier) => {
-                    dispatch(removeModifier(modifier.modifierKey));
-                }),
-            );
-        },
-        [dispatch],
-    );
 
     const onWeaponSelect = useCallback(
         (id: string, newWeapon: WeaponData) => {

@@ -76,7 +76,7 @@ const initialState: CharacterDataState = {
 
 export const characterData = createReducer(initialState, (builder) => {
     builder
-        .addCase(resetData, (_state, _action) => {
+        .addCase(resetData, () => {
             return initialState;
         })
         .addCase(loadDataFromCookies, (state, action) => {
